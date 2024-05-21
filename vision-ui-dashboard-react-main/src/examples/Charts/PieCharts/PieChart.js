@@ -46,8 +46,8 @@ class PieChart extends React.Component {
           <ReactApexChart 
             options={this.state.options} 
             series={this.state.series} type="donut" 
-            width="100%"
-            height="150%"/>
+            width="150%"
+            height="180%"/>
         </div>
         <div id="html-dist"></div>
       </div>
