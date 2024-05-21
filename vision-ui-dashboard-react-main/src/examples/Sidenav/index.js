@@ -50,7 +50,7 @@ import { useVisionUIController, setMiniSidenav, setTransparentSidenav } from "co
 import SimmmpleLogo from "examples/Icons/SimmmpleLogo";
 
 // function Sidenav({ color, brand, brandName, routes, ...rest }) {
-function Sidenav({ color, brandName, routes, ...rest }) {
+function Sidenav({ color, brandName, routes, ...rest}) {
   const [controller, dispatch] = useVisionUIController();
   const { miniSidenav, transparentSidenav } = controller;
   const location = useLocation();

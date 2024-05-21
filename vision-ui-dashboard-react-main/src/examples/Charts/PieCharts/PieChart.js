@@ -12,8 +12,16 @@ class PieChart extends React.Component {
         chart: {
           type: 'donut',
         },
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '35%'
+            },
+            customScale: 1.0
+          }
+        },
         responsive: [{
-          breakpoint: 100,
+          breakpoint: 500,
           options: {
             chart: {
               width: 500
@@ -39,7 +47,7 @@ class PieChart extends React.Component {
             options={this.state.options} 
             series={this.state.series} type="donut" 
             width="100%"
-            height="100%"/>
+            height="150%"/>
         </div>
         <div id="html-dist"></div>
       </div>
