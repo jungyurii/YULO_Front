@@ -19,7 +19,7 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-import { Card, LinearProgress, Stack } from "@mui/material";
+import { Card, CircularProgress, LinearProgress, Stack } from "@mui/material";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -47,10 +47,13 @@ import ReferralTracking from "layouts/dashboard/components/ReferralTracking";
 // React icons
 import { IoIosRocket } from "react-icons/io";
 import { IoGlobe } from "react-icons/io5";
+import { IoCamera } from "react-icons/io5";
+import { IoVideocam } from "react-icons/io5";
 import { IoBuild } from "react-icons/io5";
 import { IoWallet } from "react-icons/io5";
 import { IoDocumentText } from "react-icons/io5";
 import { FaShoppingCart } from "react-icons/fa";
+import { IoDocument } from "react-icons/io5";
 
 // Data
 import LineChart from "examples/Charts/LineCharts/LineChart";
@@ -59,6 +62,7 @@ import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
 import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
 import { barChartDataDashboard } from "layouts/dashboard/data/barChartData";
 import { barChartOptionsDashboard } from "layouts/dashboard/data/barChartOptions";
+import PieChart from "examples/Charts/PieCharts/PieChart";
 
 function Dashboard() {
   const { gradients } = colors;
@@ -72,48 +76,48 @@ function Dashboard() {
           <Grid container spacing={3}>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "today's money", fontWeight: "regular" }}
-                count="$53,000"
-                percentage={{ color: "success", text: "+55%" }}
-                icon={{ color: "info", component: <IoWallet size="22px" color="white" /> }}
+                title={{ text: "today's total detected", fontWeight: "bold"}}
+                count="13"
+                percentage={{ color: "success", text: "+55%" }} // 전날 대비 변화량
+                icon={{ color: "info", component: <IoDocument size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "today's users" }}
+                title={{ text: "Camera 1" }}
                 count="2,300"
                 percentage={{ color: "success", text: "+3%" }}
-                icon={{ color: "info", component: <IoGlobe size="22px" color="white" /> }}
+                icon={{ color: "info", component: <IoVideocam size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "new clients" }}
+                title={{ text: "Camera 2" }}
                 count="+3,462"
                 percentage={{ color: "error", text: "-2%" }}
-                icon={{ color: "info", component: <IoDocumentText size="22px" color="white" /> }}
+                icon={{ color: "info", component: <IoVideocam size="22px" color="white" /> }}
               />
             </Grid>
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
-                title={{ text: "total sales" }}
+                title={{ text: "Camera 3" }}
                 count="$103,430"
                 percentage={{ color: "success", text: "+5%" }}
-                icon={{ color: "info", component: <FaShoppingCart size="20px" color="white" /> }}
+                icon={{ color: "info", component: <IoVideocam size="20px" color="white" /> }}
               />
             </Grid>
           </Grid>
         </VuiBox>
         <VuiBox mb={3}>
           <Grid container spacing="18px">
-            <Grid item xs={12} lg={12} xl={5}>
+            <Grid item xs={12} lg={12} xl={4}>
               <WelcomeMark />
             </Grid>
-            <Grid item xs={12} lg={6} xl={3}>
-              <SatisfactionRate />
+            <Grid item xs={12} lg={6} xl={4}>
+              <WelcomeMark />
             </Grid>
             <Grid item xs={12} lg={6} xl={4}>
-              <ReferralTracking />
+              <WelcomeMark />
             </Grid>
           </Grid>
         </VuiBox>
@@ -122,8 +126,8 @@ function Dashboard() {
             <Grid item xs={12} lg={6} xl={7}>
               <Card>
                 <VuiBox sx={{ height: "100%" }}>
-                  <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
-                    Sales Overview
+                  <VuiTypography variant="h4" color="white" fontWeight="bold" mb="5px">
+                    검출 변화량 그래프
                   </VuiTypography>
                   <VuiBox display="flex" alignItems="center" mb="40px">
                     <VuiTypography variant="button" color="success" fontWeight="bold">
@@ -145,25 +149,9 @@ function Dashboard() {
             <Grid item xs={12} lg={6} xl={5}>
               <Card>
                 <VuiBox>
-                  <VuiBox
-                    mb="24px"
-                    height="220px"
-                    sx={{
-                      background: linearGradient(
-                        cardContent.main,
-                        cardContent.state,
-                        cardContent.deg
-                      ),
-                      borderRadius: "20px",
-                    }}
-                  >
-                    <BarChart
-                      barChartData={barChartDataDashboard}
-                      barChartOptions={barChartOptionsDashboard}
-                    />
-                  </VuiBox>
-                  <VuiTypography variant="lg" color="white" fontWeight="bold" mb="5px">
-                    Active Users
+                  <PieChart/>
+                  <VuiTypography variant="h4" color="white" fontWeight="bold" mb="5px">
+                    카메라별 검출 순위
                   </VuiTypography>
                   <VuiBox display="flex" alignItems="center" mb="40px">
                     <VuiTypography variant="button" color="success" fontWeight="bold">

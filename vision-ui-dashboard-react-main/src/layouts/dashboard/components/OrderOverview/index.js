@@ -21,8 +21,8 @@ function OrdersOverview() {
   return (
     <Card className="h-100">
       <VuiBox mb="16px">
-        <VuiTypography variant="lg" fontWeight="bold" mb="5px" color="white">
-          Orders overview
+        <VuiTypography variant="h4" fontWeight="bold" mb="5px" color="white">
+          최근 감지 내역
         </VuiTypography>
         <VuiBox mb={2}>
           <VuiBox display="flex" alignItems="center">

@@ -9,25 +9,13 @@ import gif from "assets/images/cardimgfree.png";
 const WelcomeMark = () => {
   return (
     <Card sx={() => ({
-      height: "340px",
+      height: "540px",
       py: "32px",
-      backgroundImage: `url(${gif})`,
+      backgroundImage: `url('http://127.0.0.1:8000/api/report/get_model_stream/video/1/1')`,
       backgroundSize: "cover",
       backgroundPosition: "50%"
     })}>
       <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
-        <VuiBox>
-          <VuiTypography color="text" variant="button" fontWeight="regular" mb="12px">
-            Welcome back,
-          </VuiTypography>
-          <VuiTypography color="white" variant="h3" fontWeight="bold" mb="18px">
-            Mark Johnson
-          </VuiTypography>
-          <VuiTypography color="text" variant="h6" fontWeight="regular" mb="auto">
-            Glad to see you again!
-            <br /> Ask me anything.
-          </VuiTypography>
-        </VuiBox>
         <VuiTypography
           component="a"
           href="#"
@@ -41,7 +29,7 @@ const WelcomeMark = () => {
             cursor: "pointer",
 
             "& .material-icons-round": {
-              fontSize: "1.125rem",
+              fontSize: "3.125rem",
               transform: `translate(2px, -0.5px)`,
               transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
             },
@@ -51,8 +39,7 @@ const WelcomeMark = () => {
             },
           }}
         >
-          Tap to record
-          <Icon sx={{ fontWeight: "bold", ml: "5px" }}>arrow_forward</Icon>
+          카메라 이름 1
         </VuiTypography>
       </VuiBox>
     </Card>

@@ -21,6 +21,7 @@
 		"@mui/material": "^5.9.2",
 		"@mui/styled-engine": "5.1.1",
 		"@mui/styles": "^5.2.0",
+		"@mui/x-charts": "^7.5.0",
 		"apexcharts": "^3.30.0",
 		"chroma-js": "2.1.2",
 		"install": "^0.13.0",
@@ -33,16 +34,17 @@
 		"react-github-btn": "1.2.1",
 		"react-icons": "^4.3.1",
 		"react-router-dom": "5.2.0",
+		"recharts": "^2.12.7",
 		"stylis": "4.0.10",
 		"stylis-plugin-rtl": "2.1.0",
 		"uuid": "8.3.2",
 		"web-vitals": "1.0.1"
 	},
 	"devDependencies": {
-		"eslint": "^7.11.0",
 		"@testing-library/jest-dom": "5.11.4",
 		"@testing-library/react": "11.1.0",
 		"@testing-library/user-event": "12.1.10",
+		"eslint": "^7.11.0",
 		"react-scripts": "4.0.3"
 	},
 	"scripts": {

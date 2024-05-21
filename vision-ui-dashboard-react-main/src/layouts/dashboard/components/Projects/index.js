@@ -71,8 +71,8 @@ function Projects() {
     >
       <VuiBox display="flex" justifyContent="space-between" alignItems="center" mb="32px">
         <VuiBox mb="auto">
-          <VuiTypography color="white" variant="lg" mb="6px" gutterBottom>
-            Projects
+          <VuiTypography color="white" variant="h4" mb="6px" gutterBottom>
+            모델별 정확도 테이블
           </VuiTypography>
           <VuiBox display="flex" alignItems="center" lineHeight={0}>
             <BsCheckCircleFill color="green" size="15px" />
