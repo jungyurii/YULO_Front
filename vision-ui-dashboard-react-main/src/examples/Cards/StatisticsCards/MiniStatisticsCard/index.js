@@ -57,7 +57,7 @@ function MiniStatisticsCard({ bgColor, title, group, count, percentage, icon, di
             <Grid item xs={8}>
               <VuiBox ml={direction === "left" ? 2 : 0} lineHeight={1}>
                 <VuiTypography
-                  variant="h4"
+                  variant="h5"
                   color={bgColor === "white" ? "text" : "white"}
                   opacity={bgColor === "white" ? 1 : 0.7}
                   textTransform="capitalize"
@@ -65,7 +65,7 @@ function MiniStatisticsCard({ bgColor, title, group, count, percentage, icon, di
                 >
                   {title.text}
                 </VuiTypography>
-                <VuiTypography variant="h2" fontWeight="bold" color="white">
+                <VuiTypography variant="h3" fontWeight="bold" color="white">
                   {count}{" "}
                   <VuiTypography variant="button" color={percentage.color} fontWeight="bold">
                     {percentage.text}
