@@ -129,7 +129,7 @@ function Dashboard() {
                   <VuiTypography variant="h4" color="white" fontWeight="bold" mb="5px">
                     검출 변화량 그래프
                   </VuiTypography>
-                  <VuiBox display="flex" alignItems="center" mb="40px">
+                  <VuiBox display="flex" alignItems="center" mb="10px">
                     <VuiTypography variant="button" color="success" fontWeight="bold">
                       +5% more{" "}
                       <VuiTypography variant="button" color="text" fontWeight="regular">
@@ -137,7 +137,7 @@ function Dashboard() {
                       </VuiTypography>
                     </VuiTypography>
                   </VuiBox>
-                  <VuiBox sx={{ height: "310px" }}>
+                  <VuiBox sx={{ height: "350px" }}>
                     <LineChart
                       lineChartData={lineChartDataDashboard}
                       lineChartOptions={lineChartOptionsDashboard}
@@ -148,8 +148,10 @@ function Dashboard() {
             </Grid>
             <Grid item xs={12} lg={6} xl={5}>
               <Card>
-                <VuiBox>
-                  <PieChart/>
+                <VuiBox sx={{ height: "420px" }}>
+                  <VuiBox alignItems="center" mb="10px">
+                    <PieChart/>
+                  </VuiBox>
                   <VuiTypography variant="h4" color="white" fontWeight="bold" mb="5px">
                     카메라별 검출 순위
                   </VuiTypography>
