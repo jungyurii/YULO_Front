@@ -83,12 +83,12 @@ function DefaultNavbar({ transparent, light, action }) {
         px={{ xs: transparent ? 4 : 3, sm: transparent ? 2 : 3, lg: transparent ? 0 : 3 }}
         my={2}
         border={`${borderWidth[1]} solid ${borderCol.navbar}`}
-        width="calc(100% - 48px)"
+        width="calc(60% - 48px)"
         borderRadius="xl"
         shadow={transparent ? "none" : "md"}
         color={light ? "white" : "dark"}
         display="flex"
-        justifyContent="space-between"
+        justifyContent="space-evenly"
         alignItems="center"
         position="absolute"
         left="50%"

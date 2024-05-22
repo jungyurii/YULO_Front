@@ -41,11 +41,6 @@ function IllustrationLayout({ color, header, title, description, illustration, c
     <PageLayout background="white">
       <DefaultNavbar
         routes={pageRoutes}
-        action={{
-          type: "external",
-          route: "https://creative-tim.com/product/vision-ui-dashboard-pro-react",
-          label: "BUY NOW",
-        }}
       />
       <Grid container>
         <Grid item xs={11} sm={8} md={6} lg={4} xl={3} sx={{ mx: "auto" }}>
