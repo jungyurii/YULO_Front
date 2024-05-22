@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
@@ -63,10 +45,30 @@ import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptio
 import { barChartDataDashboard } from "layouts/dashboard/data/barChartData";
 import { barChartOptionsDashboard } from "layouts/dashboard/data/barChartOptions";
 import PieChart from "examples/Charts/PieCharts/PieChart";
+import { useEffect } from "react";
+import axios from "axios";
 
 function Dashboard() {
   const { gradients } = colors;
   const { cardContent } = gradients;
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+
+    axios.post("http://127.0.0.1:8080/camera/cameraName",{
+      userId: '1'
+    })
+    .then(
+      response => {
+        console.log(response.data);
+      }
+    )
+    .catch(
+      error => {
+        console.log(error);
+      }
+    )
+  }, [])
 
   return (
     <DashboardLayout>
