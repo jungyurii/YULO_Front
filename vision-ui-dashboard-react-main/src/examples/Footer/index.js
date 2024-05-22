@@ -28,7 +28,7 @@ function Footer() {
       justifyContent="space-between"
       direction="row"
       component="footer"
-      py={2}
+      py={10}
       pb={0}
     >
       <VuiBox item xs={12} sx={{ textAlign: "center" }}>
