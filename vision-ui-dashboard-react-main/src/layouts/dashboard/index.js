@@ -161,78 +161,51 @@ function Dashboard() {
                     </VuiTypography>
                   </VuiBox>
                   <VuiBox display="flex">
-                    <VuiBox sx={{ width: "300px" }} p="20px">
+                    <VuiBox sx={{ width: "350px" }} p="20px">
                       <Grid item xs={6} md={3} lg={3}>
                         <Stack
                           direction="row"
-                          spacing={{ sm: "10px", xl: "4px", xxl: "10px" }}
+                          spacing={{ sm: "10px", xl: "4px", xxl: "20px" }}
                           mb="6px"
                         >
-                          <VuiBox
-                            bgColor="info"
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="center"
-                            sx={{ borderRadius: "6px", width: "25px", height: "25px" }}
-                          >
-                            <IoIosRocket color="#fff" size="12px" />
-                          </VuiBox>
                           <VuiTypography color="text" variant="button" fontWeight="medium">
                             Clicks
                           </VuiTypography>
+                          <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
+                            2,42M
+                          </VuiTypography>
                         </Stack>
-                        <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
-                          2,42M
-                        </VuiTypography>
-                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"10px"}} />
+                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"25px"}} />
                       </Grid>
                       <Grid item xs={6} md={3} lg={3}>
                         <Stack
                           direction="row"
-                          spacing={{ sm: "10px", xl: "4px", xxl: "10px" }}
+                          spacing={{ sm: "10px", xl: "4px", xxl: "20px" }}
                           mb="6px"
                         >
-                          <VuiBox
-                            bgColor="info"
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="center"
-                            sx={{ borderRadius: "6px", width: "25px", height: "25px" }}
-                          >
-                            <FaShoppingCart color="#fff" size="12px" />
-                          </VuiBox>
                           <VuiTypography color="text" variant="button" fontWeight="medium">
                             Sales
                           </VuiTypography>
+                          <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
+                            2,400$
+                          </VuiTypography>
                         </Stack>
-                        <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
-                          2,400$
-                        </VuiTypography>
-                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F" }} />
+                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"25px"}} />
                       </Grid>
                       <Grid item xs={6} md={3} lg={3}>
                         <Stack
                           direction="row"
-                          spacing={{ sm: "10px", xl: "4px", xxl: "10px" }}
+                          spacing={{ sm: "10px", xl: "4px", xxl: "20px" }}
                           mb="6px"
                         >
-                          <VuiBox
-                            bgColor="info"
-                            display="flex"
-                            justifyContent="center"
-                            alignItems="center"
-                            sx={{ borderRadius: "6px", width: "25px", height: "25px" }}
-                          >
-                            <IoBuild color="#fff" size="12px" />
-                          </VuiBox>
                           <VuiTypography color="text" variant="button" fontWeight="medium">
                             Items
                           </VuiTypography>
+                          <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
+                            320
+                          </VuiTypography>
                         </Stack>
-                        <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
-                          320
-                        </VuiTypography>
-                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F" }} />
+                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"25px"}} />
                       </Grid>
                     </VuiBox>
                     <VuiBox alignItems="center" mb="10px">
