@@ -7,6 +7,10 @@ import VuiTypography from "components/VuiTypography";
 import VuiAvatar from "components/VuiAvatar";
 import VuiProgress from "components/VuiProgress";
 
+// Icon
+import { IoLogoNoSmoking } from "react-icons/io";
+
+
 // Images
 import AdobeXD from "examples/Icons/AdobeXD";
 import Atlassian from "examples/Icons/Atlassian";
@@ -14,7 +18,7 @@ import Slack from "examples/Icons/Slack";
 import Spotify from "examples/Icons/Spotify";
 import Jira from "examples/Icons/Jira";
 import Invision from "examples/Icons/Invision";
-import avatar1 from "assets/images/avatar1.png";
+import avatar1 from "assets/images/avatar11.png";
 import avatar2 from "assets/images/avatar2.png";
 import avatar3 from "assets/images/avatar3.png";
 import avatar4 from "assets/images/avatar4.png";
@@ -48,7 +52,7 @@ export default function data() {
   return {
     columns: [
       { name: "companies", align: "left" },
-      { name: "members", align: "left" },
+      { name: "members", align: "center" },
       { name: "budget", align: "center" },
       { name: "completion", align: "center" },
     ],
@@ -64,13 +68,8 @@ export default function data() {
           </VuiBox>
         ),
         members: (
-          <VuiBox display="flex" py={1}>
-            {avatars([
-              [avatar1, "Ryan Tompson"],
-              [avatar2, "Romina Hadid"],
-              [avatar3, "Alexander Smith"],
-              [avatar4, "Jessica Doe"],
-            ])}
+          <VuiBox alignItems="center">
+            <IoLogoNoSmoking color="#fff" size="25px" />
           </VuiBox>
         ),
         budget: (
