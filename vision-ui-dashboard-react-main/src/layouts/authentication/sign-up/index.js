@@ -19,7 +19,7 @@
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // @mui material components
 import Icon from "@mui/material/Icon";
@@ -49,8 +49,47 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
 import bgSignIn from "assets/images/signUpImage.png";
 
+// Axios
+import axios from "axios";
+
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [pw, setPw] = useState('');
+
+  const handleName = (e) => {
+    setName(e.target.value);
+  }
+
+  const handleEmail = (e) => {
+    setEmail(e.target.value);
+  }
+
+  const handlePw = (e) => {
+    setPw(e.target.value);
+  }
+
+  const history = useHistory();
+  
+  const submit = () => {
+    axios.post("http://10.200.42.117:8080/user/signup", {
+      userName: name,
+      userEmail: email,
+      userPw: pw,
+    })
+    .then(response => {
+      console.log('response.data : ', response.data);
+      if(response.data.status === 200) {
+        history.push('/authentication/sign-in');
+      }
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    });
+  }
+  
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -201,6 +240,7 @@ function SignIn() {
                 sx={({ typography: { size } }) => ({
                   fontSize: size.sm,
                 })}
+                onChange={handleName}
               />
             </GradientBorder>
           </VuiBox>
@@ -226,6 +266,7 @@ function SignIn() {
                 sx={({ typography: { size } }) => ({
                   fontSize: size.sm,
                 })}
+                onChange={handleEmail}
               />
             </GradientBorder>
           </VuiBox>
@@ -251,6 +292,7 @@ function SignIn() {
                 sx={({ typography: { size } }) => ({
                   fontSize: size.sm,
                 })}
+                onChange={handlePw}
               />
             </GradientBorder>
           </VuiBox>
@@ -267,7 +309,7 @@ function SignIn() {
             </VuiTypography>
           </VuiBox>
           <VuiBox mt={4} mb={1}>
-            <VuiButton color="info" fullWidth>
+            <VuiButton color="info" fullWidth onClick={submit}>
               SIGN UP
             </VuiButton>
           </VuiBox>

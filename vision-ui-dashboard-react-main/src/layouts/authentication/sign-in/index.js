@@ -19,7 +19,7 @@
 import { useState } from "react";
 
 // react-router-dom components
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -40,8 +40,59 @@ import CoverLayout from "layouts/authentication/components/CoverLayout";
 // Images
 import bgSignIn from "assets/images/signInImage.png";
 
+// Axios
+import axios from "axios";
+
 function SignIn() {
   const [rememberMe, setRememberMe] = useState(true);
+
+  const [id, setId] = useState('');
+  const [pw, setPw] = useState('');
+
+  const handleId = (e) => {
+    setId(e.target.value);
+    console.log(id);
+  }
+
+  const handlePw = (e) => {
+    setPw(e.target.value);
+    console.log(pw);
+  }
+
+  const history = useHistory();
+
+  const submit = () => {
+    if(localStorage.getItem('userId') != 'null') {
+      axios.post("http://10.200.42.117:8080/user/token/signin", {
+        userId: localStorage.getItem('userId'),
+      }).then(response => {
+        console.log('response.data : ', response.data);
+        if(response.data.status === 200) {
+          history.push('/dashboard');
+        }
+        else {
+          alert("에러 존나나");
+        }
+      })
+    }
+    else {
+      axios.post("http://10.200.42.117:8080/user/signin", {
+        userEmail: id,
+        userPw: pw,
+      })
+      .then(response => {
+        console.log('response.data : ', response.data);
+        const userId = response.data.result.userId;
+        localStorage.setItem("userId", userId);
+        if(response.data.status === 200) {
+          history.push('/dashboard');
+        }
+      })
+      .catch(error => {
+        console.log("Error : ", error);
+      });
+    } 
+  }
 
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
 
@@ -70,6 +121,7 @@ function SignIn() {
               palette.gradients.borderLight.state,
               palette.gradients.borderLight.angle
             )}
+            onChange={handleId}
           >
             <VuiInput type="email" placeholder="Your email..." fontWeight="500" />
           </GradientBorder>
@@ -89,6 +141,7 @@ function SignIn() {
               palette.gradients.borderLight.state,
               palette.gradients.borderLight.angle
             )}
+            onChange={handlePw}
           >
             <VuiInput
               type="password"
@@ -112,7 +165,7 @@ function SignIn() {
           </VuiTypography>
         </VuiBox>
         <VuiBox mt={4} mb={1}>
-          <VuiButton color="info" fullWidth>
+          <VuiButton color="info" fullWidth onClick={submit}>
             SIGN IN
           </VuiButton>
         </VuiBox>
