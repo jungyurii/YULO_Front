@@ -43,7 +43,7 @@ export default function cameraData(props) {
   const deleteCamera = (cameraName) => {
     console.log('deleteCameraName : ', cameraName);
     const userId = localStorage.getItem("userId");
-    axios.post("http://127.0.0.1:8080/camera/deleteCamera", {
+    axios.post("http://127.0.0.1:8080/camera/cameraDelete", {
       userId : userId,
       cameraName : cameraName
     })
