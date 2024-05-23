@@ -33,10 +33,10 @@ import VuiTypography from "components/VuiTypography";
 import Table from "examples/Tables/Table";
 
 // Data
-import data from "layouts/dashboard/components/Projects/data";
+import modelData from "layouts/dashboard/components/Projects/data";
 
 function Projects({modelInfo}) {
-  const { columns, rows } = data(modelInfo);
+  const { columns, rows } = modelData(modelInfo);
   return (
     <Card
       sx={{
