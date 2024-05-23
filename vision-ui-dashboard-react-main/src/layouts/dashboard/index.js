@@ -1,7 +1,7 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-import { Card, CircularProgress, LinearProgress, Stack } from "@mui/material";
+import { Box, Card, CircularProgress, LinearProgress, Stack } from "@mui/material";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -48,6 +48,8 @@ import PieChart from "examples/Charts/PieCharts/PieChart";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Margin } from "@mui/icons-material";
+import AddCamera from "./components/AddCamera";
+import MaxWidthDialog from "./components/AddCamera";
 
 function Dashboard() {
   const { gradients } = colors;
@@ -120,16 +122,19 @@ function Dashboard() {
             </Grid>
           </Grid>
         </VuiBox>
-        <VuiBox mb={3}>
-          <Grid container spacing="18px">
-            <Grid item xs={12} lg={12} xl={4}>
+        <VuiBox mb={3} style={{ overflowX: 'auto' }}>
+          <Grid container spacing="18px" sx={{width: '200%'}} style={{ overflowX: 'auto' }}>
+            <Grid item xs={12} lg={6} xl={3}>
               <WelcomeMark />
             </Grid>
-            <Grid item xs={12} lg={6} xl={4}>
+            <Grid item xs={12} lg={6} xl={3}>
               <WelcomeMark />
             </Grid>
-            <Grid item xs={12} lg={6} xl={4}>
+            <Grid item xs={12} lg={6} xl={3}>
               <WelcomeMark />
+            </Grid>
+            <Grid item xs={12} lg={6} xl={2}>
+              <MaxWidthDialog />
             </Grid>
           </Grid>
         </VuiBox>
