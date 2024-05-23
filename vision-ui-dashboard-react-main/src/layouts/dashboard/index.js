@@ -45,7 +45,7 @@ import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptio
 import { barChartDataDashboard } from "layouts/dashboard/data/barChartData";
 import { barChartOptionsDashboard } from "layouts/dashboard/data/barChartOptions";
 import PieChart from "examples/Charts/PieCharts/PieChart";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { Margin } from "@mui/icons-material";
 
@@ -53,15 +53,24 @@ function Dashboard() {
   const { gradients } = colors;
   const { cardContent } = gradients;
 
+  const [camera1, setCamera1] = useState('0');
+  const [camera2, setCamera2] = useState('0');
+  const [camera3, setCamera3] = useState('0');
+  const [total, setTotal] = useState('0');
+
   useEffect(() => {
     const userId = localStorage.getItem("userId");
 
     axios.post("http://127.0.0.1:8080/camera/cameraName",{
-      userId: '1'
+      userId: 1,
     })
-    .then(
-      response => {
+    .then(response => {
         console.log(response.data);
+        const { data } = response.data.result;
+        setCamera1(data["Camera 1"]);
+        setCamera2(data["Camera 2"]);
+        setCamera3(data["Camera 3"]);
+        setTotal(data["todayDetection"]);
       }
     )
     .catch(
@@ -80,7 +89,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "today's total detected", fontWeight: "bold" }}
-                count="13"
+                count={total}
                 percentage={{ color: "success", text: "+55%" }} // 전날 대비 변화량
                 icon={{ color: "info", component: <IoDocument size="22px" color="white" /> }}
               />
@@ -88,7 +97,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Camera 1" }}
-                count="2,300"
+                count={camera1}
                 percentage={{ color: "success", text: "+3%" }}
                 icon={{ color: "info", component: <IoVideocam size="22px" color="white" /> }}
               />
@@ -96,7 +105,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Camera 2" }}
-                count="+3,462"
+                count={camera2}
                 percentage={{ color: "error", text: "-2%" }}
                 icon={{ color: "info", component: <IoVideocam size="22px" color="white" /> }}
               />
@@ -104,7 +113,7 @@ function Dashboard() {
             <Grid item xs={12} md={6} xl={3}>
               <MiniStatisticsCard
                 title={{ text: "Camera 3" }}
-                count="$103,430"
+                count={camera3}
                 percentage={{ color: "success", text: "+5%" }}
                 icon={{ color: "info", component: <IoVideocam size="20px" color="white" /> }}
               />
