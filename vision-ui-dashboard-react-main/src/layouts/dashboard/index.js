@@ -90,19 +90,20 @@ function Dashboard() {
       console.log("Error : ", error);
     })
 
-    const eventSource = new EventSource('http://127.0.0.1:8080/api/notification/sse/notifications', {
-      userId: 1
-    });
-    console.log("EventSource: ", eventSource);
-    eventSource.addEventListener("onmessage", (event) => {
-      const data = JSON.parse(event.data);
-      console.log("Data : %o", data);
-      setNotification(data.message);
-    });
+    // const eventSource = new EventSource('http://127.0.0.1:8080/api/notification/sse/notifications', {
+    //   userId: 1
+    // });
+    // console.log("EventSource: ", eventSource);
+    // eventSource.addEventListener("onmessage", (event) => {
+    //   const data = JSON.parse(event.data);
+    //   console.log("Data : %o", data);
+    //   setNotification(data.message);
+    // });
 
-    return () => {
-      eventSource.close();
-    };
+    // return () => {
+    //   eventSource.close();
+    // };
+    
   }, []);
 
   return (
