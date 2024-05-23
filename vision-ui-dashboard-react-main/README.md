@@ -344,7 +344,7 @@ vision-dashboard-react-free/
     │   │   └── index.js
     │   ├── tables
     │   │   ├── data
-    │   │   │   ├── authorsTableData.js
+    │   │   │   ├── cameraData.js
     │   │   │   └── projectsTableData.js
     │   │   └── index.js
     ├── variables
