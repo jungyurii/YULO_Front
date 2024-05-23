@@ -27,7 +27,7 @@ import avatar4 from "assets/images/avatar4.png";
 import axios from "axios";
 
 
-export default function data(modelInfo) {
+export default function modelata(modelInfo) {
   const rows = modelInfo.map(element => {
     return {
       Name: (
@@ -59,7 +59,7 @@ export default function data(modelInfo) {
       Accuracy: (
         <VuiBox width="8rem" textAlign="left">
           <VuiTypography color="white" variant="button" fontWeight="bold">
-            {element.modelAccuracy}
+            {element.modelAccuracy}%
           </VuiTypography>
           <VuiProgress value={element.modelAccuracy} color="info" label={false} sx={{ background: "#2D2E5F" }} />
         </VuiBox>
