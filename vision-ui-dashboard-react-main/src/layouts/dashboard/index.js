@@ -59,6 +59,7 @@ function Dashboard() {
   const [total, setTotal] = useState('0');
   const [cameraRank, setCameraRank] = useState([]);
   const [modelInfo, setModelInfo] = useState([]);
+  const [recentDetectedList, setRecentDetectedList] = useState([]);
   
 
   useEffect(() => {
@@ -67,14 +68,17 @@ function Dashboard() {
     Promise.all([
       axios.post("http://127.0.0.1:8080/camera/cameraName", { userId: 1 }),
       axios.post("http://127.0.0.1:8080/camera/cameraRanking", { userId: 1 }),
-      axios.post("http://127.0.0.1:8080/model/allInfoGet")
+      axios.post("http://127.0.0.1:8080/model/allInfoGet"),
+      axios.post("http://127.0.0.1:8080/detection/detections", { userId: 1})
     ])
     .then(responses => {
-      const [cameraNameResponse, cameraRankResponse, allModelInfoResponse] = responses;
+      const [cameraNameResponse, cameraRankResponse, allModelInfoResponse, recentDetectedListResponse] = responses;
 
-      console.log(cameraNameResponse.data.result.data);
-      console.log(cameraRankResponse.data.result.data);
-      console.log(allModelInfoResponse.data.result.data);
+      console.log('cameraNameResponse : ',cameraNameResponse.data.result.data);
+      console.log('cameraRankResponse : ',cameraRankResponse.data.result.data);
+      console.log('allModelInfoResponse : ',allModelInfoResponse.data.result.data);
+      console.log('allModelInfoResponse : ',allModelInfoResponse.data.result.data);
+      console.log('recentDetectedListResponse : ',recentDetectedListResponse.data.result.data);
 
 
       const entries = Object.entries(cameraNameResponse.data.result.data).sort((data1, data2) => data2[0] - data1[0]);
@@ -84,6 +88,7 @@ function Dashboard() {
       setTotal(lastEntry[1]);
       setCameraRank(Object.entries(cameraRankResponse.data.result.data).sort((data1, data2) => data2[1] - data1[1]));
       setModelInfo(allModelInfoResponse.data.result.data);
+      setRecentDetectedList(recentDetectedListResponse.data.result.data);
       
     })
     .catch(error => {
@@ -103,7 +108,7 @@ function Dashboard() {
     // return () => {
     //   eventSource.close();
     // };
-    
+
   }, []);
 
   return (
@@ -231,7 +236,12 @@ function Dashboard() {
             <Projects modelInfo={modelInfo}/>
           </Grid>
           <Grid item xs={12} md={6} lg={4}>
-            <OrderOverview />
+            {
+              recentDetectedList.length > 0 && (
+                <OrderOverview recentDetected={recentDetectedList}/>
+              )
+            }
+            
           </Grid>
         </Grid>
       </VuiBox>
