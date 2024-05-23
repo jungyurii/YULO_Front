@@ -238,10 +238,9 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={4}>
             {
               recentDetectedList.length > 0 && (
-                <OrderOverview recentDetected={recentDetectedList}/>
+                <OrderOverview recentDetectedList={[recentDetectedList]}/>
               )
             }
-            
           </Grid>
         </Grid>
       </VuiBox>

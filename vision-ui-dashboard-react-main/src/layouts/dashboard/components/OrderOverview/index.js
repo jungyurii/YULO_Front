@@ -18,9 +18,8 @@ import AdobeXD from "examples/Icons/AdobeXD";
 import palette from "assets/theme/base/colors";
 import { Grid } from "@mui/material";
 
-function OrdersOverview(recentDetectedList) {
-  const recentDetected = {recentDetectedList};
-  console.log('recentDetectedList : ',recentDetectedList);
+function OrdersOverview({recentDetectedList}) {
+  console.log('recentDetectedList : ',recentDetectedList[0]);
   return (
     <Card className="h-100">
       <VuiBox mb="10px">
@@ -40,20 +39,23 @@ function OrdersOverview(recentDetectedList) {
           </VuiBox>
         </VuiBox>
       </VuiBox>
-      <VuiBox style={{ overflowY: 'scroll' }} sx={{height: '400px'}}>
+      <VuiBox sx={{ height: '400px', width: '90%', overflowY: 'scroll', }}>
         <Grid container spacing="18px" sx={{mt: 0}}>
-          {recentDetected.length > 0 &&
-            recentDetected.map(([index, element]) => (
-              <>
-                <TimelineItem
-                  icon={<FaBell size="16px" color={palette.info.main} />}
-                  title="$2400, Design changes"
-                  dateTime="22 DEC 7:20 PM"
-                  key={index}
-                />
-              </>
-            ))
-          }
+        {recentDetectedList.length > 0 &&
+          recentDetectedList[0].map((item, index) => {
+            return (
+              <Grid item xs={11} lg={11} xl={11}>
+              <TimelineItem
+                fullwidth
+                icon={<FaBell size="16px" color={palette.info.main} />}
+                title={item.cameraName}
+                dateTime={item.detectionDate}
+                key={index}
+              />
+              </Grid>
+            );
+          })
+        }
         </Grid>
       </VuiBox>
     </Card>
