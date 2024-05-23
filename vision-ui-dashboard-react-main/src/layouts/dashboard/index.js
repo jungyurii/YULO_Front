@@ -47,6 +47,7 @@ import { barChartOptionsDashboard } from "layouts/dashboard/data/barChartOptions
 import PieChart from "examples/Charts/PieCharts/PieChart";
 import { useEffect } from "react";
 import axios from "axios";
+import { Margin } from "@mui/icons-material";
 
 function Dashboard() {
   const { gradients } = colors;
@@ -164,7 +165,7 @@ function Dashboard() {
                   </VuiBox>
                   <VuiBox display="flex">
                     <VuiBox sx={{ width: "350px" }} p="20px">
-                      <Grid item xs={6} md={3} lg={3}>
+                      <Grid item xs={6} md={3} lg={7}>
                         <Stack
                           direction="row"
                           spacing={{ sm: "10px", xl: "4px", xxl: "20px" }}
@@ -173,13 +174,13 @@ function Dashboard() {
                           <VuiTypography color="text" variant="button" fontWeight="medium">
                             Clicks
                           </VuiTypography>
-                          <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
+                            <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
                             2,42M
                           </VuiTypography>
                         </Stack>
-                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"25px"}} />
+                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"35px" }} />
                       </Grid>
-                      <Grid item xs={6} md={3} lg={3}>
+                      <Grid item xs={6} md={3} lg={7}>
                         <Stack
                           direction="row"
                           spacing={{ sm: "10px", xl: "4px", xxl: "20px" }}
@@ -192,9 +193,9 @@ function Dashboard() {
                             2,400$
                           </VuiTypography>
                         </Stack>
-                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"25px"}} />
+                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"35px"}} />
                       </Grid>
-                      <Grid item xs={6} md={3} lg={3}>
+                      <Grid item xs={6} md={3} lg={7}>
                         <Stack
                           direction="row"
                           spacing={{ sm: "10px", xl: "4px", xxl: "20px" }}
@@ -207,7 +208,7 @@ function Dashboard() {
                             320
                           </VuiTypography>
                         </Stack>
-                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"25px"}} />
+                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"35px"}} />
                       </Grid>
                     </VuiBox>
                     <VuiBox alignItems="center" mb="10px">
