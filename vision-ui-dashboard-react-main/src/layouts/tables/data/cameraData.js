@@ -34,9 +34,26 @@ import { IoLogoNoSmoking } from "react-icons/io5";
 import { IoIosFlame, IoMdPersonAdd } from "react-icons/io";
 import VuiButton from "components/VuiButton";
 import Icon from "@mui/material/Icon";
+import axios from "axios";
+import { useState } from "react";
 
 
-export default function cameraData(cameraSettings) {
+export default function cameraData(props) {
+  const {cameraSettings, setCameraSettings} = props;
+  const deleteCamera = (cameraName) => {
+    console.log('deleteCameraName : ', cameraName);
+    const userId = localStorage.getItem("userId");
+    axios.post("http://127.0.0.1:8080/camera/deleteCamera", {
+      userId : userId,
+      cameraName : cameraName
+    })
+    .then(response => {
+      setCameraSettings(prevSettings => prevSettings.filter(camera => camera.cameraName !== cameraName));
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    })
+  }
   const rows = cameraSettings.map((camera,index) => {
     return {
       ID: 
@@ -95,7 +112,7 @@ export default function cameraData(cameraSettings) {
           })}
         >
           <VuiBox mr={1}>
-            <VuiButton variant="text" color="error">
+            <VuiButton variant="text" color="error" onClick={() => deleteCamera(camera.cameraName)}>
               <Icon sx={{ mr: "4px" }}>delete</Icon>&nbsp;DELETE
             </VuiButton>
           </VuiBox>

@@ -34,9 +34,9 @@ function Tables() {
       console.log("Error : ", error);
     });
   },[]);
-
+  console.log("리 렌더링 발생");
   
-  const { columns, rows } = cameraData(cameraSettings);
+  const { columns, rows } = cameraData({cameraSettings, setCameraSettings});
   const { columns: prCols, rows: prRows } = projectsTableData;
 
   return (
@@ -64,7 +64,7 @@ function Tables() {
                 },
               }}
             >
-              <Table columns={columns} rows={rows} />
+              <Table columns={columns} rows={rows}/>
             </VuiBox>
           </Card>
         </VuiBox>
