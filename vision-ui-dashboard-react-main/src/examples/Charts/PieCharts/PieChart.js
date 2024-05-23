@@ -1,3 +1,4 @@
+import colors from "assets/theme/base/colors";
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
@@ -6,19 +7,19 @@ class PieChart extends React.Component {
     super(props);
 
     this.state = {
-    
-      series: [44, 55, 41, 17, 15],
+
+      chartDate: [],
       options: {
         chart: {
           type: 'donut',
         },
-        plotOptions: {
-          pie: {
-            donut: {
-              size: '35%'
-            },
-            customScale: 1.0
-          }
+        labels: [],
+        legend: {
+          labels: {
+            colors: "#FFFFFF",
+          },
+          fontSize: '12px',
+          fontWeight: 600,
         },
         responsive: [{
           breakpoint: 500,
@@ -30,11 +31,30 @@ class PieChart extends React.Component {
               position: 'bottom'
             }
           }
-        }]
+        }],
+        plotOptions: {
+          pie: {
+            donut: {
+              size: '35%'
+            },
+            customScale: 1.0
+          }
+        },
+        
       },
-    
-    
     };
+  }
+
+  componentDidMount() {
+    const {pieChartData, label} = this.props;
+    console.log('pieChartData : ',pieChartData);
+    console.log('label : ',label);
+    this.setState({
+      chartDate: pieChartData,
+      options: {
+        labels: label
+      }
+    });
   }
 
 
@@ -45,7 +65,7 @@ class PieChart extends React.Component {
         <div id="chart">
           <ReactApexChart 
             options={this.state.options} 
-            series={this.state.series} type="donut" 
+            series={this.state.chartDate} type="donut" 
             width="150%"
             height="180%"/>
         </div>

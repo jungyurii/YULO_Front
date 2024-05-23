@@ -59,29 +59,28 @@ function Dashboard() {
   const [camera2, setCamera2] = useState('0');
   const [camera3, setCamera3] = useState('0');
   const [total, setTotal] = useState('0');
+  const [cameraRank, setCameraRank] = useState([]);
+  
 
   useEffect(() => {
     const userId = localStorage.getItem("userId");
+    
+    Promise.all([
+      axios.post("http://127.0.0.1:8080/camera/cameraName", { userId: 1 }),
+      axios.post("http://127.0.0.1:8080/camera/cameraRanking", { userId: 1 }),
+    ])
+    .then(responses => {
+      const [cameraNameResponse, cameraRankResponse] = responses;
 
-    axios.post("http://127.0.0.1:8080/camera/cameraName",{
-      userId: 1,
+      console.log(cameraNameResponse.data.result.data);
+      console.log(cameraRankResponse.data.result.data);
+      setCameraRank(Object.entries(cameraRankResponse.data.result.data));
     })
-    .then(response => {
-        console.log(response.data);
-        const { data } = response.data.result;
-        setCamera1(data["Camera 1"]);
-        setCamera2(data["Camera 2"]);
-        setCamera3(data["Camera 3"]);
-        setTotal(data["todayDetection"]);
-      }
-    )
-    .catch(
-      error => {
-        console.log(error);
-      }
-    )
-  }, [])
-
+    .catch(error => {
+      console.log("Error : ", error);
+    })
+  }, []);
+  console.log('cameraRank.map(([index, data]) => (index)) :',cameraRank.map(([index, data]) => (data)));
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -178,55 +177,36 @@ function Dashboard() {
                     </VuiTypography>
                   </VuiBox>
                   <VuiBox display="flex">
-                    <VuiBox sx={{ width: "350px" }} p="20px">
-                      <Grid item xs={6} md={3} lg={7}>
-                        <Stack
-                          direction="row"
-                          spacing={{ sm: "10px", xl: "4px", xxl: "20px" }}
-                          mb="6px"
-                        >
-                          <VuiTypography color="text" variant="button" fontWeight="medium">
-                            Clicks
-                          </VuiTypography>
+                    <VuiBox sx={{ width: "360px" }} p="20px">
+                    {
+                      Object.entries(cameraRank).map(([index, data]) => (
+                        
+                        <Grid item xs={6} md={3} lg={8} key={index}>
+                          <Stack
+                            direction="row"
+                            spacing={{ sm: "10px", xl: "4px", xxl: "20px" }}
+                            mb="6px"
+                          >
+                            <VuiTypography color="text" variant="button" fontWeight="medium">
+                              {data[0]}
+                            </VuiTypography>
                             <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
-                            2,42M
-                          </VuiTypography>
-                        </Stack>
-                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"35px" }} />
-                      </Grid>
-                      <Grid item xs={6} md={3} lg={7}>
-                        <Stack
-                          direction="row"
-                          spacing={{ sm: "10px", xl: "4px", xxl: "20px" }}
-                          mb="6px"
-                        >
-                          <VuiTypography color="text" variant="button" fontWeight="medium">
-                            Sales
-                          </VuiTypography>
-                          <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
-                            2,400$
-                          </VuiTypography>
-                        </Stack>
-                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"35px"}} />
-                      </Grid>
-                      <Grid item xs={6} md={3} lg={7}>
-                        <Stack
-                          direction="row"
-                          spacing={{ sm: "10px", xl: "4px", xxl: "20px" }}
-                          mb="6px"
-                        >
-                          <VuiTypography color="text" variant="button" fontWeight="medium">
-                            Items
-                          </VuiTypography>
-                          <VuiTypography color="white" variant="lg" fontWeight="bold" mb="8px">
-                            320
-                          </VuiTypography>
-                        </Stack>
-                        <VuiProgress value={60} color="info" sx={{ background: "#2D2E5F", mb:"35px"}} />
-                      </Grid>
+                              {data[1]}
+                            </VuiTypography>
+                          </Stack>
+                          <VuiProgress value={data[1]} color="info" sx={{ background: "#2D2E5F", mb:"35px" }} />
+                        </Grid>
+                      ))
+                    }
+                      
                     </VuiBox>
                     <VuiBox alignItems="center" mb="10px">
-                      <PieChart/>
+                    {cameraRank.length > 0 && (
+                      <PieChart 
+                        pieChartData={cameraRank.map(([index, data]) => (data))} 
+                        label={cameraRank.map(([index, data]) => (index))}
+                      />
+                    )}
                     </VuiBox>
                   </VuiBox>
                 </VuiBox>
