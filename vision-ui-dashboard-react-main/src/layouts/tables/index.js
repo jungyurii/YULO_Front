@@ -11,11 +11,32 @@ import Footer from "examples/Footer";
 import Table from "examples/Tables/Table";
 
 // Data
-import authorsTableData from "layouts/tables/data/authorsTableData";
+import cameraData from "layouts/tables/data/cameraData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 function Tables() {
-  const { columns, rows } = authorsTableData;
+
+  const [cameraSettings, setCameraSettings] = useState([]);
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+
+    axios.post("http://127.0.0.1:8080/camera/cameraSetting", { 
+      userId: 1
+    })
+    .then(responses => {
+      console.log("Response : ", responses.data.result.data);
+      setCameraSettings(responses.data.result.data);
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    });
+  },[]);
+
+  
+  const { columns, rows } = cameraData(cameraSettings);
   const { columns: prCols, rows: prRows } = projectsTableData;
 
   return (
@@ -26,7 +47,7 @@ function Tables() {
           <Card>
             <VuiBox display="flex" justifyContent="space-between" alignItems="center" mb="22px">
               <VuiTypography variant="lg" color="white">
-                Authors table
+                Camera Setting
               </VuiTypography>
             </VuiBox>
             <VuiBox

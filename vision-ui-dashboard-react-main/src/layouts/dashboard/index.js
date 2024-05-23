@@ -75,16 +75,34 @@ function Dashboard() {
       console.log(cameraNameResponse.data.result.data);
       console.log(cameraRankResponse.data.result.data);
       console.log(allModelInfoResponse.data.result.data);
-      const entries = Object.entries(cameraNameResponse.data.result.data);
-      const lastEntry = entries.pop(); // 마지막 요소 추출 및 변수에 저장
+
+
+      const entries = Object.entries(cameraNameResponse.data.result.data).sort((data1, data2) => data2[0] - data1[0]);
+      const lastEntry = entries.pop();
+
       setCamerasDetected(entries); 
       setTotal(lastEntry[1]);
-      setCameraRank(Object.entries(cameraRankResponse.data.result.data));
+      setCameraRank(Object.entries(cameraRankResponse.data.result.data).sort((data1, data2) => data2[1] - data1[1]));
       setModelInfo(allModelInfoResponse.data.result.data);
+      
     })
     .catch(error => {
       console.log("Error : ", error);
     })
+
+    const eventSource = new EventSource('http://127.0.0.1:8080/api/notification/sse/notifications', {
+      userId: 1
+    });
+    console.log("EventSource: ", eventSource);
+    eventSource.addEventListener("onmessage", (event) => {
+      const data = JSON.parse(event.data);
+      console.log("Data : %o", data);
+      setNotification(data.message);
+    });
+
+    return () => {
+      eventSource.close();
+    };
   }, []);
 
   return (
