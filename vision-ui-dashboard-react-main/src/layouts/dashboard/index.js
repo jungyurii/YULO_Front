@@ -55,9 +55,6 @@ function Dashboard() {
   const { gradients } = colors;
   const { cardContent } = gradients;
 
-  const [camera1, setCamera1] = useState('0');
-  const [camera2, setCamera2] = useState('0');
-  const [camera3, setCamera3] = useState('0');
   const [camerasDetected, setCamerasDetected] = useState([]);
   const [total, setTotal] = useState('0');
   const [cameraRank, setCameraRank] = useState([]);
@@ -69,12 +66,14 @@ function Dashboard() {
     Promise.all([
       axios.post("http://127.0.0.1:8080/camera/cameraName", { userId: 1 }),
       axios.post("http://127.0.0.1:8080/camera/cameraRanking", { userId: 1 }),
+      axios.post("http://127.0.0.1:8080/model/allInfoGet")
     ])
     .then(responses => {
-      const [cameraNameResponse, cameraRankResponse] = responses;
+      const [cameraNameResponse, cameraRankResponse, allModelInfoResponse] = responses;
 
       console.log(cameraNameResponse.data.result.data);
       console.log(cameraRankResponse.data.result.data);
+      console.log(allModelInfoResponse.data.result.data);
       const entries = Object.entries(cameraNameResponse.data.result.data);
       const lastEntry = entries.pop(); // 마지막 요소 추출 및 변수에 저장
       setCamerasDetected(entries); 
@@ -85,7 +84,7 @@ function Dashboard() {
       console.log("Error : ", error);
     })
   }, []);
-  console.log('cameraRank.map(([index, data]) => (index)) :',camerasDetected);
+
   return (
     <DashboardLayout>
       <DashboardNavbar />
