@@ -47,8 +47,6 @@ class PieChart extends React.Component {
 
   componentDidMount() {
     const {pieChartData, label} = this.props;
-    console.log('pieChartData : ',pieChartData);
-    console.log('label : ',label);
     this.setState({
       chartDate: pieChartData,
       options: {

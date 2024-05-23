@@ -58,6 +58,7 @@ function Dashboard() {
   const [camerasDetected, setCamerasDetected] = useState([]);
   const [total, setTotal] = useState('0');
   const [cameraRank, setCameraRank] = useState([]);
+  const [modelInfo, setModelInfo] = useState([]);
   
 
   useEffect(() => {
@@ -79,6 +80,7 @@ function Dashboard() {
       setCamerasDetected(entries); 
       setTotal(lastEntry[1]);
       setCameraRank(Object.entries(cameraRankResponse.data.result.data));
+      setModelInfo(allModelInfoResponse.data.result.data);
     })
     .catch(error => {
       console.log("Error : ", error);
