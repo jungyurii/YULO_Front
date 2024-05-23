@@ -58,6 +58,7 @@ function Dashboard() {
   const [camera1, setCamera1] = useState('0');
   const [camera2, setCamera2] = useState('0');
   const [camera3, setCamera3] = useState('0');
+  const [camerasDetected, setCamerasDetected] = useState([]);
   const [total, setTotal] = useState('0');
   const [cameraRank, setCameraRank] = useState([]);
   
@@ -74,20 +75,24 @@ function Dashboard() {
 
       console.log(cameraNameResponse.data.result.data);
       console.log(cameraRankResponse.data.result.data);
+      const entries = Object.entries(cameraNameResponse.data.result.data);
+      const lastEntry = entries.pop(); // 마지막 요소 추출 및 변수에 저장
+      setCamerasDetected(entries); 
+      setTotal(lastEntry[1]);
       setCameraRank(Object.entries(cameraRankResponse.data.result.data));
     })
     .catch(error => {
       console.log("Error : ", error);
     })
   }, []);
-  console.log('cameraRank.map(([index, data]) => (index)) :',cameraRank.map(([index, data]) => (data)));
+  console.log('cameraRank.map(([index, data]) => (index)) :',camerasDetected);
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <VuiBox py={3}>
-        <VuiBox mb={3}>
-          <Grid container spacing={3}>
-            <Grid item xs={12} md={6} xl={3}>
+        <VuiBox mb={3} style={{ overflowX: 'auto' }}>
+          <Grid container spacing={3} sx={{width: '170%'}} style={{ overflowX: 'auto' }}>
+            <Grid item xs={12} md={6} xl={2}>
               <MiniStatisticsCard
                 title={{ text: "today's total detected", fontWeight: "bold" }}
                 count={total}
@@ -95,30 +100,18 @@ function Dashboard() {
                 icon={{ color: "info", component: <IoDocument size="22px" color="white" /> }}
               />
             </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-              <MiniStatisticsCard
-                title={{ text: "Camera 1" }}
-                count={camera1}
-                percentage={{ color: "success", text: "+3%" }}
-                icon={{ color: "info", component: <IoVideocam size="22px" color="white" /> }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-              <MiniStatisticsCard
-                title={{ text: "Camera 2" }}
-                count={camera2}
-                percentage={{ color: "error", text: "-2%" }}
-                icon={{ color: "info", component: <IoVideocam size="22px" color="white" /> }}
-              />
-            </Grid>
-            <Grid item xs={12} md={6} xl={3}>
-              <MiniStatisticsCard
-                title={{ text: "Camera 3" }}
-                count={camera3}
-                percentage={{ color: "success", text: "+5%" }}
-                icon={{ color: "info", component: <IoVideocam size="20px" color="white" /> }}
-              />
-            </Grid>
+            {
+              Object.entries(camerasDetected).map(([index, data]) => (
+                <Grid item xs={12} md={6} xl={1} key={index}>
+                  <MiniStatisticsCard
+                    title={{ text: data[0] }}
+                    count={data[1]}
+                    percentage={{ color: "success", text: "+3%" }}
+                    icon={{ color: "info", component: <IoVideocam size="22px" color="white" /> }}
+                  />
+                </Grid>
+              ))
+            }
           </Grid>
         </VuiBox>
         <VuiBox mb={3} style={{ overflowX: 'auto' }}>
@@ -198,7 +191,6 @@ function Dashboard() {
                         </Grid>
                       ))
                     }
-                      
                     </VuiBox>
                     <VuiBox alignItems="center" mb="10px">
                     {cameraRank.length > 0 && (
