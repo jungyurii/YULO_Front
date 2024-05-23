@@ -44,7 +44,7 @@ export default function cameraData(props) {
     console.log('deleteCameraName : ', cameraName);
     const userId = localStorage.getItem("userId");
     axios.delete("http://127.0.0.1:8080/camera/cameraDelete", {
-      userId : userId,
+      userId : 1,
       cameraName : cameraName
     })
     .then(response => {
