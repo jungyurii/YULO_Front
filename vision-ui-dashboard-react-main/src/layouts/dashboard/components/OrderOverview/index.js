@@ -16,7 +16,9 @@ import AdobeXD from "examples/Icons/AdobeXD";
 
 // Vision UI Dashboard theme imports
 import palette from "assets/theme/base/colors";
-import { Grid } from "@mui/material";
+import { Grid, Icon } from "@mui/material";
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import VuiButton from "components/VuiButton";
 
 function OrdersOverview({recentDetectedList}) {
   console.log('recentDetectedList : ',recentDetectedList[0]);
@@ -39,20 +41,27 @@ function OrdersOverview({recentDetectedList}) {
           </VuiBox>
         </VuiBox>
       </VuiBox>
-      <VuiBox sx={{ height: '400px', width: '90%', overflowY: 'scroll', }}>
-        <Grid container spacing="18px" sx={{mt: 0}}>
+      <VuiBox shadow="lg" sx={{ height: '400px', width: '570px', overflowY: 'scroll',overflowX: 'hidden', pr: 2 }}>
+        <Grid container spacing="18px">
         {recentDetectedList.length > 0 &&
           recentDetectedList[0].map((item, index) => {
             return (
-              <Grid item xs={11} lg={11} xl={11}>
-              <TimelineItem
-                fullwidth
-                icon={<FaBell size="16px" color={palette.info.main} />}
-                title={item.cameraName}
-                dateTime={item.detectionDate}
-                key={index}
-              />
+              <Grid container xs={11} lg={11} xl={11} marginX={2} padding={1} key={index} sx={{ borderTop: 1, borderBottom: 1}}>
+                <Grid item width={400}>
+                  <TimelineItem
+                    fullwidth
+                    icon={<FaBell size="16px" color={palette.info.main} />}
+                    title={item.cameraName}
+                    dateTime={item.detectionDate}
+                  />
+                </Grid>
+                <Grid item sx={1}>
+                  <VuiButton variant="text" color="success">
+                    <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECK
+                  </VuiButton>
+                </Grid>
               </Grid>
+
             );
           })
         }

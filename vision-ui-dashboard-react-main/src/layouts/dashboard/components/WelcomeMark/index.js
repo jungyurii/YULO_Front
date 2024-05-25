@@ -6,12 +6,12 @@ import VuiTypography from "components/VuiTypography";
 
 import gif from "assets/images/cardimgfree.png";
 
-const WelcomeMark = () => {
+const WelcomeMark = ({data}) => {
   return (
     <Card sx={() => ({
       height: "540px",
       py: "32px",
-      backgroundImage: `url('http://127.0.0.1:8000/api/report/get_model_stream/video/1/1')`,
+      // backgroundImage: `url('${data.streamURL}')`,
       backgroundSize: "cover",
       backgroundPosition: "50%"
     })}>
@@ -39,7 +39,7 @@ const WelcomeMark = () => {
             },
           }}
         >
-          카메라 이름 1
+          {data.cameraName}
         </VuiTypography>
       </VuiBox>
     </Card>
