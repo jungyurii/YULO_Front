@@ -6,6 +6,8 @@ import VuiTypography from "components/VuiTypography";
 import Skeleton from '@mui/material/Skeleton';
 
 import gif from "assets/images/cardimgfree.png";
+import yolo from "assets/images/model-images/detect_object.png"
+import smoke from "assets/images/model-images/detect_smoke.png"
 import { ImageButton } from "components/ImageButton";
 import { ImageSrc } from "components/ImageButton";
 import { ImageBackdrop } from "components/ImageButton";
@@ -22,7 +24,6 @@ import VuiButton from "components/VuiButton";
 
 const AddCamera = () => {
   const [open, setOpen] = useState(false);
-  const [videoSrc, setVideoSrc] = useState('');
   const [isLoading, setIsLoading] = useState(true);
 
   const handleClickOpen = () => {
@@ -32,18 +33,42 @@ const AddCamera = () => {
   const handleClose = () => {
     setOpen(false);
   };
+  const models = [
+    {name:'YOLO Object Detect', image: yolo},
+    {name:'Smoke Detection', image: smoke},
+    {name:'Fire Detection', image: gif},
+    {name:'Safe Hat', image: gif},
+    {name:'Electric Scooter', image: gif},
+  ];
 
-  const [personName, setPersonName] = useState(['Oliver Hansen']);
+  const [modelType, setModelType] = useState('YOLO Object Detect');
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [cardImage, setCardImage] = useState(models[0].image);
+  const [cameraName, setCameraName] = useState('');
+  const [cameraURL, setCameraURL] = useState('');
 
-  const handleChange = (event) => {
-    const {
-      target: { value },
-    } = event;
-    setPersonName(
-      // On autofill we get a stringified value.
-      typeof value === 'string' ? value.split(',') : value,
-    );
+  const handleCameraName = (e) => {
+    setCameraName(e.target.value);
+  }
+
+  const handleCameraURL = (e) => {
+    setCameraURL(e.target.value);
+  }
+
+  const modelhandleChange = (event) => {
+    const selectedModel = event.target.value;
+    const selected = models.findIndex(model => model.name === selectedModel);
+    
+    console.log("선택된 모델 인덱스:", selected);
+    console.log("선택된 모델:", selectedModel);
+    setCardImage(models[selected].image);
+    setModelType(event.target.value);
+    setSelectedIndex(selected);
   };
+
+  const testSubmit = () => {
+    
+  }
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -55,19 +80,9 @@ const AddCamera = () => {
       },
     },
   };
+
   
-  const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-  ];
+
 
   return (
     <React.Fragment>
@@ -222,7 +237,7 @@ const AddCamera = () => {
                           palette.gradients.borderLight.angle
                         )}
                       >
-                        <VuiInput type="text" placeholder="Enter Your Camera Name..." fontWeight="500" />
+                        <VuiInput type="text" placeholder="Enter Your Camera Name..." fontWeight="500" onChange={handleCameraName} />
                       </GradientBorder>
                     </VuiBox>
                     <VuiBox mb={2}>
@@ -241,7 +256,7 @@ const AddCamera = () => {
                           palette.gradients.borderLight.angle
                         )}
                       >
-                        <VuiInput type="text" placeholder="Enter Your Camera IP..." fontWeight="500" />
+                        <VuiInput type="text" placeholder="Enter Your Camera IP..." fontWeight="500" onChange={handleCameraURL} />
                       </GradientBorder>
                     </VuiBox>
                     <VuiBox>
@@ -253,23 +268,65 @@ const AddCamera = () => {
                       </VuiBox>
                       <Select
                         id="demo-checkbox"
-                        value={personName}
-                        onChange={handleChange}
-                        input={<OutlinedInput label="Tag" />}
-                        renderValue={(selected) => selected.join(', ')}
+                        value={modelType}
+                        onChange={modelhandleChange}
                         MenuProps={MenuProps}
                       >
-                        {names.map((name) => (
-                          <MenuItem key={name} value={name}>
-                            <Checkbox checked={personName.indexOf(name) > -1} />
-                            <ListItemText primary={name} />
+                        {models.map((model,index) => (
+                          <MenuItem key={index} value={model.name}>
+                            <ListItemText primary={model.name} />
                           </MenuItem>
                         ))}
                       </Select>
                     </FormControl>
                     </VuiBox>
+                    <Card>
+                      <VuiBox sx={{height: "250px"}}>
+                        <Image sx={{width: "100%", backgroundImage: `url(${cardImage})`}} style={{backgroundSize: "contain"}}/>
+                      </VuiBox>
+                    </Card>
+                    <Grid container spacing={2}>
+                      <Grid item xs={6}>
+                      <VuiBox mb={1} ml={0.5}>
+                        <VuiTypography component="label" variant="button" color="#2d3748" fontWeight="large">
+                          Detect label
+                        </VuiTypography>
+                      </VuiBox>
+                      <GradientBorder
+                        minWidth="100%"
+                        padding="1px"
+                        borderRadius={borders.borderRadius.lg}
+                        backgroundImage={radialGradient(
+                          palette.gradients.borderLight.main,
+                          palette.gradients.borderLight.state,
+                          palette.gradients.borderLight.angle
+                        )}
+                      >
+                        <VuiInput type="number" placeholder="Enter Detect label..." fontWeight="500" disabled={selectedIndex !== 0}/>
+                      </GradientBorder>
+                      </Grid>
+                      <Grid item xs={6}>
+                      <VuiBox mb={1} ml={0.5}>
+                        <VuiTypography component="label" variant="button" color="#2d3748" fontWeight="large">
+                          Detect Count
+                        </VuiTypography>
+                      </VuiBox>
+                      <GradientBorder
+                        minWidth="100%"
+                        padding="1px"
+                        borderRadius={borders.borderRadius.lg}
+                        backgroundImage={radialGradient(
+                          palette.gradients.borderLight.main,
+                          palette.gradients.borderLight.state,
+                          palette.gradients.borderLight.angle
+                        )}
+                      >
+                        <VuiInput type="text" placeholder="Enter Detect Count..." fontWeight="500" disabled={selectedIndex !== 0}/>
+                      </GradientBorder>
+                      </Grid>
+                    </Grid>
                     <VuiBox mt={2}>
-                      <VuiButton variant="gradient" color="dark" fullWidth>테스트</VuiButton>
+                      <VuiButton variant="gradient" color="dark" fullWidth onClick={testSubmit}>테스트</VuiButton>
                     </VuiBox>
                   </VuiBox>
                 </Paper>
