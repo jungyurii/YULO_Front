@@ -60,7 +60,6 @@ function OrdersOverview({recentDetectedList}) {
                   </VuiButton>
                 </Grid>
               </Grid>
-
             );
           })
         }

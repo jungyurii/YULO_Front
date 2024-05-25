@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import { Grid, TextField, Box, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, Icon, InputLabel, MenuItem, Select, Switch, Typography, Paper, OutlinedInput, Checkbox, ListItemText } from "@mui/material";
+import { Grid, TextField, Box, Button, Card, Dialog, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, Icon, InputLabel, MenuItem, Select, Switch, Typography, Paper, OutlinedInput, Checkbox, ListItemText, Tooltip } from "@mui/material";
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import Skeleton from '@mui/material/Skeleton';
@@ -22,10 +22,12 @@ import palette from "assets/theme/base/colors";
 import VuiInput from "components/VuiInput";
 import VuiButton from "components/VuiButton";
 import axios from "axios";
+import { AreaChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+
 
 const AddCamera = () => {
   const [open, setOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -78,6 +80,7 @@ const AddCamera = () => {
   const [streamURL, setStreamURL] = useState('');
   const [graphURL, setGraphURL] = useState('');
 
+
   const testSubmit = () => {
     axios.post(cameraURL+"/api/model/test",{
       userId: 1,
@@ -87,12 +90,17 @@ const AddCamera = () => {
       count : count
     })
     .then(response => {
-      console.log(response);
+      console.log(response.data);
+      //setStreamURL(response.data.stream_url);
+      setGraphURL(response.data.graph_url);
+      setIsLoading(false);
+      console.log('graphURL : ', graphURL);
     })
     .catch(error => {
       console.log('Error : ', error);
     })
   }
+
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -165,40 +173,47 @@ const AddCamera = () => {
                     <h4>Live Stream Demo</h4>
                     <Card sx={() => ({
                       height: "90%",
-                      backgroundImage: `url('http://127.0.0.1:8000/api/report/get_model_stream/video/1/1')`,
                       backgroundSize: "cover",
                       backgroundPosition: "50%",
                     })}>
                       {isLoading ? (
                         <Skeleton variant="rectangular" width={'100%'} height={'100%'} sx={{ bgcolor: '#2d3748', borderRadius:5}}/>
                       ) : (
+                        <Card sx={() => ({
+                          height: "540px",
+                          py: "32px",
+                          backgroundImage: `url('${streamURL}')`,
+                          backgroundSize: "cover",
+                          backgroundPosition: "50%"
+                        })}>
                           <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
-                          <VuiTypography
-                            component="a"
-                            href="#"
-                            variant="button"
-                            color="white"
-                            fontWeight="regular"
-                            sx={{
-                              mr: "5px",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              cursor: "pointer",
-
-                              "& .material-icons-round": {
-                                fontSize: "3.125rem",
-                                transform: `translate(2px, -0.5px)`,
-                                transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
-                              },
-
-                              "&:hover .material-icons-round, &:focus  .material-icons-round": {
-                                transform: `translate(6px, -0.5px)`,
-                              },
-                            }}
-                          >
-                            카메라 이름 1
-                          </VuiTypography>
-                        </VuiBox>
+                            <VuiTypography
+                              component="a"
+                              href="#"
+                              variant="button"
+                              color="white"
+                              fontWeight="regular"
+                              sx={{
+                                mr: "5px",
+                                display: "inline-flex",
+                                alignItems: "center",
+                                cursor: "pointer",
+                    
+                                "& .material-icons-round": {
+                                  fontSize: "3.125rem",
+                                  transform: `translate(2px, -0.5px)`,
+                                  transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
+                                },
+                    
+                                "&:hover .material-icons-round, &:focus  .material-icons-round": {
+                                  transform: `translate(6px, -0.5px)`,
+                                },
+                              }}
+                            >
+                              {cameraName}
+                            </VuiTypography>
+                          </VuiBox>
+                        </Card>
                       )}
                     </Card>
                   </Paper>
@@ -209,33 +224,24 @@ const AddCamera = () => {
                     {isLoading ? (
                         <Skeleton variant="rectangular" width={'100%'} height={'90%'} sx={{ bgcolor: '#2d3748', borderRadius:5}}/>
                       ) : (
-                          <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
-                          <VuiTypography
-                            component="a"
-                            href="#"
-                            variant="button"
-                            color="white"
-                            fontWeight="regular"
-                            sx={{
-                              mr: "5px",
-                              display: "inline-flex",
-                              alignItems: "center",
-                              cursor: "pointer",
-
-                              "& .material-icons-round": {
-                                fontSize: "3.125rem",
-                                transform: `translate(2px, -0.5px)`,
-                                transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
-                              },
-
-                              "&:hover .material-icons-round, &:focus  .material-icons-round": {
-                                transform: `translate(6px, -0.5px)`,
-                              },
-                            }}
-                          >
-                            카메라 이름 1
-                          </VuiTypography>
-                        </VuiBox>
+                          <VuiBox height="90%" display="flex" flexDirection="column" justifyContent="space-between">
+                            <Card sx={() => ({
+                              height: "540px",
+                            })}>
+                            <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
+                              <LiveChart
+                                url={graphURL}
+                              >
+                                <CartesianGrid strokeDasharray="3 3" />
+                                <XAxis dataKey="dateTime" style={{color:"black"}}/>
+                                <YAxis />
+                                <Tooltip />
+                                <Legend />
+                                <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
+                              </LiveChart>
+                            </VuiBox>
+                          </Card>
+                          </VuiBox>
                       )}
                   </Paper>
                 </Grid>
@@ -366,3 +372,51 @@ const AddCamera = () => {
 };
 
 export default AddCamera;
+
+const LiveChart = (({url}) => {
+  const [datas, setDatas] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        console.log(url);
+        
+        const response = await axios.get(url);
+
+        if (Array.isArray(response.data)) {  
+          setDatas((prevDatas) => [...prevDatas, ...response.data]);  
+        } else {
+          console.error("Unexpected response data format", response.data);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    if (url) { // url이 비어 있지 않을 때만 실행
+      fetchData(); // 최초 1회 요청
+      const interval = setInterval(fetchData, 1000); // 이후 주기적으로 요청
+
+      return () => {
+        clearInterval(interval);
+      };
+    }
+  }, [url]);
+
+  return (
+    <ResponsiveContainer width="95%" height="95%">
+      <AreaChart
+        width={'100%'}
+        height={'100%'}
+        data={datas}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="dateTime" style={{color:"black"}}/>
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
+      </AreaChart>
+    </ResponsiveContainer>
+  );
+});
