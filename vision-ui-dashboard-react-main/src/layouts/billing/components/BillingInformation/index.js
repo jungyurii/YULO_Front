@@ -25,13 +25,19 @@ import VuiTypography from "components/VuiTypography";
 
 // Billing page components
 import Bill from "layouts/billing/components/Bill";
+// Vision UI Dashboard React components
+import VuiPagination from "components/VuiPagination";
+
+// @mui material components
+import Icon from "@mui/material/Icon";
 
 function BillingInformation() {
   return (
-    <Card id="delete-account">
+
+    <Card id="delete-account" fullwidth>
       <VuiBox>
         <VuiTypography variant="lg" color="white" fontWeight="bold">
-          Billing Information
+          Detected List
         </VuiTypography>
       </VuiBox>
       <VuiBox>
@@ -57,7 +63,21 @@ function BillingInformation() {
           />
         </VuiBox>
       </VuiBox>
+      <VuiBox mt={4} display="flex" justifyContent="center">
+        <VuiPagination>
+          <VuiPagination item>
+            <Icon>keyboard_arrow_left</Icon>
+          </VuiPagination>
+          <VuiPagination item active>1</VuiPagination>
+          <VuiPagination item>2</VuiPagination>
+          <VuiPagination item>3</VuiPagination>
+          <VuiPagination item>
+            <Icon>keyboard_arrow_right</Icon>
+          </VuiPagination>
+        </VuiPagination>
+      </VuiBox>
     </Card>
+    
   );
 }
 

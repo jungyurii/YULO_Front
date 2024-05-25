@@ -62,26 +62,6 @@ function Bill({ name, company, email, vat, noGutter }) {
             {name}
           </VuiTypography>
 
-          <VuiBox
-            display="flex"
-            alignItems="center"
-            mt={{ xs: 2, sm: 0 }}
-            ml={{ xs: -1.5, sm: 0 }}
-            sx={({ breakpoints }) => ({
-              [breakpoints.only("sm")]: {
-                flexDirection: "column",
-              },
-            })}
-          >
-            <VuiBox mr={1}>
-              <VuiButton variant="text" color="error">
-                <Icon sx={{ mr: "4px" }}>delete</Icon>&nbsp;DELETE
-              </VuiButton>
-            </VuiBox>
-            <VuiButton variant="text" color="text">
-              <Icon sx={{ mr: "4px" }}>edit</Icon>&nbsp;EDIT
-            </VuiButton>
-          </VuiBox>
         </VuiBox>
         <VuiBox mb={1} lineHeight={0}>
           <VuiTypography variant="caption" color="text">
@@ -110,6 +90,33 @@ function Bill({ name, company, email, vat, noGutter }) {
             {vat}
           </VuiTypography>
         </VuiTypography>
+      </VuiBox>
+      <VuiBox width="40%" display="flex" flexDirection="row">
+        <VuiBox 
+          bgColor="info"
+          sx={{ backgroundImage: "/Users/hongseongmin/GitHub/YULO_Front_2/vision-ui-dashboard-react-main/src/assets/videos/output.mp4", width:"50%",color: "info", height:"120px"}}>
+
+        </VuiBox>
+        <VuiBox
+          display="flex"
+          alignItems="center"
+          mt={{ xs: 2, sm: 0 }}
+          ml={{ xs: -1.5, sm: 0 }}
+          sx={({ breakpoints }) => ({
+            [breakpoints.only("sm")]: {
+              flexDirection: "column",
+            },
+          })}
+          >
+          <VuiBox mr={1}>
+            <VuiButton variant="text" color="error">
+              <Icon sx={{ mr: "4px" }}>delete</Icon>&nbsp;DELETE
+            </VuiButton>
+          </VuiBox>
+          <VuiButton variant="text" color="text">
+            <Icon sx={{ mr: "4px" }}>edit</Icon>&nbsp;SHOW
+          </VuiButton>
+        </VuiBox>
       </VuiBox>
     </VuiBox>
   );
