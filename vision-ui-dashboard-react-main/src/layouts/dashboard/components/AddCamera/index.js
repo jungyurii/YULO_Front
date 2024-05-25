@@ -21,6 +21,7 @@ import radialGradient from "assets/theme/functions/radialGradient";
 import palette from "assets/theme/base/colors";
 import VuiInput from "components/VuiInput";
 import VuiButton from "components/VuiButton";
+import axios from "axios";
 
 const AddCamera = () => {
   const [open, setOpen] = useState(false);
@@ -46,6 +47,8 @@ const AddCamera = () => {
   const [cardImage, setCardImage] = useState(models[0].image);
   const [cameraName, setCameraName] = useState('');
   const [cameraURL, setCameraURL] = useState('');
+  const [label, setLabel] = useState('');
+  const [count, setCount] = useState(0);
 
   const handleCameraName = (e) => {
     setCameraName(e.target.value);
@@ -59,15 +62,36 @@ const AddCamera = () => {
     const selectedModel = event.target.value;
     const selected = models.findIndex(model => model.name === selectedModel);
     
-    console.log("선택된 모델 인덱스:", selected);
-    console.log("선택된 모델:", selectedModel);
     setCardImage(models[selected].image);
     setModelType(event.target.value);
     setSelectedIndex(selected);
   };
 
+  const handleLabel = (e) => {
+    setLabel(e.target.value);
+  }
+
+  const handleCount = (e) => {
+    setCount(e.target.value);
+  }
+
+  const [streamURL, setStreamURL] = useState('');
+  const [graphURL, setGraphURL] = useState('');
+
   const testSubmit = () => {
-    
+    axios.post(cameraURL+"/api/model/test",{
+      userId: 1,
+      cameraURL: cameraURL,
+      modelType: selectedIndex,
+      label : label,
+      count : count
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log('Error : ', error);
+    })
   }
 
   const ITEM_HEIGHT = 48;
@@ -302,7 +326,7 @@ const AddCamera = () => {
                           palette.gradients.borderLight.angle
                         )}
                       >
-                        <VuiInput type="number" placeholder="Enter Detect label..." fontWeight="500" disabled={selectedIndex !== 0}/>
+                        <VuiInput type="number" placeholder="Enter Detect label..." fontWeight="500" disabled={selectedIndex !== 0} onChange={handleLabel}/>
                       </GradientBorder>
                       </Grid>
                       <Grid item xs={6}>
@@ -321,7 +345,7 @@ const AddCamera = () => {
                           palette.gradients.borderLight.angle
                         )}
                       >
-                        <VuiInput type="text" placeholder="Enter Detect Count..." fontWeight="500" disabled={selectedIndex !== 0}/>
+                        <VuiInput type="text" placeholder="Enter Detect Count..." fontWeight="500" disabled={selectedIndex !== 0} onChange={handleCount}/>
                       </GradientBorder>
                       </Grid>
                     </Grid>

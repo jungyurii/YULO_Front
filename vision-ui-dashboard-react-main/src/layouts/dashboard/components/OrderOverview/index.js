@@ -21,7 +21,6 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import VuiButton from "components/VuiButton";
 
 function OrdersOverview({recentDetectedList}) {
-  console.log('recentDetectedList : ',recentDetectedList[0]);
   return (
     <Card className="h-100">
       <VuiBox mb="10px">
