@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
@@ -94,8 +76,9 @@ function Bill({ name, company, email, vat, noGutter }) {
       <VuiBox width="40%" display="flex" flexDirection="row">
         <VuiBox 
           bgColor="info"
-          sx={{ backgroundImage: "/Users/hongseongmin/GitHub/YULO_Front_2/vision-ui-dashboard-react-main/src/assets/videos/output.mp4", width:"50%",color: "info", height:"120px"}}>
-
+          sx={{ backgroundImage: "/Users/hongseongmin/GitHub/YULO_Front_2/vision-ui-dashboard-react-main/src/assets/videos/output.mp4", 
+          width:"50%", color: "info", height:"120px", mr: "30px" }}>
+          
         </VuiBox>
         <VuiBox
           display="flex"
@@ -108,7 +91,7 @@ function Bill({ name, company, email, vat, noGutter }) {
             },
           })}
           >
-          <VuiBox mr={1}>
+          <VuiBox mr={2}>
             <VuiButton variant="text" color="error">
               <Icon sx={{ mr: "4px" }}>delete</Icon>&nbsp;DELETE
             </VuiButton>
