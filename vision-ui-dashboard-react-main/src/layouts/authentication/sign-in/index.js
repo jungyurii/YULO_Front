@@ -63,7 +63,7 @@ function SignIn() {
 
   const submit = () => {
     if(localStorage.getItem('userId') != 'null') {
-      axios.post("http://10.200.42.117:8080/user/token/signin", {
+      axios.post("http://127.0.0.1:8080/user/token/signin", {
         userId: localStorage.getItem('userId'),
       }).then(response => {
         console.log('response.data : ', response.data);
@@ -76,7 +76,7 @@ function SignIn() {
       })
     }
     else {
-      axios.post("http://10.200.42.117:8080/user/signin", {
+      axios.post("http://127.0.0.1:8080/user/signin", {
         userEmail: id,
         userPw: pw,
       })
