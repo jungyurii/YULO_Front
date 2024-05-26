@@ -405,7 +405,7 @@ const LiveChart = (({url}) => {
 
   return (
     <ResponsiveContainer width="95%" height="95%">
-      <AreaChart
+      <LineChart
         width={'100%'}
         height={'100%'}
         data={datas}
@@ -416,7 +416,7 @@ const LiveChart = (({url}) => {
         <Tooltip />
         <Legend />
         <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-      </AreaChart>
+      </LineChart>
     </ResponsiveContainer>
   );
 });

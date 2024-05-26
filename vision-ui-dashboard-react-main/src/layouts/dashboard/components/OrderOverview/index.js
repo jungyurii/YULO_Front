@@ -18,6 +18,7 @@ import AdobeXD from "examples/Icons/AdobeXD";
 import palette from "assets/theme/base/colors";
 import { Grid, Icon } from "@mui/material";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import VuiButton from "components/VuiButton";
 
 function OrdersOverview({recentDetectedList}) {
@@ -55,9 +56,16 @@ function OrdersOverview({recentDetectedList}) {
                   />
                 </Grid>
                 <Grid item sx={1}>
-                  <VuiButton variant="text" color="success">
-                    <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECK
-                  </VuiButton>
+                  {
+                    item.detectionChecked ? (
+                      <VuiButton variant="text" color="success">
+                        <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
+                      </VuiButton>
+                    ) : (
+                      <VuiButton variant="text" color="info">
+                        <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
+                      </VuiButton>
+                    )}
                 </Grid>
               </Grid>
             );
