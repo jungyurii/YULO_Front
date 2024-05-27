@@ -61,6 +61,7 @@ function Dashboard() {
   const [modelInfo, setModelInfo] = useState([]);
   const [recentDetectedList, setRecentDetectedList] = useState([]);
   const [cameraSetting, setCameraSetting] = useState([]);
+  const [graphData, setGraphData] = useState([]);
   
 
   useEffect(() => {
@@ -71,10 +72,11 @@ function Dashboard() {
       axios.post("http://127.0.0.1:8080/camera/cameraRanking", { userId: 1 }),
       axios.post("http://127.0.0.1:8080/model/allInfoGet"),
       axios.post("http://127.0.0.1:8080/detection/detections", { userId: 1}),
-      axios.post("http://127.0.0.1:8080/camera/cameraSetting", { userId: 1 })
+      axios.post("http://127.0.0.1:8080/camera/cameraSetting", { userId: 1 }),
+      axios.post("http://127.0.0.1:8080/graph/graphList", { userId: 1 })
     ])
     .then(responses => {
-      const [cameraNameResponse, cameraRankResponse, allModelInfoResponse, recentDetectedListResponse, cameraSettingResponse] = responses;
+      const [cameraNameResponse, cameraRankResponse, allModelInfoResponse, recentDetectedListResponse, cameraSettingResponse, graphDataResponse] = responses;
 
       console.log('cameraNameResponse : ',cameraNameResponse.data.result.data);
       console.log('cameraRankResponse : ',cameraRankResponse.data.result.data);
@@ -82,6 +84,7 @@ function Dashboard() {
       console.log('allModelInfoResponse : ',allModelInfoResponse.data.result.data);
       console.log('recentDetectedListResponse : ',recentDetectedListResponse.data.result.data);
       console.log('cameraSettingResponse : ', cameraSettingResponse.data.result.data);
+      console.log('graphDataResponse : ', graphDataResponse.data.result.data)
 
 
       const entries = Object.entries(cameraNameResponse.data.result.data).sort((data1, data2) => data2[0] - data1[0]);
