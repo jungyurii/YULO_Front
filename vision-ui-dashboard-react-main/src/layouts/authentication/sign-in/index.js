@@ -71,19 +71,22 @@ function SignIn() {
           history.push('/dashboard');
         }
         else {
-          alert("에러 존나나");
+          alert("에러 나");
         }
       })
     }
     else {
+      console.log("여기로 들어옴");
       axios.post("http://127.0.0.1:8080/user/signin", {
         userEmail: id,
         userPw: pw,
       })
       .then(response => {
         console.log('response.data : ', response.data);
-        const userId = response.data.result.userId;
+        const userId = response.data.result.data.userId;
+        const userEmail = response.data.result.data.userEmail;
         localStorage.setItem("userId", userId);
+        localStorage.setItem("userEmail", userEmail);
         if(response.data.status === 200) {
           history.push('/dashboard');
         }

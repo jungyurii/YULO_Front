@@ -49,13 +49,22 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
-
+  const [userEmail, setUserEmail] = useState('');
+  
   useEffect(() => {
     // Setting the navbar type
     if (fixedNavbar) {
       setNavbarType("sticky");
     } else {
       setNavbarType("static");
+    }
+
+    //userEmail이 있는 경우
+    const userEmail = localStorage.getItem("userEmail");
+    if(userEmail != 'null') {
+      setUserEmail(userEmail);
+    } else {
+      history.push('/authentication/sign-in');
     }
 
     // A function that sets the transparent state of the navbar.
@@ -148,24 +157,48 @@ function DashboardNavbar({ absolute, light, isMini }) {
               />
             </VuiBox>
             <VuiBox color={light ? "white" : "inherit"}>
-              <Link to="/authentication/sign-in">
-                <IconButton sx={navbarIconButton} size="small">
-                  <Icon
-                    sx={({ palette: { dark, white } }) => ({
-                      color: light ? white.main : dark.main,
-                    })}
-                  >
-                    account_circle
-                  </Icon>
-                  <VuiTypography
-                    variant="button"
-                    fontWeight="medium"
-                    color={light ? "white" : "dark"}
-                  >
-                    Sign in
-                  </VuiTypography>
-                </IconButton>
-              </Link>
+              {
+                userEmail ? (
+                  <Link to="/dashboard">
+                    <IconButton sx={navbarIconButton} size="small">
+                      <Icon
+                        sx={({ palette: { dark, white } }) => ({
+                          color: light ? white.main : dark.main,
+                        })}
+                      >
+                        account_circle
+                      </Icon>
+                      <VuiTypography
+                        variant="button"
+                        fontWeight="medium"
+                        color={light ? "white" : "dark"}
+                      >
+                        {userEmail}
+                      </VuiTypography>
+                    </IconButton>
+                  </Link>
+                ) : (
+                  <Link to="/authentication/sign-in">
+                    <IconButton sx={navbarIconButton} size="small">
+                      <Icon
+                        sx={({ palette: { dark, white } }) => ({
+                          color: light ? white.main : dark.main,
+                        })}
+                      >
+                        account_circle
+                      </Icon>
+                      <VuiTypography
+                        variant="button"
+                        fontWeight="medium"
+                        color={light ? "white" : "dark"}
+                      >
+                        Sign in
+                      </VuiTypography>
+                    </IconButton>
+                  </Link>
+                )
+              }
+              
               <IconButton
                 size="small"
                 color="inherit"
