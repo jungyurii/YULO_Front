@@ -16,12 +16,24 @@ import AdobeXD from "examples/Icons/AdobeXD";
 
 // Vision UI Dashboard theme imports
 import palette from "assets/theme/base/colors";
-import { Grid, Icon } from "@mui/material";
+import { Dialog, DialogContent, DialogTitle, Grid, Icon } from "@mui/material";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import VuiButton from "components/VuiButton";
+import { useState } from "react";
 
 function OrdersOverview({recentDetectedList}) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const checkVideo = () => {
+    // 모달 표시 상태를 true로 설정하여 모달을 엽니다.
+    setIsModalOpen(true);
+  };
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+
   return (
     <Card className="h-100">
       <VuiBox mb="10px">
@@ -62,7 +74,7 @@ function OrdersOverview({recentDetectedList}) {
                         <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
                       </VuiButton>
                     ) : (
-                      <VuiButton variant="text" color="info">
+                      <VuiButton variant="text" color="info" onClick={checkVideo}> 
                         <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
                       </VuiButton>
                     )}
@@ -73,7 +85,32 @@ function OrdersOverview({recentDetectedList}) {
         }
         </Grid>
       </VuiBox>
+      {/* 모달을 표시하는 부분 */}
+      <Dialog
+        open={isModalOpen}
+        onClose={closeModal}
+        aria-labelledby="modal-title"
+      >
+        {/* 비디오 플레이어 컴포넌트 */}
+        <DialogContent>
+        <Card sx={() => ({
+      height: "540px",
+      py: "32px",
+      width: "500px",
+      backgroundSize: "cover",
+      backgroundPosition: "50%"
+    })}>
+      <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
+          <video width="100%" controls>
+            <source src={'http://192.168.0.100:8000/web/static/1006.mp4'} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+      </VuiBox>
     </Card>
+        </DialogContent>
+      </Dialog>
+    </Card>
+    
   );
 }
 
