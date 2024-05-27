@@ -1,28 +1,24 @@
-/*!
 
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 
 export const lineChartDataDashboard = [
   {
-    name: "Mobile apps",
-    data: [1000, 250, 300, 220, 500, 250, 1000, 1000, 1000, 1000, 1000, 1000],
+    name: 'Camera 1',
+    data: [0,1,2,3,4],
+    datetime: ['2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS']
   },
   {
-    name: "Websites",
-    data: [200, 230, 300, 350, 370, 420, 550, 350, 400, 500, 330, 550],
+    name: 'Camera 2',
+    data: [0,5,2,3,2],
+    datetime: ['2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS']
   },
+  {
+    name: 'Camera 3',
+    data: [0,2,6,12,10],
+    datetime: ['2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS']
+  },
+  {
+    name: 'Camera 4',
+    data: [0,1,3,2,5],
+    datetime: ['2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS','2024-01-23:HH:MM:SS']
+  }
 ];

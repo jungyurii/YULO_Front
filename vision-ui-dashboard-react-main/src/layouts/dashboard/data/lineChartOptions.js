@@ -1,20 +1,4 @@
-/*!
 
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 
 export const lineChartOptionsDashboard = {
   chart: {
@@ -32,21 +16,7 @@ export const lineChartOptionsDashboard = {
     curve: "smooth",
   },
   xaxis: {
-    type: "datetime",
-    categories: [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ],
+    type: "numeric",
     labels: {
       style: {
         colors: "#c8cfca",
@@ -87,7 +57,7 @@ export const lineChartOptionsDashboard = {
       opacityTo: 0,
       stops: [],
     },
-    colors: ["#0075FF", "#2CD9FF"],
+    colors: ["#0075FF", "#2CD9FF", "#e31a1a","#ffcd75"],
   },
-  colors: ["#0075FF", "#2CD9FF"],
+  colors: ["#0075FF", "#2CD9FF", "#e31a1a","#ffcd75"],
 };
