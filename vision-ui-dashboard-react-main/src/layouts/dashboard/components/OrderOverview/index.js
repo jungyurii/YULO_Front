@@ -1,6 +1,7 @@
 import Card from "@mui/material/Card";
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
+import React from "react";
 
 // React icons
 import { BsCheckCircleFill } from "react-icons/bs";
@@ -21,21 +22,37 @@ import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import VuiButton from "components/VuiButton";
 import { useState } from "react";
+import axios from "axios";
 
 function OrdersOverview({recentDetectedList}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const checkVideo = () => {
+  const checkVideo = (detectionId) => {
+    console.log("detectionId : %o", detectionId);
     // 모달 표시 상태를 true로 설정하여 모달을 엽니다.
     setIsModalOpen(true);
+    axios.post("http://127.0.0.1:8080/detection/detectionCheck", {
+      detectionId: detectionId,
+    })
+    .then(response => {
+      console.log(response.data);
+      axios.post("http://127.0.0.1:8080/detection/detections", { userId: 1}).then(
+
+      ).catch(
+        
+      );
+    })
+    .catch(error => {
+      console.log("Error : ",error);
+    })
   };
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
 
-  return (
-    <Card className="h-100">
+  return (<React.Fragment>
+    <Card>
       <VuiBox mb="10px">
         <VuiTypography variant="h4" fontWeight="bold" mb="5px" color="white">
           최근 감지 내역
@@ -74,7 +91,7 @@ function OrdersOverview({recentDetectedList}) {
                         <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
                       </VuiButton>
                     ) : (
-                      <VuiButton variant="text" color="info" onClick={checkVideo}> 
+                      <VuiButton variant="text" color="info" onClick={() => checkVideo(item.detectionId)}> 
                         <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
                       </VuiButton>
                     )}
@@ -86,31 +103,28 @@ function OrdersOverview({recentDetectedList}) {
         </Grid>
       </VuiBox>
       {/* 모달을 표시하는 부분 */}
-      <Dialog
-        open={isModalOpen}
-        onClose={closeModal}
-        aria-labelledby="modal-title"
-      >
-        {/* 비디오 플레이어 컴포넌트 */}
-        <DialogContent>
-        <Card sx={() => ({
-      height: "540px",
-      py: "32px",
-      width: "500px",
-      backgroundSize: "cover",
-      backgroundPosition: "50%"
-    })}>
-      <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
+      
+  </Card>
+  <Dialog
+    open={isModalOpen}
+    onClose={closeModal}
+    aria-labelledby="modal-title"
+    fullWidth
+    maxWidth={'lg'}
+  >
+    {/* 비디오 플레이어 컴포넌트 */}
+    <DialogContent sx={{ width: "100%", maxWidth: "900px", height: "100%", margin: 0, padding: 0, backgroundColor:"#012654", alignItems:"center"}} >
+      <Card>
+        <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
           <video width="100%" controls>
             <source src={'http://192.168.0.100:8000/web/static/1006.mp4'} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-      </VuiBox>
-    </Card>
-        </DialogContent>
-      </Dialog>
-    </Card>
-    
+        </VuiBox>
+      </Card>
+    </DialogContent>
+  </Dialog>
+  </React.Fragment>
   );
 }
 
