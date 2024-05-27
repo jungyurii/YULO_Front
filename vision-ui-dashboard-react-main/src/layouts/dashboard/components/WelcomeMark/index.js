@@ -11,7 +11,7 @@ const WelcomeMark = ({data}) => {
     <Card sx={() => ({
       height: "540px",
       py: "32px",
-      // backgroundImage: `url('${data.streamURL}')`,
+      backgroundImage: `url('${data.streamURL}')`,
       backgroundSize: "cover",
       backgroundPosition: "50%"
     })}>
