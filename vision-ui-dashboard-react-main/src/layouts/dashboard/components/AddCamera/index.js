@@ -22,7 +22,10 @@ import palette from "assets/theme/base/colors";
 import VuiInput from "components/VuiInput";
 import VuiButton from "components/VuiButton";
 import axios from "axios";
-import { AreaChart, CartesianGrid, Legend, Line, LineChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { AreaChart, CartesianGrid, Legend, Line, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
+import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
+import LiveChart from "examples/Charts/LiveCharts/LiveChart";
 
 
 const AddCamera = () => {
@@ -37,6 +40,7 @@ const AddCamera = () => {
     setOpen(false);
   };
   const models = [
+    {name:'Please Choose Model...', image: yolo},
     {name:'YOLO Object Detect', image: yolo},
     {name:'Smoke Detection', image: smoke},
     {name:'Fire Detection', image: gif},
@@ -44,12 +48,12 @@ const AddCamera = () => {
     {name:'Electric Scooter', image: gif},
   ];
 
-  const [modelType, setModelType] = useState('YOLO Object Detect');
+  const [modelType, setModelType] = useState('Please Choose Model...');
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [cardImage, setCardImage] = useState(models[0].image);
   const [cameraName, setCameraName] = useState('');
   const [cameraURL, setCameraURL] = useState('');
-  const [label, setLabel] = useState('');
+  const [label, setLabel] = useState(0);
   const [count, setCount] = useState(0);
 
   const handleCameraName = (e) => {
@@ -86,21 +90,38 @@ const AddCamera = () => {
       userId: 1,
       cameraURL: cameraURL,
       modelType: selectedIndex,
+      cameraId: 1,
       label : label,
       count : count
     })
     .then(response => {
-      console.log(response.data);
-      //setStreamURL(response.data.stream_url);
+      console.log("response.data.stream_url : ", response.data.stream_url);
+      setStreamURL(response.data.stream_url);
       setGraphURL(response.data.graph_url);
       setIsLoading(false);
-      console.log('graphURL : ', graphURL);
     })
     .catch(error => {
       console.log('Error : ', error);
     })
   }
 
+  const saveCameraSubmit = () => {
+    const userId = localStorage.getItem("userId");
+    axios.post("http://127.0.0.1:8080/camera/cameraAdd", { 
+      userId: 1,
+      cameraName: cameraName,
+      cameraURL: cameraURL,
+      streamURL: streamURL,
+      graphURL: graphURL,
+      modelId: selectedIndex,
+      label: label,
+      count: count
+    }).then(response => {
+      console.log('saveCameraSubmit response.data : ',response.data);
+    }).catch(error => {
+      console.log("saveCameraSubmit Error : ", error);
+    })
+  }
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -186,33 +207,6 @@ const AddCamera = () => {
                           backgroundSize: "cover",
                           backgroundPosition: "50%"
                         })}>
-                          <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
-                            <VuiTypography
-                              component="a"
-                              href="#"
-                              variant="button"
-                              color="white"
-                              fontWeight="regular"
-                              sx={{
-                                mr: "5px",
-                                display: "inline-flex",
-                                alignItems: "center",
-                                cursor: "pointer",
-                    
-                                "& .material-icons-round": {
-                                  fontSize: "3.125rem",
-                                  transform: `translate(2px, -0.5px)`,
-                                  transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
-                                },
-                    
-                                "&:hover .material-icons-round, &:focus  .material-icons-round": {
-                                  transform: `translate(6px, -0.5px)`,
-                                },
-                              }}
-                            >
-                              {cameraName}
-                            </VuiTypography>
-                          </VuiBox>
                         </Card>
                       )}
                     </Card>
@@ -228,8 +222,13 @@ const AddCamera = () => {
                             <Card sx={() => ({
                               height: "540px",
                             })}>
-                            <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
+                            <VuiBox height="350px" display="flex" flexDirection="column" justifyContent="space-between">
                               <LiveChart
+                                graphURL={graphURL}
+                                lineChartData={lineChartDataDashboard}
+                                lineChartOptions={lineChartOptionsDashboard}
+                              />
+                              {/* <LiveChart
                                 url={graphURL}
                               >
                                 <CartesianGrid strokeDasharray="3 3" />
@@ -238,7 +237,7 @@ const AddCamera = () => {
                                 <Tooltip />
                                 <Legend />
                                 <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                              </LiveChart>
+                              </LiveChart> */}
                             </VuiBox>
                           </Card>
                           </VuiBox>
@@ -332,7 +331,7 @@ const AddCamera = () => {
                           palette.gradients.borderLight.angle
                         )}
                       >
-                        <VuiInput type="number" placeholder="Enter Detect label..." fontWeight="500" disabled={selectedIndex !== 0} onChange={handleLabel}/>
+                        <VuiInput type="number" placeholder="Enter Detect label..." fontWeight="500" onChange={handleLabel}/>
                       </GradientBorder>
                       </Grid>
                       <Grid item xs={6}>
@@ -351,7 +350,7 @@ const AddCamera = () => {
                           palette.gradients.borderLight.angle
                         )}
                       >
-                        <VuiInput type="text" placeholder="Enter Detect Count..." fontWeight="500" disabled={selectedIndex !== 0} onChange={handleCount}/>
+                        <VuiInput type="text" placeholder="Enter Detect Count..." fontWeight="500" onChange={handleCount}/>
                       </GradientBorder>
                       </Grid>
                     </Grid>
@@ -364,7 +363,7 @@ const AddCamera = () => {
             </Grid>
           </DialogContent>
           <DialogActions sx={{paddingX: 60, paddingBottom: 2}}>
-            <VuiButton variant="gradient" color="info" fullWidth>카메라 저장하기</VuiButton>
+            <VuiButton variant="gradient" color="info" fullWidth onClick={saveCameraSubmit}>카메라 저장하기</VuiButton>
           </DialogActions>
         </Dialog>
       </React.Fragment>
@@ -373,50 +372,50 @@ const AddCamera = () => {
 
 export default AddCamera;
 
-const LiveChart = (({url}) => {
-  const [datas, setDatas] = useState([]);
+// const LiveChart = (({url}) => {
+//   const [datas, setDatas] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        console.log(url);
+//   useEffect(() => {
+//     const fetchData = async () => {
+//       try {
+//         console.log(url);
         
-        const response = await axios.get(url);
+//         const response = await axios.get(url);
 
-        if (Array.isArray(response.data)) {  
-          setDatas((prevDatas) => [...prevDatas, ...response.data]);  
-        } else {
-          console.error("Unexpected response data format", response.data);
-        }
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
+//         if (Array.isArray(response.data)) {  
+//           setDatas((prevDatas) => [...prevDatas, ...response.data]);  
+//         } else {
+//           console.error("Unexpected response data format", response.data);
+//         }
+//       } catch (error) {
+//         console.error('Error fetching data:', error);
+//       }
+//     };
 
-    if (url) { // url이 비어 있지 않을 때만 실행
-      fetchData(); // 최초 1회 요청
-      const interval = setInterval(fetchData, 1000); // 이후 주기적으로 요청
+//     if (url) { // url이 비어 있지 않을 때만 실행
+//       fetchData(); // 최초 1회 요청
+//       const interval = setInterval(fetchData, 1000); // 이후 주기적으로 요청
 
-      return () => {
-        clearInterval(interval);
-      };
-    }
-  }, [url]);
+//       return () => {
+//         clearInterval(interval);
+//       };
+//     }
+//   }, [url]);
 
-  return (
-    <ResponsiveContainer width="95%" height="95%">
-      <LineChart
-        width={'100%'}
-        height={'100%'}
-        data={datas}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="dateTime" style={{color:"black"}}/>
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-      </LineChart>
-    </ResponsiveContainer>
-  );
-});
+//   return (
+//     <ResponsiveContainer width="95%" height="95%">
+//       <LineChart
+//         width={'100%'}
+//         height={'100%'}
+//         data={datas}
+//       >
+//         <CartesianGrid strokeDasharray="3 3" />
+//         <XAxis dataKey="dateTime" style={{color:"black"}}/>
+//         <YAxis />
+//         <Tooltip />
+//         <Legend />
+//         <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
+//       </LineChart>
+//     </ResponsiveContainer>
+//   );
+// });
