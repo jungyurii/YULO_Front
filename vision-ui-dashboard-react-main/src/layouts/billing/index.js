@@ -68,7 +68,7 @@ function Billing() {
                   <CreditBalance />
                 </Grid> */}
                 <Grid item xs={12}>
-                  <PaymentMethod />
+                  <PaymentMethod setDetectedList={setDetectedList}/>
                 </Grid>
               </Grid>
             </Grid>
