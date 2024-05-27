@@ -31,7 +31,8 @@ import VuiPagination from "components/VuiPagination";
 // @mui material components
 import Icon from "@mui/material/Icon";
 
-function BillingInformation() {
+function BillingInformation({detectedList}) {
+  // console.log('BillingInformation : ',detectedList);
   return (
 
     <Card id="delete-account" fullwidth>
@@ -42,12 +43,24 @@ function BillingInformation() {
       </VuiBox>
       <VuiBox>
         <VuiBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-          <Bill
-            name="oliver liam"
-            company="viking burrito"
-            email="oliver@burrito.com"
-            vat="FRB1235476"
-          />
+        {/* 
+          cameraName : "Camera 1"
+          detectionChecked: false
+          detectionDate: "2024-05-27T05:47:01.009765"
+          detectionId: 56
+          detectionServerPath: "7193.mp4"
+          modelId: 1 
+        */}
+          {detectedList.map(detection => (
+            <Bill
+              name={detection.cameraName}
+              company={detection.detectionDate}
+              email={detection.modelId}
+              vat={detection.detectionChecked}
+              key={detection.detectionId}
+            />
+          ))}
+          
           <Bill
             name="lucas harper"
             company="stone tech zone"

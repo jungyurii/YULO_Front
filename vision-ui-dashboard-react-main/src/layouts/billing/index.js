@@ -35,9 +35,24 @@ import Invoices from "layouts/billing/components/Invoices";
 import BillingInformation from "layouts/billing/components/BillingInformation";
 import Transactions from "layouts/billing/components/Transactions";
 import CreditBalance from "./components/CreditBalance";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 function Billing() {
+  const [detectedList, setDetectedList] = useState([]);
+  useEffect(() => {
+    axios.post("http://127.0.0.1:8080/detection/detections", { 
+      userId: 1
+    })
+    .then(response => {
+      console.log('response.data.result.data : ',response.data.result.data);
+      setDetectedList(response.data.result.data);
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    })
+  }, []);
   return (
     <DashboardLayout>
       <DashboardNavbar />
@@ -65,7 +80,7 @@ function Billing() {
         <VuiBox my={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              <BillingInformation />
+              <BillingInformation detectedList={detectedList}/>
             </Grid>           
           </Grid>
         </VuiBox>

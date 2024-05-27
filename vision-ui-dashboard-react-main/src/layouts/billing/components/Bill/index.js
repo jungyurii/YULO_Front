@@ -11,7 +11,7 @@ import VuiButton from "components/VuiButton";
 import linearGradient from "assets/theme/functions/linearGradient";
 import colors from "assets/theme/base/colors";
 
-function Bill({ name, company, email, vat, noGutter }) {
+function Bill({ name, company, email, vat, noGutter, key }) {
   const { gradients } = colors;
   const { bill } = gradients;
 
@@ -47,7 +47,7 @@ function Bill({ name, company, email, vat, noGutter }) {
         </VuiBox>
         <VuiBox mb={1} lineHeight={0}>
           <VuiTypography variant="caption" color="text">
-            Company Name:&nbsp;&nbsp;&nbsp;
+            Detected Date :&nbsp;&nbsp;&nbsp;
             <VuiTypography
               variant="caption"
               color="text"
@@ -60,14 +60,14 @@ function Bill({ name, company, email, vat, noGutter }) {
         </VuiBox>
         <VuiBox mb={1} lineHeight={0}>
           <VuiTypography variant="caption" color="text">
-            Email Address:&nbsp;&nbsp;&nbsp;
+            Model Type :&nbsp;&nbsp;&nbsp;
             <VuiTypography variant="caption" fontWeight="regular" color="text">
               {email}
             </VuiTypography>
           </VuiTypography>
         </VuiBox>
         <VuiTypography variant="caption" color="text">
-          VAT Number:&nbsp;&nbsp;&nbsp;
+          CHECKED:&nbsp;&nbsp;&nbsp;
           <VuiTypography variant="caption" fontWeight="regular" color="text">
             {vat}
           </VuiTypography>
