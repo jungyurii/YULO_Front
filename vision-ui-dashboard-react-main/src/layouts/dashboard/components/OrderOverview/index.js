@@ -99,28 +99,29 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
         {recentDetectedList.length > 0 &&
           recentDetectedList[0].map((item, index) => {
             return (
-              <Grid container xs={11} lg={11} xl={11} marginX={2} padding={1} key={index} sx={{ borderTop: 1, borderBottom: 1}}>
+              <Grid container xs={11} lg={11} xl={11} marginX={2} padding={1} key={index} sx={{ borderTop: 1, borderBottom: 1, alignItems: 'center' }}>
                 <Grid item width={400}>
                   <TimelineItem
                     fullwidth
                     icon={<FaBell size="16px" color={palette.info.main} />}
                     title={item.cameraName}
-                    dateTime={item.detectionDate}
+                    dateTime={
+                      <React.Fragment>
+                        {item.detectionDate}
+                        {item.detectionChecked ? (
+                          <VuiButton variant="text" color="success" onClick={() => openModal(item.detectionId)} sx={{ ml: 10 }}>
+                            <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
+                          </VuiButton>
+                        ) : (
+                          <VuiButton variant="text" color="info" onClick={() => openModal(item.detectionId)} >
+                            <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
+                          </VuiButton>
+                        )}
+                      </React.Fragment>
+                    }
                   />
                 </Grid>
-                <Grid item sx={1}>
-                  {
-                    item.detectionChecked ? (
-                      <VuiButton variant="text" color="success" onClick={() => openModal(item.detectionId)}>
-                        <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
-                      </VuiButton>
-                    ) : (
-                      <VuiButton variant="text" color="info" onClick={() => openModal(item.detectionId)}> 
-                        <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
-                      </VuiButton>
-                    )}
-                </Grid>
-              </Grid>
+              </Grid> 
             );
           })
         }
