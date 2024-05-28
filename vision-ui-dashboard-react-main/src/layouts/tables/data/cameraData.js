@@ -39,7 +39,7 @@ import { useState } from "react";
 
 
 export default function cameraData(props) {
-  const {cameraSettings, setCameraSettings} = props;
+  const {cameraSettings, setCameraSettings, editCamera} = props;
   const deleteCamera = (cameraName) => {
     console.log('deleteCameraName : ', cameraName);
     const userId = localStorage.getItem("userId");
@@ -52,7 +52,9 @@ export default function cameraData(props) {
     })
     .catch(error => {
       console.log("Error : ", error);
-    })
+    });
+
+    
   }
   const rows = cameraSettings.map((camera,index) => {
     return {
@@ -116,7 +118,7 @@ export default function cameraData(props) {
               <Icon sx={{ mr: "4px" }}>delete</Icon>&nbsp;DELETE
             </VuiButton>
           </VuiBox>
-          <VuiButton variant="text" color="text">
+          <VuiButton variant="text" color="text" onClick={() => editCamera(camera.cameraName)}>
             <Icon sx={{ mr: "4px" }}>edit</Icon>&nbsp;EDIT
           </VuiButton>
         </VuiBox>
