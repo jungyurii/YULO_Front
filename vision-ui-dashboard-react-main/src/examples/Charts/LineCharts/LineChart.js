@@ -13,9 +13,32 @@ class LineChart extends React.Component {
 
   componentDidMount() {
     const { lineChartData, lineChartOptions } = this.props;
+    console.log("LineChart : %o", lineChartData);
+    const series = [];
+
+    data: [{
+              x: new Date('2018-02-12').getTime(),
+              y: 76
+            }, {
+              x: new Date('2018-02-12').getTime(),
+              y: 76
+    }]
+    lineChartData.forEach(element => {
+      console.log(element);
+      
+      const newarr= element.data.map((data,index) => {
+        const d = {
+          y: element.data[index],
+          x: new Date(element.dateTime[index])
+        }
+        return d;
+      });
+      series.push({data : newarr, name: element.name});
+    });
+    console.log('SERIES: %o', series);
 
     this.setState({
-      chartData: lineChartData,
+      chartData: series,
       chartOptions: lineChartOptions,
     });
   }

@@ -84,8 +84,7 @@ function Dashboard() {
       console.log('allModelInfoResponse : ',allModelInfoResponse.data.result.data);
       console.log('recentDetectedListResponse : ',recentDetectedListResponse.data.result.data);
       console.log('cameraSettingResponse : ', cameraSettingResponse.data.result.data);
-      console.log('graphDataResponse : ', graphDataResponse.data.result.data)
-
+      console.log('graphDataResponse : ', graphDataResponse.data.result.data);
 
       const entries = Object.entries(cameraNameResponse.data.result.data).sort((data1, data2) => data2[0] - data1[0]);
       const lastEntry = entries.pop();
@@ -96,7 +95,7 @@ function Dashboard() {
       setRecentDetectedList(recentDetectedListResponse.data.result.data);
       setCameraSetting(cameraSettingResponse.data.result.data);
       setCameraRank(Object.entries(cameraRankResponse.data.result.data).sort((data1, data2) => data2[1] - data1[1]));
-      
+      setGraphData(graphDataResponse.data.result.data);
     })
     .catch(error => {
       console.log("Error : ", error);
@@ -177,10 +176,14 @@ function Dashboard() {
                     </VuiTypography>
                   </VuiBox>
                   <VuiBox sx={{ height: "350px" }}>
-                    <LineChart
-                      lineChartData={lineChartDataDashboard}
-                      lineChartOptions={lineChartOptionsDashboard}
-                    />
+                  {
+                    graphData.length > 0 && (
+                      <LineChart
+                        lineChartData={graphData}
+                        lineChartOptions={lineChartOptionsDashboard}
+                      />
+                    )
+                  }
                   </VuiBox>
                 </VuiBox>
               </Card>
