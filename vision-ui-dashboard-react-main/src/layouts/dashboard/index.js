@@ -50,6 +50,7 @@ import axios from "axios";
 import { Margin } from "@mui/icons-material";
 import AddCamera from "./components/AddCamera";
 import MaxWidthDialog from "./components/AddCamera";
+import ApexChart from "examples/Charts/LineCharts/LineChart2";
 
 function Dashboard() {
   const { gradients } = colors;
@@ -178,10 +179,11 @@ function Dashboard() {
                   <VuiBox sx={{ height: "350px" }}>
                   {
                     graphData.length > 0 && (
-                      <LineChart
-                        lineChartData={graphData}
-                        lineChartOptions={lineChartOptionsDashboard}
-                      />
+                      // <LineChart
+                      //   lineChartData={graphData}
+                      //   lineChartOptions={lineChartOptionsDashboard}
+                      // />
+                      <ApexChart lineChartData={graphData}/>
                     )
                   }
                   </VuiBox>
