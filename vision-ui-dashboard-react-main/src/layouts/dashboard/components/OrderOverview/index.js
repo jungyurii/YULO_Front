@@ -17,38 +17,62 @@ import AdobeXD from "examples/Icons/AdobeXD";
 
 // Vision UI Dashboard theme imports
 import palette from "assets/theme/base/colors";
-import { Dialog, DialogContent, DialogTitle, Grid, Icon } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon } from "@mui/material";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import VuiButton from "components/VuiButton";
 import { useState } from "react";
 import axios from "axios";
 
-function OrdersOverview({recentDetectedList}) {
+function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [detectedId, setDetectdId] = useState(0);
 
-  const checkVideo = (detectionId) => {
-    console.log("detectionId : %o", detectionId);
+  const openModal = (detectionId) => {
     // 모달 표시 상태를 true로 설정하여 모달을 엽니다.
     setIsModalOpen(true);
+    setDetectdId(detectionId);
+  };
+
+  const fetchData = () => {
+    axios.post("http://127.0.0.1:8080/detection/detections", { userId: 1})
+    .then(response => {
+      setRecentDetectedList(response.data.result.data);
+    }
+    ).catch(error => {
+      console.log("Error : ", error);
+    });
+  }
+
+  const checkVideo = () => {
     axios.post("http://127.0.0.1:8080/detection/detectionCheck", {
-      detectionId: detectionId,
+      detectionId: detectedId,
     })
     .then(response => {
-      console.log(response.data);
-      axios.post("http://127.0.0.1:8080/detection/detections", { userId: 1}).then(
-
-      ).catch(
-        
-      );
+      fetchData();
     })
     .catch(error => {
       console.log("Error : ",error);
-    })
-  };
-  const closeModal = () => {
+    });
     setIsModalOpen(false);
   };
+
+  const deleteVideo = () => {
+    axios.post("http://127.0.0.1:8080/detection/detectionDelete", {
+      detectionId: detectedId
+    })
+    .then(response => {
+      fetchData();
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    });
+    setIsModalOpen(false);
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
 
 
   return (<React.Fragment>
@@ -87,11 +111,11 @@ function OrdersOverview({recentDetectedList}) {
                 <Grid item sx={1}>
                   {
                     item.detectionChecked ? (
-                      <VuiButton variant="text" color="success">
+                      <VuiButton variant="text" color="success" onClick={() => openModal(item.detectionId)}>
                         <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
                       </VuiButton>
                     ) : (
-                      <VuiButton variant="text" color="info" onClick={() => checkVideo(item.detectionId)}> 
+                      <VuiButton variant="text" color="info" onClick={() => openModal(item.detectionId)}> 
                         <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
                       </VuiButton>
                     )}
@@ -107,13 +131,13 @@ function OrdersOverview({recentDetectedList}) {
   </Card>
   <Dialog
     open={isModalOpen}
-    onClose={closeModal}
+    close={closeModal}
     aria-labelledby="modal-title"
     fullWidth
     maxWidth={'lg'}
   >
     {/* 비디오 플레이어 컴포넌트 */}
-    <DialogContent sx={{ width: "100%", maxWidth: "900px", height: "100%", margin: 0, padding: 0, backgroundColor:"#012654", alignItems:"center"}} >
+    <DialogContent sx={{ backgroundColor:"#012654"}} >
       <Card>
         <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
           <video width="100%" controls>
@@ -122,6 +146,10 @@ function OrdersOverview({recentDetectedList}) {
           </video>
         </VuiBox>
       </Card>
+      <DialogActions sx={{paddingBottom: 2}}>
+          <VuiButton variant="gradient" color="info" fullWidth onClick={checkVideo}>확인 완료</VuiButton>
+          <VuiButton variant="gradient" color="error" fullWidth onClick={deleteVideo}>삭제</VuiButton>
+      </DialogActions>
     </DialogContent>
   </Dialog>
   </React.Fragment>

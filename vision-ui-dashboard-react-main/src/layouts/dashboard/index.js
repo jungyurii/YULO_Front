@@ -22,7 +22,7 @@ import colors from "assets/theme/base/colors";
 // Dashboard layout components
 import WelcomeMark from "layouts/dashboard/components/WelcomeMark";
 import Projects from "layouts/dashboard/components/Projects";
-import OrderOverview from "layouts/dashboard/components/OrderOverview";
+import OrdersOverview from "layouts/dashboard/components/OrderOverview";
 import SatisfactionRate from "layouts/dashboard/components/SatisfactionRate";
 import ReferralTracking from "layouts/dashboard/components/ReferralTracking";
 
@@ -248,7 +248,7 @@ function Dashboard() {
           <Grid item xs={12} md={6} lg={4}>
             {
               recentDetectedList.length > 0 && (
-                <OrderOverview recentDetectedList={[recentDetectedList]}/>
+                <OrdersOverview recentDetectedList={[recentDetectedList]} setRecentDetectedList={setRecentDetectedList}/>
               )
             }
           </Grid>
