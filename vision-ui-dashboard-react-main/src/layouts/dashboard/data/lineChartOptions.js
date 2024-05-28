@@ -16,7 +16,7 @@ export const lineChartOptionsDashboard = {
     curve: "smooth",
   },
   xaxis: {
-    type: "numeric",
+    type: "datetime",
     labels: {
       style: {
         colors: "#c8cfca",
@@ -57,7 +57,7 @@ export const lineChartOptionsDashboard = {
       opacityTo: 0,
       stops: [],
     },
-    colors: ["#0075FF", "#2CD9FF", "#e31a1a","#ffcd75"],
+    colors: ["#0075FF", "#2CD9FF", "#e31a1a","#ffcd75","#56577A"],
   },
-  colors: ["#0075FF", "#2CD9FF", "#e31a1a","#ffcd75"],
+  colors: ["#0075FF", "#2CD9FF", "#e31a1a","#ffcd75","#56577A"],
 };
