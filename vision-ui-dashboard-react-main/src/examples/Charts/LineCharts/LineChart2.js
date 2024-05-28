@@ -18,7 +18,17 @@ class ApexChart extends React.Component {
           }
         },
         dataLabels: {
-          enabled: false
+          enabled: true,
+          // dropShadow: {
+          //   enabled: true,
+          //   left: 2,
+          //   top: 2,
+          //   opacity: 0.5,
+          // },
+          // background: {
+          //   enabled : false,
+          //   foreColor: "#fff"
+          // },
         },
         markers: {
           size: 0,
@@ -28,20 +38,51 @@ class ApexChart extends React.Component {
           type: 'datetime',
           min: new Date('27 May 2024').getTime(),
           tickAmount: 1,
+          labels: {
+            show: true,
+            style: {
+              colors: "#fff",
+              fontSize: "10px",
+              fontFamily: "Plus Jakarta Display",
+            },
+          },
+        },
+        yaxis: {
+          show: true,
+          labels: {
+            show: true,
+            style: {
+              colors: "#fff",
+              fontSize: "10px",
+              fontFamily: "Plus Jakarta Display",
+            },
+          },
         },
         tooltip: {
           x: {
-            format: 'dd MMM yyyy'
-          }
+            format: 'yyyy MMM dd hh:mm:ss'
+          },
+          theme: "dark",
         },
         fill: {
           type: 'gradient',
           gradient: {
-            shadeIntensity: 1,
-            opacityFrom: 0.7,
-            opacityTo: 0.9,
-            stops: [0, 100]
-          }
+            shade: "dark",
+            type: "vertical",
+            shadeIntensity: 0,
+            gradientToColors: undefined, // optional, if not defined - uses the shades of same color in series
+            inverseColors: true,
+            opacityFrom: 0.8,
+            opacityTo: 0,
+            stops: [],
+          },
+        },
+        legend: {
+          labels: {
+            colors: "#FFFFFF",
+          },
+          fontSize: '12px',
+          fontWeight: 600,
         },
       },
     
