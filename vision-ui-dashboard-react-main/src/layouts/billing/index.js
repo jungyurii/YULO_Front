@@ -42,8 +42,9 @@ import axios from "axios";
 function Billing() {
   const [detectedList, setDetectedList] = useState([]);
   useEffect(() => {
+    const userId = localStorage.getItem("userId");
     axios.post("http://127.0.0.1:8080/detection/detections", { 
-      userId: 1
+      userId: userId
     })
     .then(response => {
       console.log('response.data.result.data : ',response.data.result.data);
