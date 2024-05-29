@@ -7,7 +7,7 @@ import marker from "assets/images/small-logos/marker.png"
 
 const Map = ReactMapboxGl({
   accessToken:
-    process.env.MAPBOX
+    process.env.REACT_APP_KEY_MAPBOX
 });
 
 const mapStyle = {
