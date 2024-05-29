@@ -30,6 +30,9 @@ import { Image } from "components/ImageButton";
 import LiveChart from "examples/Charts/LiveCharts/LiveChart";
 import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
 import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
+import ApexChart3 from "examples/Charts/LineCharts/LineChart3";
+import KakaoMap from "./components/KakaoMap";
+import MyComponent from "./components/GoogleMap";
 
 function Tables() {
 
@@ -219,7 +222,14 @@ function Tables() {
               },
             }}
           >
-            <Table columns={prCols} rows={prRows} />
+            <Grid container spacing={2}>
+              <Grid item xs={8}>  
+                {/* <MyComponent/> */}
+              </Grid>
+              <Grid item xs={4}>
+                {/* <KakaoMap/> */}
+              </Grid>
+            </Grid>
           </VuiBox>
         </Card>
       </VuiBox>

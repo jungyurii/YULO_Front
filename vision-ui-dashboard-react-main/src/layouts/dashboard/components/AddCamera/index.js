@@ -26,15 +26,34 @@ import { AreaChart, CartesianGrid, Legend, Line, ResponsiveContainer, XAxis, YAx
 import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
 import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
 import LiveChart from "examples/Charts/LiveCharts/LiveChart";
+import KakaoMap from "layouts/tables/components/KakaoMap";
+import MapBox from "layouts/tables/components/MapBox";
 
 
 const AddCamera = () => {
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [position, setPosition] = useState();
 
   const handleClickOpen = () => {
     setOpen(true);
   };
+
+  const askForLocation = () =>  {
+    navigator.geolocation.getCurrentPosition(accessToGeo)
+}
+
+  const accessToGeo = (position) => {
+    const positionObj = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+    }
+    console.log(positionObj);
+    setPosition(positionObj);
+  }
+  useEffect(() => {
+    askForLocation();
+  },[]);
 
   const handleClose = () => {
     setOpen(false);
@@ -214,7 +233,7 @@ const AddCamera = () => {
                 </Grid>
                 <Grid>
                   <Paper style={{ padding: 20, backgroundColor: "#cbd5e0" }} sx={{height: 400, mt: 2}}>
-                    <h4>Live Graph Demo</h4>
+                    <h4>Location</h4>
                     {isLoading ? (
                         <Skeleton variant="rectangular" width={'100%'} height={'90%'} sx={{ bgcolor: '#2d3748', borderRadius:5}}/>
                       ) : (
@@ -223,11 +242,11 @@ const AddCamera = () => {
                               height: "540px",
                             })}>
                             <VuiBox height="350px" display="flex" flexDirection="column" justifyContent="space-between">
-                              <LiveChart
+                              {/* <LiveChart
                                 graphURL={graphURL}
                                 lineChartData={lineChartDataDashboard}
                                 lineChartOptions={lineChartOptionsDashboard}
-                              />
+                              /> */}
                               {/* <LiveChart
                                 url={graphURL}
                               >
@@ -238,6 +257,8 @@ const AddCamera = () => {
                                 <Legend />
                                 <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
                               </LiveChart> */}
+                              {/* <KakaoMap position={position}/> */}
+                              {position && <MapBox position={position}/>}
                             </VuiBox>
                           </Card>
                           </VuiBox>
