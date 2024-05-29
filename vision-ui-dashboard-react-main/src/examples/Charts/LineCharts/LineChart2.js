@@ -5,7 +5,8 @@ import ReactApexChart from "react-apexcharts";
 class ApexChart extends React.Component {
   constructor(props) {
     super(props);
-
+    const now = new Date();
+    const twelveHoursAgo = new Date(now.getTime() - 12 * 60 * 60 * 1000); // 12시간 전의 시간을 계산
     this.state = {
       series: []
       ,
@@ -18,7 +19,7 @@ class ApexChart extends React.Component {
           }
         },
         dataLabels: {
-          enabled: true,
+          enabled: false,
           // dropShadow: {
           //   enabled: true,
           //   left: 2,
@@ -36,7 +37,8 @@ class ApexChart extends React.Component {
         },
         xaxis: {
           type: 'datetime',
-          min: new Date('27 May 2024').getTime(),
+          min: twelveHoursAgo.getTime(),
+          max: now.getTime(),
           tickAmount: 1,
           labels: {
             show: true,
