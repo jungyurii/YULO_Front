@@ -122,8 +122,8 @@ function Dashboard() {
     <DashboardLayout>
       <DashboardNavbar />
       <VuiBox py={3}>
-        <VuiBox mb={3} style={{ overflowX: 'auto' }}>
-          <Grid container spacing={3} sx={{width: '170%'}} style={{ overflowX: 'auto' }}>
+        <VuiBox mb={3} style={{ overflowX: 'visible' }}>
+          <Grid container spacing={3} sx={{width: '170%'}} style={{ overflowX: 'visible' }}>
             <Grid item xs={12} md={6} xl={2}>
               <MiniStatisticsCard
                 title={{ text: "today's total detected", fontWeight: "bold" }}
@@ -146,8 +146,8 @@ function Dashboard() {
             }
           </Grid>
         </VuiBox>
-        <VuiBox mb={3} style={{ overflowX: 'auto' }}>
-          <Grid container spacing="18px" sx={{width: '300%'}} style={{ overflowX: 'auto' }}>
+        <VuiBox mb={3} style={{ overflowX: 'visible' }}>
+          <Grid container spacing="18px" sx={{width: '300%'}} style={{ overflowX: 'visible' }}>
             {
               Object.entries(cameraSetting).map(([index, data]) => (
                 <Grid item xs={12} lg={6} xl={2} key={index}>
