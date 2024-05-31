@@ -94,7 +94,7 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
           </VuiBox>
         </VuiBox>
       </VuiBox>
-      <VuiBox shadow="lg" sx={{ height: '400px', width: '570px', overflowY: 'scroll',overflowX: 'hidden', pr: 2 }}>
+      <VuiBox shadow="lg" sx={{ height: '400px', width: '570px', overflowY: 'scroll', overflowX: 'hidden', pr: 2 }}>
         <Grid container spacing="18px">
         {recentDetectedList.length > 0 &&
           recentDetectedList[0].map((item, index) => {
@@ -113,7 +113,7 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
                             <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
                           </VuiButton>
                         ) : (
-                          <VuiButton variant="text" color="info" onClick={() => openModal(item.detectionId)} >
+                          <VuiButton variant="text" color="info" onClick={() => openModal(item.detectionId)} sx={{ ml: 10 }}>
                             <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
                           </VuiButton>
                         )}
