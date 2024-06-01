@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { Card, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Dialog, DialogTitle, DialogContent, DialogActions, Paper } from '@mui/material';
-
+import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
+import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 // Vision UI Dashboard React layouts
 import VuiBox from 'components/VuiBox';
 import VuiTypography from 'components/VuiTypography';
 import VuiInput from 'components/VuiInput';
 import VuiButton from 'components/VuiButton';
 
-const Board = () => {
+function Board() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [title, setTitle] = useState('');
@@ -29,6 +30,8 @@ const Board = () => {
   };
 
   return (
+    <DashboardLayout>
+    <DashboardNavbar/>
     <VuiBox display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
       <VuiTypography variant="h4" gutterBottom>
         게시판
@@ -75,6 +78,7 @@ const Board = () => {
         </DialogActions>
       </Dialog>
     </VuiBox>
+    </DashboardLayout>
   );
 };
 

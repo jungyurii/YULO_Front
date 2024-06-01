@@ -16,6 +16,7 @@ import { IoBuild } from "react-icons/io5";
 import { IoCheckmarkCircle } from "react-icons/io5";
 import { IoStatsChart } from "react-icons/io5";
 import { IoHome } from "react-icons/io5";
+import CameraMap from "layouts/cameraMap";
 
 const routes = [
   {
@@ -47,17 +48,17 @@ const routes = [
   },
   {
     type: "collapse",
-    name: "Video Check",
-    key: "Video Check",
-    route: "/profile",
+    name: "Camera Map",
+    key: "cameraMap",
+    route: "/cameraMap",
     icon: <IoCheckmarkCircle size="15px" color="inherit" />,
-    component: Profile,
+    component: CameraMap,
     noCollapse: true,
   },
   {
     type: "collapse",
     name: "Board",
-    key: "Board",
+    key: "board",
     route: "/board",
     icon: <IoBuild size="15px" color="inherit" />,
     component: Board,
