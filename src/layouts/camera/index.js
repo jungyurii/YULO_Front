@@ -14,8 +14,8 @@ import yolo from "assets/images/model-images/detect_object.png"
 import smoke from "assets/images/model-images/detect_smoke.png"
 
 // Data
-import cameraData from "layouts/tables/data/cameraData";
-import projectsTableData from "layouts/tables/data/projectsTableData";
+import cameraData from "layouts/camera/data/cameraData";
+import projectsTableData from "layouts/camera/data/projectsTableData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
@@ -34,7 +34,7 @@ import ApexChart3 from "examples/Charts/LineCharts/LineChart3";
 import KakaoMap from "./components/KakaoMap";
 import MyComponent from "./components/GoogleMap";
 
-function Tables() {
+function Camera() {
 
   const [cameraSettings, setCameraSettings] = useState([]);
   const [open, setOpen] = useState(false);
@@ -437,4 +437,4 @@ function Tables() {
   );
 }
 
-export default Tables;
+export default Camera;

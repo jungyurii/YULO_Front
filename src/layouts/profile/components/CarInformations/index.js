@@ -178,10 +178,10 @@ const CarInformations = () => {
 									</VuiTypography>
 								</VuiBox>
 								<VuiBox sx={{ maxHeight: '75px' }}>
-									<LineChart
+									{/* <LineChart
 										lineChartData={lineChartDataProfile1}
 										lineChartOptions={lineChartOptionsProfile1}
-									/>
+									/> */}
 								</VuiBox>
 							</VuiBox>
 						</Grid>
@@ -251,10 +251,10 @@ const CarInformations = () => {
 									</VuiTypography>
 								</VuiBox>
 								<VuiBox sx={{ maxHeight: '75px' }}>
-									<LineChart
+									{/* <LineChart
 										lineChartData={lineChartDataProfile2}
 										lineChartOptions={lineChartOptionsProfile2}
-									/>
+									/> */}
 								</VuiBox>
 							</VuiBox>
 						</Grid>

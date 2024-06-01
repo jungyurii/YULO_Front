@@ -30,16 +30,16 @@ import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import Footer from "examples/Footer";
 
 // Billing page components
-import PaymentMethod from "layouts/billing/components/PaymentMethod";
-import Invoices from "layouts/billing/components/Invoices";
-import BillingInformation from "layouts/billing/components/BillingInformation";
-import Transactions from "layouts/billing/components/Transactions";
+import PaymentMethod from "layouts/detected/components/PaymentMethod";
+import Invoices from "layouts/detected/components/Invoices";
+import BillingInformation from "layouts/detected/components/BillingInformation";
+import Transactions from "layouts/detected/components/Transactions";
 import CreditBalance from "./components/CreditBalance";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 
-function Billing() {
+function Detected() {
   const [detectedList, setDetectedList] = useState([]);
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -91,4 +91,4 @@ function Billing() {
   );
 }
 
-export default Billing;
+export default Detected;

@@ -1,7 +1,7 @@
 // Vision UI Dashboard React layouts
 import Dashboard from "layouts/dashboard";
-import Tables from "layouts/tables";
-import Billing from "layouts/billing";
+import Camera from "layouts/camera";
+import Detected from "layouts/detected";
 import Board from "layouts/board";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
@@ -30,28 +30,28 @@ const routes = [
   {
     type: "collapse",
     name: "Camera Setting",
-    key: "Camera Setting",
-    route: "/tables",
+    key: "camera",
+    route: "/camera",
     icon: <IoVideocam size="15px" color="inherit" />,
-    component: Tables,
+    component: Camera,
     noCollapse: true,
   },
   {
     type: "collapse",
     name: "Detected List",
-    key: "Detected List",
-    route: "/billing",
+    key: "detected",
+    route: "/detected",
     icon: <IoStatsChart size="15px" color="inherit" />,
-    component: Billing,
+    component: Detected,
     noCollapse: true,
   },
   {
     type: "collapse",
     name: "Video Check",
     key: "Video Check",
-    route: "/tables",
+    route: "/profile",
     icon: <IoCheckmarkCircle size="15px" color="inherit" />,
-    component: Tables,
+    component: Profile,
     noCollapse: true,
   },
   {
