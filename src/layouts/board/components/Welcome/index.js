@@ -1,79 +1,59 @@
-/*!
-
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
 import React from "react";
 import { Card, Icon } from "@mui/material";
-import welcome from "assets/images/welcome-profile.png";
-import VuiTypography from "components/VuiTypography/index";
-import VuiBox from "components/VuiBox/index";
+
+// Vision UI Dashboard React examples
+import Table from "examples/Tables/Table";
+
 
 const Welcome = () => {
   return (
-    <Card
-      sx={({ breakpoints }) => ({
-        background: `url(${welcome})`,
-        backgroundSize: "cover",
-        borderRadius: "20px",
-        height: "100%",
-        [breakpoints.only("xl")]: {
-          gridArea: "1 / 1 / 2 / 2",
-        },
-      })}
-    >
-      <VuiBox display="flex" flexDirection="column" sx={{ height: "100%" }}>
-        <VuiBox display="flex" flexDirection="column" mb="auto">
-          <VuiTypography color="white" variant="h3" fontWeight="bold" mb="3px">
-            Welcome back!
-          </VuiTypography>
-          <VuiTypography color="white" variant="button" fontWeight="regular">
-            Nice to see you, Mark Johnson!
-          </VuiTypography>
-        </VuiBox>
-        <VuiBox justifySelf="flex-end">
-          <VuiTypography
-            component="a"
-            href="#"
-            variant="button"
-            color="white"
-            fontWeight="regular"
-            sx={{
-              mr: "5px",
-              display: "inline-flex",
-              alignItems: "center",
-              justifySelf: "flex-end",
-              cursor: "pointer",
-
-              "& .material-icons-round": {
-                fontSize: "1.125rem",
-                transform: `translate(2px, -0.5px)`,
-                transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
-              },
-
-              "&:hover .material-icons-round, &:focus  .material-icons-round": {
-                transform: `translate(6px, -0.5px)`,
-              },
-            }}
-          >
-            Tap to record
-            <Icon sx={{ fontWeight: "bold", ml: "5px" }}>arrow_forward</Icon>
-          </VuiTypography>
-        </VuiBox>
-      </VuiBox>
+    <Card>
+      <Table
+        columns={[
+          { name: "name", align: "left" },
+          { name: "function", align: "left" },
+          { name: "email", align: "center" },
+          { name: "employed", align: "center" },
+        ]}
+        rows={[
+          {
+            name: ["https://bit.ly/3qzezP5", "John Micheal"],
+            function: "Manager",
+            email: "john@user.com",
+            employed: "23/04/18",
+          },
+          {
+            name: ["https://bit.ly/3CfVnYA", "Alexa Liras"],
+            function: "Programator",
+            email: "alexa@user.com",
+            employed: "11/01/19",
+          },
+          {
+            name: ["https://bit.ly/3wM6x6v", "Laurent Perrier"],
+            function: "Executive",
+            email: "laurent@user.com",
+            employed: "19/09/17",
+          },
+          {
+            name: ["https://bit.ly/3CfVnYA", "Michael Levi"],
+            function: "Backend Developer",
+            email: "michael@user.com",
+            employed: "24/12/08",
+          },
+          {
+            name: ["https://bit.ly/3qzezP5", "Richard Gran"],
+            function: "Manager",
+            email: "richard@user.com",
+            employed: "04/10/21",
+          },
+          {
+            name: ["https://bit.ly/3CfVnYA", "Miriam Eric"],
+            function: "Programtor",
+            email: "miriam@user.com",
+            employed: "14/09/20",
+          },
+        ]}
+      />
     </Card>
   );
 };
