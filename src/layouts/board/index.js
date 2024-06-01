@@ -35,7 +35,12 @@ function Board() {
     <DashboardLayout>
       <Header setView={setView} />
       { view ?
-       (<Welcome />) : (
+       (<Grid container marginY="30px" width="100%">
+        <Grid item xs={12} xl={12}>
+          <Welcome />
+       </Grid>
+      </Grid>) 
+      : (
         <Grid container marginY="30px" width="100%"> 
         <Grid item xs={12} xl={12}>
           <Card>
