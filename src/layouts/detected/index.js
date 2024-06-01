@@ -63,12 +63,8 @@ function Detected() {
       <VuiBox mt={4}>
         <VuiBox mb={1.5}>
           <Grid container spacing={3}>
-            <Grid item xs={12} lg={7} xl={8}>
-              <Grid container spacing={3}>
-                <Grid item xs={12}>
-                  <PaymentMethod setDetectedList={setDetectedList}/>
-                </Grid>
-              </Grid>
+            <Grid item xs={12} width="100%">
+              <PaymentMethod setDetectedList={setDetectedList}/>
             </Grid>
           </Grid>
         </VuiBox>
