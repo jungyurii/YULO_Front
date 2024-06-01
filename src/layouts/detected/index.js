@@ -38,8 +38,11 @@ import CreditBalance from "./components/CreditBalance";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
+import colors from "assets/theme/base/colors";
 
 function Detected() {
+  const { gradients } = colors;
+  const { cardContent } = gradients;
   const [detectedList, setDetectedList] = useState([]);
   useEffect(() => {
     const userId = localStorage.getItem("userId");
@@ -56,26 +59,17 @@ function Detected() {
   }, []);
   return (
     <DashboardLayout>
-      <DashboardNavbar />
+      <DashboardNavbar/>
       <VuiBox mt={4}>
         <VuiBox mb={1.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} lg={7} xl={8}>
               <Grid container spacing={3}>
-                {/* <Grid item xs={12} xl={6}>
-                  <MasterCard number={7812213908237916} valid="05/24" cvv="09X" />
-                </Grid> */}
-                {/* <Grid item xs={12} md={12} xl={6}>
-                  <CreditBalance />
-                </Grid> */}
                 <Grid item xs={12}>
                   <PaymentMethod setDetectedList={setDetectedList}/>
                 </Grid>
               </Grid>
             </Grid>
-            {/* <Grid item xs={12} lg={5} xl={4}>
-              <Invoices />
-            </Grid> */}
           </Grid>
         </VuiBox>
         <VuiBox my={3}>
