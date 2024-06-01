@@ -5,6 +5,9 @@ import team2 from "assets/images/avatar2.png";
 import team3 from "assets/images/avatar3.png";
 import team4 from "assets/images/avatar4.png";
 
+// @mui material components
+import Icon from "@mui/material/Icon";
+
 // Images
 import profile1 from "assets/images/profile-1.png";
 import profile2 from "assets/images/profile-2.png";
@@ -14,13 +17,14 @@ import profile3 from "assets/images/profile-3.png";
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
-import Footer from "examples/Footer";
+import VuiPagination from "components/VuiPagination";
 
 // Vision UI Dashboard React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 
 // Overview page components
 import Header from "layouts/board/components/Header";
+import Footer from "examples/Footer";
 
 function Board() {
   return (
@@ -204,6 +208,20 @@ function Board() {
           </Card>
         </Grid>
       </Grid>
+
+      <VuiBox mt={4} display="flex" justifyContent="center">
+        <VuiPagination>
+          <VuiPagination item>
+            <Icon>keyboard_arrow_left</Icon>
+          </VuiPagination>
+          <VuiPagination item active>1</VuiPagination>
+          <VuiPagination item>2</VuiPagination>
+          <VuiPagination item>3</VuiPagination>
+          <VuiPagination item>
+            <Icon>keyboard_arrow_right</Icon>
+          </VuiPagination>
+        </VuiPagination>
+      </VuiBox>
 
       <Footer />
     </DashboardLayout>
