@@ -6,7 +6,7 @@ class ApexChart extends React.Component {
   constructor(props) {
     super(props);
     const now = new Date();
-    const twelveHoursAgo = new Date(now.getTime() - 12 * 60 * 60 * 1000); // 12시간 전의 시간을 계산
+    const twelveHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000); // 12시간 전의 시간을 계산
     this.state = {
       series: []
       ,
