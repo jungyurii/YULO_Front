@@ -61,19 +61,6 @@ function BillingInformation({detectedList}) {
             />
           ))}
           
-          <Bill
-            name="lucas harper"
-            company="stone tech zone"
-            email="lucas@stone-tech.com"
-            vat="FRB1235476"
-          />
-          <Bill
-            name="ethan james"
-            company="fiber notion"
-            email="ethan@fiber.com"
-            vat="FRB1235476"
-            noGutter
-          />
         </VuiBox>
       </VuiBox>
       <VuiBox mt={4} display="flex" justifyContent="center">

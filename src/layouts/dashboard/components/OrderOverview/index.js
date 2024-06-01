@@ -17,7 +17,7 @@ import AdobeXD from "examples/Icons/AdobeXD";
 
 // Vision UI Dashboard theme imports
 import palette from "assets/theme/base/colors";
-import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Grid, Icon, Stack } from "@mui/material";
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 import VuiButton from "components/VuiButton";
@@ -100,27 +100,24 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
           recentDetectedList[0].map((item, index) => {
             return (
               <Grid container xs={11} lg={11} xl={11} marginX={2} padding={1} key={index} sx={{ borderTop: 1, borderBottom: 1, alignItems: 'center' }}>
-                <Grid item width={400}>
+                <VuiBox display="flex" width="100%" flexDirection="row" justifyContent="space-between">
                   <TimelineItem
                     fullwidth
                     icon={<FaBell size="16px" color={palette.info.main} />}
                     title={item.cameraName}
-                    dateTime={
-                      <React.Fragment>
-                        {item.detectionDate}
-                        {item.detectionChecked ? (
-                          <VuiButton variant="text" color="success" onClick={() => openModal(item.detectionId)} sx={{ ml: 10 }}>
-                            <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
-                          </VuiButton>
-                        ) : (
-                          <VuiButton variant="text" color="info" onClick={() => openModal(item.detectionId)} sx={{ ml: 10 }}>
-                            <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
-                          </VuiButton>
-                        )}
-                      </React.Fragment>
-                    }
-                  />
-                </Grid>
+                    dateTime={item.detectionDate}
+                  >
+                  </TimelineItem>
+                  {item.detectionChecked ? (
+                    <VuiButton variant="text" color="success" onClick={() => openModal(item.detectionId)} sx={{ ml: 10 }}>
+                      <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
+                    </VuiButton>
+                  ) : (
+                    <VuiButton variant="text" color="info" onClick={() => openModal(item.detectionId)} sx={{ ml: 10 }}>
+                      <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
+                    </VuiButton>
+                  )}
+                </VuiBox>
               </Grid> 
             );
           })
