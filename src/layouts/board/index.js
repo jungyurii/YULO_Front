@@ -1,17 +1,18 @@
-import Card from "@mui/material/Card";
-import Grid from "@mui/material/Grid";
-import team1 from "assets/images/avatar1.png";
-import team2 from "assets/images/avatar2.png";
-import team3 from "assets/images/avatar3.png";
-import team4 from "assets/images/avatar4.png";
+import { useState } from "react";
 
 // @mui material components
 import Icon from "@mui/material/Icon";
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
 
 // Images
 import profile1 from "assets/images/profile-1.png";
 import profile2 from "assets/images/profile-2.png";
 import profile3 from "assets/images/profile-3.png";
+import team1 from "assets/images/avatar1.png";
+import team2 from "assets/images/avatar2.png";
+import team3 from "assets/images/avatar3.png";
+import team4 from "assets/images/avatar4.png";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -24,13 +25,18 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 
 // Overview page components
 import Header from "layouts/board/components/Header";
+import Welcome from "./components/Welcome";
 import Footer from "examples/Footer";
 
 function Board() {
+  const [view, setView] = useState(true);
+
   return (
     <DashboardLayout>
-      <Header />
-      <Grid container marginY="30px" width="100%"> 
+      <Header setView={setView} />
+      { view ?
+       (<Welcome />) : (
+        <Grid container marginY="30px" width="100%"> 
         <Grid item xs={12} xl={12}>
           <Card>
             <VuiBox display="flex" flexDirection="column" height="100%" >
@@ -208,6 +214,9 @@ function Board() {
           </Card>
         </Grid>
       </Grid>
+
+       )
+      }
 
       <VuiBox mt={4} display="flex" justifyContent="center">
         <VuiPagination>
