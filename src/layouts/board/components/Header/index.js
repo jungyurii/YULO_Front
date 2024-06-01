@@ -20,7 +20,7 @@ import { IoBuild } from "react-icons/io5";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { useEffect, useState } from "react";
 
-function Header() {
+function Header({setView}) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
@@ -44,7 +44,16 @@ function Header() {
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
 
-  const handleSetTabValue = (event, newValue) => setTabValue(newValue);
+  const handleSetTabValue = (event, newValue) => {
+    if (newValue === 1) {
+      setView(false);
+    } else {
+      setView(true);
+    }
+      
+    setTabValue(newValue);
+    console.log("new Value :", newValue);
+  }
 
   return (
     <VuiBox position="relative">
