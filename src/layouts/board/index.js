@@ -1,85 +1,163 @@
-import React, { useState } from 'react';
-import { Card, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Dialog, DialogTitle, DialogContent, DialogActions, Paper } from '@mui/material';
+import Card from "@mui/material/Card";
+import Grid from "@mui/material/Grid";
+import team1 from "assets/images/avatar1.png";
+import team2 from "assets/images/avatar2.png";
+import team3 from "assets/images/avatar3.png";
+import team4 from "assets/images/avatar4.png";
+
+// Images
+import profile1 from "assets/images/profile-1.png";
+import profile2 from "assets/images/profile-2.png";
+import profile3 from "assets/images/profile-3.png";
+
+// Vision UI Dashboard React components
+import VuiBox from "components/VuiBox";
+import VuiTypography from "components/VuiTypography";
+import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
+import Footer from "examples/Footer";
+
+// Vision UI Dashboard React example components
 import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
-import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-// Vision UI Dashboard React layouts
-import VuiBox from 'components/VuiBox';
-import VuiTypography from 'components/VuiTypography';
-import VuiInput from 'components/VuiInput';
-import VuiButton from 'components/VuiButton';
+
+// Overview page components
+import Header from "layouts/board/components/Header";
 
 function Board() {
-  const [posts, setPosts] = useState([]);
-  const [open, setOpen] = useState(false);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-    setTitle('');
-    setContent('');
-  };
-
-  const handleSubmit = () => {
-    setPosts([...posts, { title, content }]);
-    handleClose();
-  };
-
   return (
     <DashboardLayout>
-    <DashboardNavbar/>
-    <VuiBox display="flex" flexDirection="column" alignItems="center" justifyContent="center" minHeight="100vh">
-      <VuiTypography variant="h4" gutterBottom>
-        게시판
-      </VuiTypography>
-      <TableContainer component={Paper}>
-        <Table>
-          <TableBody>
-            {posts.map((post, index) => (
-              <TableRow key={index}>
-                <TableCell>{post.title}</TableCell>
-                <TableCell>{post.content}</TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <VuiButton variant="contained" color="primary" onClick={handleOpen}>
-        새 글 작성
-      </VuiButton>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>새 글 작성</DialogTitle>
-        <DialogContent>
-          <VuiInput
-            autoFocus
-            margin="dense"
-            label="제목"
-            fullWidth
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-          <VuiInput
-            margin="dense"
-            label="내용"
-            multiline
-            rows={4}
-            fullWidth
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-        </DialogContent>
-        <DialogActions>
-          <VuiButton onClick={handleClose}>취소</VuiButton>
-          <VuiButton onClick={handleSubmit}>작성</VuiButton>
-        </DialogActions>
-      </Dialog>
-    </VuiBox>
+      <Header />
+      <VuiBox mt={5} mb={3}>
+        <Grid
+          container
+          spacing={3}
+          sx={({ breakpoints }) => ({
+            [breakpoints.only("xl")]: {
+              gridTemplateColumns: "repeat(2, 1fr)",
+            },
+          })}
+        >
+          <Grid
+            item
+            xs={12}
+            xl={4}
+            xxl={3}
+            sx={({ breakpoints }) => ({
+              minHeight: "400px",
+              [breakpoints.only("xl")]: {
+                gridArea: "1 / 1 / 2 / 2",
+              },
+            })}
+          >
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            xl={5}
+            xxl={6}
+            sx={({ breakpoints }) => ({
+              [breakpoints.only("xl")]: {
+                gridArea: "2 / 1 / 3 / 3",
+              },
+            })}
+          >
+          </Grid>
+          <Grid
+            item
+            xs={12}
+            xl={3}
+            xxl={3}
+            sx={({ breakpoints }) => ({
+              [breakpoints.only("xl")]: {
+                gridArea: "1 / 2 / 2 / 3",
+              },
+            })}
+          >
+          </Grid>
+        </Grid>
+      </VuiBox>
+      
+      <Grid container spacing={3} mb="30px">
+        <Grid item xs={12} xl={9}>
+          <Card>
+            <VuiBox display="flex" flexDirection="column" height="100%">
+              <VuiBox display="flex" flexDirection="column" mb="24px">
+                <VuiTypography color="white" variant="lg" fontWeight="bold" mb="6px">
+                  Projects
+                </VuiTypography>
+                <VuiTypography color="text" variant="button" fontWeight="regular">
+                  Architects design houses
+                </VuiTypography>
+              </VuiBox>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={6} xl={4}>
+                  <DefaultProjectCard
+                    image={profile1}
+                    label="project #2"
+                    title="modern"
+                    description="As Uber works through a huge amount of internal management turmoil."
+                    action={{
+                      type: "internal",
+                      route: "/pages/profile/profile-overview",
+                      color: "white",
+                      label: "VIEW ALL",
+                    }}
+                    authors={[
+                      { image: team1, name: "Elena Morison" },
+                      { image: team2, name: "Ryan Milly" },
+                      { image: team3, name: "Nick Daniel" },
+                      { image: team4, name: "Peterson" },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} xl={4}>
+                  <DefaultProjectCard
+                    image={profile2}
+                    label="project #1"
+                    title="scandinavian"
+                    description="Music is something that every person has his or her own specific opinion about."
+                    action={{
+                      type: "internal",
+                      route: "/pages/profile/profile-overview",
+                      color: "white",
+                      label: "VIEW ALL",
+                    }}
+                    authors={[
+                      { image: team3, name: "Nick Daniel" },
+                      { image: team4, name: "Peterson" },
+                      { image: team1, name: "Elena Morison" },
+                      { image: team2, name: "Ryan Milly" },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} xl={4}>
+                  <DefaultProjectCard
+                    image={profile3}
+                    label="project #3"
+                    title="minimalist"
+                    description="Different people have different taste, and various types of music."
+                    action={{
+                      type: "internal",
+                      route: "/pages/profile/profile-overview",
+                      color: "white",
+                      label: "VIEW ALL",
+                    }}
+                    authors={[
+                      { image: team4, name: "Peterson" },
+                      { image: team3, name: "Nick Daniel" },
+                      { image: team2, name: "Ryan Milly" },
+                      { image: team1, name: "Elena Morison" },
+                    ]}
+                  />
+                </Grid>
+              </Grid>
+            </VuiBox>
+          </Card>
+        </Grid>
+      </Grid>
+
+      <Footer />
     </DashboardLayout>
   );
-};
+}
 
 export default Board;
