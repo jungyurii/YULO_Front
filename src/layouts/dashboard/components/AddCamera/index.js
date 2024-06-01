@@ -26,8 +26,8 @@ import { AreaChart, CartesianGrid, Legend, Line, ResponsiveContainer, XAxis, YAx
 import { lineChartDataDashboard } from "layouts/dashboard/data/lineChartData";
 import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptions";
 import LiveChart from "examples/Charts/LiveCharts/LiveChart";
-import KakaoMap from "layouts/tables/components/KakaoMap";
-import MapBox from "layouts/tables/components/MapBox";
+import KakaoMap from "layouts/camera/components/KakaoMap";
+import MapBox from "layouts/camera/components/MapBox";
 
 
 const AddCamera = () => {
@@ -257,8 +257,8 @@ const AddCamera = () => {
                                 <Legend />
                                 <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
                               </LiveChart> */}
-                              {/* <KakaoMap position={position}/> */}
-                              {position && <MapBox position={position}/>}
+                              <KakaoMap position={position}/>
+                              {/* {<MapBox position={position}/>} */}
                             </VuiBox>
                           </Card>
                           </VuiBox>
