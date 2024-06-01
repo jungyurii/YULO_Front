@@ -26,60 +26,10 @@ function Board() {
   return (
     <DashboardLayout>
       <Header />
-      <VuiBox mt={5} mb={3}>
-        <Grid
-          container
-          spacing={3}
-          sx={({ breakpoints }) => ({
-            [breakpoints.only("xl")]: {
-              gridTemplateColumns: "repeat(2, 1fr)",
-            },
-          })}
-        >
-          <Grid
-            item
-            xs={12}
-            xl={4}
-            xxl={3}
-            sx={({ breakpoints }) => ({
-              minHeight: "400px",
-              [breakpoints.only("xl")]: {
-                gridArea: "1 / 1 / 2 / 2",
-              },
-            })}
-          >
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            xl={5}
-            xxl={6}
-            sx={({ breakpoints }) => ({
-              [breakpoints.only("xl")]: {
-                gridArea: "2 / 1 / 3 / 3",
-              },
-            })}
-          >
-          </Grid>
-          <Grid
-            item
-            xs={12}
-            xl={3}
-            xxl={3}
-            sx={({ breakpoints }) => ({
-              [breakpoints.only("xl")]: {
-                gridArea: "1 / 2 / 2 / 3",
-              },
-            })}
-          >
-          </Grid>
-        </Grid>
-      </VuiBox>
-      
-      <Grid container spacing={3} mb="30px">
-        <Grid item xs={12} xl={9}>
+      <Grid container marginY="30px" width="100%"> 
+        <Grid item xs={12} xl={12}>
           <Card>
-            <VuiBox display="flex" flexDirection="column" height="100%">
+            <VuiBox display="flex" flexDirection="column" height="100%" >
               <VuiBox display="flex" flexDirection="column" mb="24px">
                 <VuiTypography color="white" variant="lg" fontWeight="bold" mb="6px">
                   Projects
@@ -88,8 +38,8 @@ function Board() {
                   Architects design houses
                 </VuiTypography>
               </VuiBox>
-              <Grid container spacing={3}>
-                <Grid item xs={12} md={6} xl={4}>
+              <Grid container spacing={5}>
+                <Grid item xs={12} md={6} xl={3}>
                   <DefaultProjectCard
                     image={profile1}
                     label="project #2"
@@ -109,7 +59,7 @@ function Board() {
                     ]}
                   />
                 </Grid>
-                <Grid item xs={12} md={6} xl={4}>
+                <Grid item xs={12} md={6} xl={3}>
                   <DefaultProjectCard
                     image={profile2}
                     label="project #1"
@@ -129,7 +79,7 @@ function Board() {
                     ]}
                   />
                 </Grid>
-                <Grid item xs={12} md={6} xl={4}>
+                <Grid item xs={12} md={6} xl={3}>
                   <DefaultProjectCard
                     image={profile3}
                     label="project #3"
@@ -146,6 +96,106 @@ function Board() {
                       { image: team3, name: "Nick Daniel" },
                       { image: team2, name: "Ryan Milly" },
                       { image: team1, name: "Elena Morison" },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} xl={3}>
+                  <DefaultProjectCard
+                    image={profile1}
+                    label="project #2"
+                    title="modern"
+                    description="As Uber works through a huge amount of internal management turmoil."
+                    action={{
+                      type: "internal",
+                      route: "/pages/profile/profile-overview",
+                      color: "white",
+                      label: "VIEW ALL",
+                    }}
+                    authors={[
+                      { image: team1, name: "Elena Morison" },
+                      { image: team2, name: "Ryan Milly" },
+                      { image: team3, name: "Nick Daniel" },
+                      { image: team4, name: "Peterson" },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} xl={3}>
+                  <DefaultProjectCard
+                    image={profile2}
+                    label="project #1"
+                    title="scandinavian"
+                    description="Music is something that every person has his or her own specific opinion about."
+                    action={{
+                      type: "internal",
+                      route: "/pages/profile/profile-overview",
+                      color: "white",
+                      label: "VIEW ALL",
+                    }}
+                    authors={[
+                      { image: team3, name: "Nick Daniel" },
+                      { image: team4, name: "Peterson" },
+                      { image: team1, name: "Elena Morison" },
+                      { image: team2, name: "Ryan Milly" },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} xl={3}>
+                  <DefaultProjectCard
+                    image={profile2}
+                    label="project #1"
+                    title="scandinavian"
+                    description="Music is something that every person has his or her own specific opinion about."
+                    action={{
+                      type: "internal",
+                      route: "/pages/profile/profile-overview",
+                      color: "white",
+                      label: "VIEW ALL",
+                    }}
+                    authors={[
+                      { image: team3, name: "Nick Daniel" },
+                      { image: team4, name: "Peterson" },
+                      { image: team1, name: "Elena Morison" },
+                      { image: team2, name: "Ryan Milly" },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} xl={3}>
+                  <DefaultProjectCard
+                    image={profile2}
+                    label="project #1"
+                    title="scandinavian"
+                    description="Music is something that every person has his or her own specific opinion about."
+                    action={{
+                      type: "internal",
+                      route: "/pages/profile/profile-overview",
+                      color: "white",
+                      label: "VIEW ALL",
+                    }}
+                    authors={[
+                      { image: team3, name: "Nick Daniel" },
+                      { image: team4, name: "Peterson" },
+                      { image: team1, name: "Elena Morison" },
+                      { image: team2, name: "Ryan Milly" },
+                    ]}
+                  />
+                </Grid>
+                <Grid item xs={12} md={6} xl={3}>
+                  <DefaultProjectCard
+                    image={profile2}
+                    label="project #1"
+                    title="scandinavian"
+                    description="Music is something that every person has his or her own specific opinion about."
+                    action={{
+                      type: "internal",
+                      route: "/pages/profile/profile-overview",
+                      color: "white",
+                      label: "VIEW ALL",
+                    }}
+                    authors={[
+                      { image: team3, name: "Nick Daniel" },
+                      { image: team4, name: "Peterson" },
+                      { image: team1, name: "Elena Morison" },
+                      { image: team2, name: "Ryan Milly" },
                     ]}
                   />
                 </Grid>
