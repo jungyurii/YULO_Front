@@ -13,8 +13,8 @@
 
 ## 시작 명령어
 
-- window의 경우 `npm start-win`
-- mac의 경우 `npm start-mac`
+- window의 경우 `npm run start-win`
+- mac의 경우 `npm run start-mac`
 위 명령어로 실행가능
 
 ## 파일 구조
