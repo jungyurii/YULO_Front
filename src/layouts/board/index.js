@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // @mui material components
 import Icon from "@mui/material/Icon";
@@ -17,6 +17,7 @@ import team4 from "assets/images/avatar4.png";
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
+import VuiButton from "components/VuiButton";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 import VuiPagination from "components/VuiPagination";
 
@@ -28,8 +29,34 @@ import Header from "layouts/board/components/Header";
 import Welcome from "./components/Welcome";
 import Footer from "examples/Footer";
 
+import Pagination from '@mui/material/Pagination';
+
+import axios from "axios";
+import React from "react";
+
 function Board() {
   const [view, setView] = useState(true);
+  const [paging, setPaging] = useState(1);
+  const [boardlist, setBoardlist] = useState([]);
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+
+    axios.get("http://127.0.0.1:8080/board/list?page=1", { 
+      userId: 1
+    })
+    .then(response => {
+      console.log("Response : ", response.data.result.data.content);
+      setBoardlist(response.data.result.data.content);
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    });
+  },[])
 
   return (
     <DashboardLayout>
@@ -213,6 +240,14 @@ function Board() {
                       { image: team2, name: "Ryan Milly" },
                     ]}
                   />
+
+                  {/* <VuiBox mt={4} display="flex" justifyContent="center">
+                    <Pagination
+                      number={1} // 현재 페이지
+                      size={8} // 페이지당 요소 수
+
+                    />
+                  </VuiBox> */}
                 </Grid>
               </Grid>
             </VuiBox>
@@ -222,20 +257,6 @@ function Board() {
 
        )
       }
-
-      <VuiBox mt={4} display="flex" justifyContent="center">
-        <VuiPagination>
-          <VuiPagination item>
-            <Icon>keyboard_arrow_left</Icon>
-          </VuiPagination>
-          <VuiPagination item active>1</VuiPagination>
-          <VuiPagination item>2</VuiPagination>
-          <VuiPagination item>3</VuiPagination>
-          <VuiPagination item>
-            <Icon>keyboard_arrow_right</Icon>
-          </VuiPagination>
-        </VuiPagination>
-      </VuiBox>
 
       <Footer />
     </DashboardLayout>

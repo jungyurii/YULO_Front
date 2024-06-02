@@ -52,7 +52,6 @@ function Header({setView}) {
     }
       
     setTabValue(newValue);
-    console.log("new Value :", newValue);
   }
 
   return (
