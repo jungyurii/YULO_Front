@@ -1,53 +1,55 @@
 import React from "react";
-import { Card, Icon } from "@mui/material";
+import { Card } from "@mui/material";
 
 // Vision UI Dashboard React examples
 import Table from "examples/Tables/Table";
 
+import VuiButton from "components/VuiButton";
 
 const Welcome = () => {
   return (
     <Card>
       <Table
         columns={[
+          { name: "id", align: "left" },
           { name: "name", align: "left" },
-          { name: "function", align: "left" },
-          { name: "email", align: "center" },
-          { name: "employed", align: "center" },
+          { name: "title", align: "center" },
+          { name: "date", align: "center" },
+          { name: "detail", align: "center" },
         ]}
         rows={[
           {
-            name: ["https://bit.ly/3qzezP5", "John Micheal"],
-            function: "Manager",
-            email: "john@user.com",
-            employed: "23/04/18",
+            name: "Manager",
+            title: "John Micheal",
+            date: "23/04/18",
+            detail: <VuiButton color="info">detail</VuiButton>,
           },
           {
-            name: ["https://bit.ly/3CfVnYA", "Alexa Liras"],
+            name: "John Micheal",
             function: "Programator",
             email: "alexa@user.com",
             employed: "11/01/19",
           },
           {
-            name: ["https://bit.ly/3wM6x6v", "Laurent Perrier"],
+            name: "John Micheal",
             function: "Executive",
             email: "laurent@user.com",
             employed: "19/09/17",
           },
           {
-            name: ["https://bit.ly/3CfVnYA", "Michael Levi"],
+            name: "John Micheal",
             function: "Backend Developer",
             email: "michael@user.com",
             employed: "24/12/08",
           },
           {
-            name: ["https://bit.ly/3qzezP5", "Richard Gran"],
+            name: "John Micheal",
             function: "Manager",
             email: "richard@user.com",
             employed: "04/10/21",
           },
           {
-            name: ["https://bit.ly/3CfVnYA", "Miriam Eric"],
+            name: "John Micheal",
             function: "Programtor",
             email: "miriam@user.com",
             employed: "14/09/20",
