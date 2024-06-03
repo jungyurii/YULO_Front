@@ -41,7 +41,7 @@ function CameraMap() {
               카메라 API
           </VuiTypography>
           <VuiBox py={3} sx={{width: "130vh", height: "90vh"}}>
-            {/* {position !== undefined && <KakaoMap position={position}/>}   */}
+            {position !== undefined && <KakaoMap position={position}/>}  
           </VuiBox>
         </Card>
       </DashboardLayout>
