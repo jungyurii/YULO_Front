@@ -25,6 +25,7 @@ function Welcome() {
     id: notice.noticeId,
     name: notice.userName,
     title: notice.title,
+    date: notice.createDate,
   }));
 
     return (
