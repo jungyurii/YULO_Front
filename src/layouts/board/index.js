@@ -88,7 +88,7 @@ function Board() {
                         image={profile1}
                         label="project #1"
                         title={board.title}
-                        description={board.title}
+                        description={board.content}
                         action={{
                           type: "internal",
                           route: "/pages/profile/profile-overview",
