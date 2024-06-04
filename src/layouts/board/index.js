@@ -42,13 +42,15 @@ function Board() {
   const [size, setSize] = useState(0);
   const [first, setFirst] = useState(false);
   const [last, setLast] = useState(false);
+  const [userName, setUserName] = useState('');
+  const [email, setEmail] = useState('');
 
   const [boardlist, setBoardlist] = useState([]);
   const [open, setOpen] = useState(false);
   const [clickBoardIndex, setClickBoardIndex] = useState(); // 클릭된 카드를 식별하기 위한 상태 추가
 
-  const handleOpen = (index) => {
-    setClickBoardIndex(index); // 클릭된 카드 index 저장
+  const handleOpen = (boardId) => {
+    console.log("boardId : ", boardId);
     setOpen(true);
   };
 
@@ -74,7 +76,7 @@ function Board() {
       userId: 1
     })
     .then(response => {
-      console.log("Response : ", response.data.result.data.content);
+      console.log("Response : ", response.data.result.data);
       console.log("TotalPages : ", response.data.result.data.totalPages);
       console.log("CurrentPage : ", response.data.result.data.number + 1);
       console.log("TotalElements : ", response.data.result.data.totalElements);
@@ -97,7 +99,7 @@ function Board() {
 
   return (
     <DashboardLayout>
-      <Header setView={setView} />
+      <Header setView={setView} userName={userName} email={email}/>
       { view ?
        (<Grid container marginY="30px" width="100%">
         <Grid item xs={12} xl={12}>
@@ -113,23 +115,23 @@ function Board() {
                 <VuiTypography color="white" variant="lg" fontWeight="bold" mb="6px">
                   Community
                 </VuiTypography>
-                <VuiButton display="inline" variant="text" fontWeight="bold" color="info"> + Add Write
+                <VuiButton display="inline" variant="text" fontWeight="bold" color="info" onClick={() => setOpen(true)}> + Add Write
                 </VuiButton>
               </VuiBox>
               <Grid container spacing={5}>
                   {
                     boardlist.map((board, index) => (
-                      <Grid item xs={12} md={6} xl={3} key={index}>
+                      <Grid item xs={12} md={6} xl={3} key={index}  onClick={() => handleOpen(board.boardId)}>
                       <DefaultProjectCard
                         image={profile1}
-                        label="project #1"
+                        label={"project #" + board.boardId}
                         title={board.title}
                         description={board.content}
                         action={{
                           type: "internal",
                           color: "white",
                           label: "VIEW ALL",
-                          onClick: () => handleOpen(index), // 클릭 이벤트 시 해당 카드의 index를 전달
+                          onClick: () => handleOpen(board.boardId), // 클릭 이벤트 시 해당 카드의 index를 전달
                         }}
                         authors={[
                           { image: team1, name: "Elena Morison" },
@@ -137,9 +139,13 @@ function Board() {
                           { image: team3, name: "Nick Daniel" },
                           { image: team4, name: "Peterson" },
                         ]}
+                       
                       />
-                      {/* <Dialog
-                          open={handleOpen}
+                    </Grid>
+                    ))
+                  }
+                    <Dialog
+                          open={open}
                           close={handleClose}
                           aria-labelledby="title"
                           fullWidth
@@ -155,10 +161,7 @@ function Board() {
                               <VuiButton variant="gradient" color="error" fullWidth onClick={handleClose}>닫기</VuiButton>
                           </DialogActions>
                         </DialogContent>
-                      </Dialog> */}
-                    </Grid>
-                    ))
-                  }
+                      </Dialog>
               </Grid>
                 <VuiBox mt={4} display="flex" justifyContent="center">
                   <Pagination
