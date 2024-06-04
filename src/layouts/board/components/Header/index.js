@@ -20,7 +20,7 @@ import { IoBuild } from "react-icons/io5";
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
 import { useEffect, useState } from "react";
 
-function Header({setView}) {
+function Header({setView, userName, email}) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
 
@@ -117,10 +117,10 @@ function Header({setView}) {
               })}
             >
               <VuiTypography variant="lg" color="white" fontWeight="bold">
-                Mark Johnson
+                {userName}
               </VuiTypography>
               <VuiTypography variant="button" color="text" fontWeight="regular">
-                mark@simmmple.com
+                {email}
               </VuiTypography>
             </VuiBox>
           </Grid>
