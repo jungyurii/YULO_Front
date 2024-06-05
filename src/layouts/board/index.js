@@ -19,7 +19,6 @@ import team4 from "assets/images/avatar4.png";
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";
-import VuiBadge from "components/VuiBadge";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
 // Vision UI Dashboard React example components
@@ -27,7 +26,7 @@ import DashboardLayout from "examples/LayoutContainers/DashboardLayout";
 
 // Overview page components
 import Header from "layouts/board/components/Header";
-import Welcome from "./components/Welcome";
+import Announcement from "./components/Announcement";
 import Footer from "examples/Footer";
 
 // React icons
@@ -96,8 +95,8 @@ function Board() {
       <Header setView={setView} userName={userName} email={email}/>
       { view ?
        (<Grid container marginY="30px" width="100%">
-        <Grid item xs={12} xl={12}>
-          <Welcome />
+          <Grid item xs={12} xl={12}>
+          <Announcement />
        </Grid>
       </Grid>) 
       : (
