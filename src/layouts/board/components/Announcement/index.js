@@ -8,7 +8,7 @@ import VuiBox from "components/VuiBox";
 
 import axios from "axios";
 
-function Welcome() {
+function Announcement() {
   const [noticelist, setNoticelist] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -77,4 +77,4 @@ function Welcome() {
     );
   };
 
-export default Welcome;
+export default Announcement;
