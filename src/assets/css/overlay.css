@@ -35,6 +35,21 @@ ul {
 .first .text {
   color: #fff;
   font-weight: bold;
+  background-color: #0e456d;
+  padding: 10px;
+  text-align: center;
+  border-radius: 15px;
+  border: solid 2px #125688;
+}
+
+.first .text:hover {
+  color: #fff;
+  font-weight: bold;
+  background-color: #86bee7;
+  padding: 10px;
+  text-align: center;
+  border-radius: 15px;
+  border: solid 2px #5995c0;
 }
 
 .first .triangle {
