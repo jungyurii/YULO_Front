@@ -67,6 +67,15 @@ const routes = [
     component: Board,
     noCollapse: true,
   },
+  {
+    type: "collapse",
+    name: "Sign In",
+    key: "sign-in",
+    route: "/authentication/sign-in",
+    icon: <IoIosDocument size="15px" color="inherit" />,
+    component: SignIn,
+    noCollapse: false,
+  },
 ];
 
 export default routes;
