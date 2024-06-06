@@ -39,7 +39,20 @@ function Camera() {
   const [cameraSettings, setCameraSettings] = useState([]);
   const [open, setOpen] = useState(false);
   const [isLoading, setIsLoading]= useState(true);
+  const [position, setPosition] = useState();
 
+  const askForLocation = () =>  {
+    navigator.geolocation.getCurrentPosition(accessToGeo)
+  }
+
+  const accessToGeo = (position) => {
+    const positionObj = {
+        latitude: position.coords.latitude,
+        longitude: position.coords.longitude
+    }
+    console.log(positionObj);
+    setPosition(positionObj);
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -54,6 +67,7 @@ function Camera() {
     .then(responses => {
       console.log("Response : ", responses.data.result.data);
       setCameraSettings(responses.data.result.data);
+      askForLocation();
     })
     .catch(error => {
       console.log("Error : ", error);
@@ -254,18 +268,6 @@ function Camera() {
                 backgroundSize: "cover",
                 backgroundPosition: "50%",
               })}>
-                {/* {isLoading ? (
-                  <Skeleton variant="rectangular" width={'100%'} height={'100%'} sx={{ bgcolor: '#2d3748', borderRadius:5}}/>
-                ) : (
-                  <Card sx={() => ({
-                    height: "540px",
-                    py: "32px",
-                    backgroundImage: `url('${streamURL}')`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "50%"
-                  })}>
-                  </Card>
-                )} */}
                 <Card sx={() => ({
                     height: "540px",
                     py: "32px",
@@ -278,8 +280,8 @@ function Camera() {
           </Grid>
           <Grid>
             <Paper style={{ padding: 20, backgroundColor: "#cbd5e0" }} sx={{height: 400, mt: 2}}>
-              <h4>Live Graph Demo</h4>
-              {/* {isLoading ? (
+            <h4>Location</h4> 현재 위치 "위도 : {position && (position.longitude)} 경도: {position && (position.latitude)} "
+              {!isLoading ? (
                   <Skeleton variant="rectangular" width={'100%'} height={'90%'} sx={{ bgcolor: '#2d3748', borderRadius:5}}/>
                 ) : (
                     <VuiBox height="90%" display="flex" flexDirection="column" justifyContent="space-between">
@@ -287,28 +289,11 @@ function Camera() {
                         height: "540px",
                       })}>
                       <VuiBox height="350px" display="flex" flexDirection="column" justifyContent="space-between">
-                        <LiveChart
-                          graphURL={graphURL}
-                          lineChartData={lineChartDataDashboard}
-                          lineChartOptions={lineChartOptionsDashboard}
-                        />
+                        <KakaoMap position={position} setPosition={setPosition}/>
                       </VuiBox>
                     </Card>
                     </VuiBox>
-                )} */}
-                <VuiBox height="90%" display="flex" flexDirection="column" justifyContent="space-between">
-                  <Card sx={() => ({
-                    height: "540px",
-                  })}>
-                    <VuiBox height="350px" display="flex" flexDirection="column" justifyContent="space-between">
-                      <LiveChart
-                        graphURL={graphURL}
-                        lineChartData={lineChartDataDashboard}
-                        lineChartOptions={lineChartOptionsDashboard}
-                      />
-                    </VuiBox>
-                  </Card>
-                </VuiBox>
+                )}
             </Paper>
           </Grid>
         </Grid>
