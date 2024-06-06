@@ -1,23 +1,8 @@
-/*!
-
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
 // @mui material components
 import Card from "@mui/material/Card";
+import Pagination from '@mui/material/Pagination';
+import axios from "axios";
+import { useState, useEffect } from "react";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -25,14 +10,52 @@ import VuiTypography from "components/VuiTypography";
 
 // Billing page components
 import Bill from "layouts/detected/components/Bill";
-// Vision UI Dashboard React components
-import VuiPagination from "components/VuiPagination";
 
 // @mui material components
 import Icon from "@mui/material/Icon";
 
-function BillingInformation({detectedList}) {
-  // console.log('BillingInformation : ',detectedList);
+
+function BillingInformation() {
+  const [detectedList, setDetectedList] = useState([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalElements, setTotalElements] = useState(0);
+  const [size, setSize] = useState(0);
+  const [first, setFirst] = useState(false);
+  const [last, setLast] = useState(false);
+
+  const handelPageChange = (page) => {
+    axios.get(`http://127.0.0.1:8080/detection/detections?userId=1&page=${page}`)
+    .then(response => {
+      setDetectedList(response.data.result.data.content);
+      setCurrentPage(page);
+    })
+    .catch(error => {
+      console.log("error : ", error);
+    })
+  }
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+
+    axios.get("http://127.0.0.1:8080/detection/detections?userId=1&page=1", { 
+      userId: 1
+    })
+    .then(response => {
+      console.log('Response : ', response.data.result.data);
+      setDetectedList(response.data.result.data.content);
+      setTotalPages(response.data.result.data.totalPages); // 전체 페이지 수 설정
+      setCurrentPage(response.data.result.data.number + 1); // 현재 페이지 번호 설정
+      setTotalElements(response.data.result.data.totalElements); // 전체 요소 수 설정
+      setSize(response.data.result.data.size); // 페이지당 요소 수 설정
+      setFirst(response.data.result.data.first); // 첫 번째 페이지인지
+      setLast(response.data.result.data.last); // 마지막 페이지인지
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    })
+  }, []);
+
   return (
 
     <Card id="delete-account" fullwidth>
@@ -43,14 +66,6 @@ function BillingInformation({detectedList}) {
       </VuiBox>
       <VuiBox>
         <VuiBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-        {/* 
-          cameraName : "Camera 1"
-          detectionChecked: false
-          detectionDate: "2024-05-27T05:47:01.009765"
-          detectionId: 56
-          detectionServerPath: "7193.mp4"
-          modelId: 1 
-        */}
           {detectedList.map(detection => (
             <Bill
               name={detection.cameraName}
@@ -60,21 +75,18 @@ function BillingInformation({detectedList}) {
               key={detection.detectionId}
             />
           ))}
-          
+
         </VuiBox>
       </VuiBox>
       <VuiBox mt={4} display="flex" justifyContent="center">
-        <VuiPagination>
-          <VuiPagination item>
-            <Icon>keyboard_arrow_left</Icon>
-          </VuiPagination>
-          <VuiPagination item active>1</VuiPagination>
-          <VuiPagination item>2</VuiPagination>
-          <VuiPagination item>3</VuiPagination>
-          <VuiPagination item>
-            <Icon>keyboard_arrow_right</Icon>
-          </VuiPagination>
-        </VuiPagination>
+        <Pagination
+            color="secondary"
+            count={totalPages} // 전체 페이지 수
+            page={currentPage} // 현재 페이지
+            onChange={(event, page) => handelPageChange(page)}
+            showFirstButton={!first} // 첫번째 페이지가 아닐 때 첫번째 페이지 버튼 표시
+            showLastButton={!last} // 마지막 페이지가 아닐 때 마지막 페이지 버튼 표시
+          />
       </VuiBox>
     </Card>
     

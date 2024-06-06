@@ -16,12 +16,10 @@ import Footer from "examples/Footer";
 
 function Board() {
   const [view, setView] = useState(true);
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
 
   return (
     <DashboardLayout>
-      <Header setView={setView} userName={userName} email={email}/>
+      <Header setView={setView} />
       { view ?
        (<Grid container marginY="30px" width="100%">
           <Grid item xs={12} xl={12}>
