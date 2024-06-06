@@ -37,16 +37,16 @@ function Footer() {
           sx={{ textAlign: "center", fontWeight: "400 !important" }}
           color="white"
         >
-          @ 2021, Made with ❤️&nbsp;&nbsp;&nbsp; by{" "}
+          2024 Capstone Project &nbsp;&nbsp;&nbsp; by{" "}
           <VuiTypography
             component="a"
             variant="button"
-            href="https://simmmple.com/"
+            href="https://www.inhatc.ac.kr/sites/kr/index.do"
             sx={{ textAlign: "center", fontWeight: "500 !important" }}
             color="white"
             mr="2px"
           >
-            Simmmple
+            Inhatc
           </VuiTypography>
           &
           <VuiTypography
@@ -54,13 +54,12 @@ function Footer() {
             mr="2px"
             component="a"
             variant="button"
-            href="https://www.creative-tim.com/"
+            href="https://github.com/kitae104"
             sx={{ textAlign: "center", fontWeight: "500 !important" }}
             color="white"
           >
-            Creative Tim
+            YULO Club
           </VuiTypography>
-          for a better web
         </VuiTypography>
       </VuiBox>
       <VuiBox item xs={10}>
@@ -72,7 +71,7 @@ function Footer() {
               variant="body2"
               color="white"
             >
-              Marketplace
+              Notion
             </VuiTypography>
           </VuiBox>
           <VuiBox mr={{ xs: "20px", lg: "46px" }}>
@@ -82,7 +81,7 @@ function Footer() {
               variant="body2"
               color="white"
             >
-              Blog
+              Git
             </VuiTypography>
           </VuiBox>
           <VuiBox>

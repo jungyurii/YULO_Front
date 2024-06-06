@@ -19,6 +19,7 @@ import { IoHome } from "react-icons/io5";
 import CameraMap from "layouts/cameraMap";
 
 const routes = [
+  { type: "title", title: "Main", key: "Main-pages" },
   {
     type: "collapse",
     name: "Dashboard",
@@ -28,6 +29,7 @@ const routes = [
     component: Dashboard,
     noCollapse: true,
   },
+  { type: "title", title: "Report", key: "Report-pages" },
   {
     type: "collapse",
     name: "Camera Setting",
@@ -46,6 +48,7 @@ const routes = [
     component: Detected,
     noCollapse: true,
   },
+  { type: "title", title: "Community", key: "Community-pages" },
   {
     type: "collapse",
     name: "Camera Map",
@@ -62,44 +65,6 @@ const routes = [
     route: "/board",
     icon: <IoBuild size="15px" color="inherit" />,
     component: Board,
-    noCollapse: true,
-  },
-  {
-    type: "collapse",
-    name: "Configuration",
-    key: "Configuration",
-    route: "/profile",
-    icon: <IoBuild size="15px" color="inherit" />,
-    component: Profile,
-    noCollapse: true,
-  },
-
-  { type: "title", title: "Account Pages", key: "account-pages" },
-  {
-    type: "collapse",
-    name: "Profile",
-    key: "profile",
-    route: "/profile",
-    icon: <BsFillPersonFill size="15px" color="inherit" />,
-    component: Profile,
-    noCollapse: true,
-  },
-  {
-    type: "collapse",
-    name: "Sign In",
-    key: "sign-in",
-    route: "/authentication/sign-in",
-    icon: <IoIosDocument size="15px" color="inherit" />,
-    component: SignIn,
-    noCollapse: true,
-  },
-  {
-    type: "collapse",
-    name: "Sign Up",
-    key: "sign-up",
-    route: "/authentication/sign-up",
-    icon: <IoRocketSharp size="15px" color="inherit" />,
-    component: SignUp,
     noCollapse: true,
   },
 ];
