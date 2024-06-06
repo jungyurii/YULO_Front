@@ -1,28 +1,38 @@
-import AppBar from "@mui/material/AppBar";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
+import AppBar from "@mui/material/AppBar";
+
 // Images
 import burceMars from "assets/images/avatar-simmmple.png";
+
 // Vision UI Dashboard React base styles
 import breakpoints from "assets/theme/base/breakpoints";
 import VuiAvatar from "components/VuiAvatar";
+
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
+
 // Vision UI Dashboard React icons
 import { IoCube } from "react-icons/io5";
 import { IoDocument } from "react-icons/io5";
 import { IoBuild } from "react-icons/io5";
+
 // Vision UI Dashboard React example components
 import DashboardNavbar from "examples/Navbars/DashboardNavbar";
-import { useEffect, useState } from "react";
 
-function Header({setView, userName, email}) {
+function Header({setView}) {
   const [tabsOrientation, setTabsOrientation] = useState("horizontal");
   const [tabValue, setTabValue] = useState(0);
+
+  const [userName, setUserName] = useState('');
+  const [userEmail, setUserEmail] = useState('');
 
   useEffect(() => {
     // A function that sets the orientation state of the tabs.
@@ -43,6 +53,23 @@ function Header({setView, userName, email}) {
     // Remove event listener on cleanup
     return () => window.removeEventListener("resize", handleTabsOrientation);
   }, [tabsOrientation]);
+
+
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+
+    axios.post("http://127.0.0.1:8080/board/info", { 
+      userId: userId
+    })
+    .then(response => {
+      console.log('Response : ', response.data.result.data);
+      setUserName(response.data.result.data.userName);
+      setUserEmail(response.data.result.data.userEmail);
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    })
+  }, []);
 
   const handleSetTabValue = (event, newValue) => {
     if (newValue === 1) {
@@ -120,7 +147,7 @@ function Header({setView, userName, email}) {
                 {userName}
               </VuiTypography>
               <VuiTypography variant="button" color="text" fontWeight="regular">
-                {email}
+                {userEmail}
               </VuiTypography>
             </VuiBox>
           </Grid>
