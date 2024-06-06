@@ -1,7 +1,7 @@
 // @mui material components
 import Grid from "@mui/material/Grid";
 import Icon from "@mui/material/Icon";
-import { Box, Card, CircularProgress, LinearProgress, Stack } from "@mui/material";
+import { Box, Card, LinearProgress, Stack } from "@mui/material";
 
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
@@ -51,6 +51,12 @@ import { Margin } from "@mui/icons-material";
 import AddCamera from "./components/AddCamera";
 import MaxWidthDialog from "./components/AddCamera";
 import ApexChart from "examples/Charts/LineCharts/LineChart2";
+import Video from "../../assets/videos/annotated_output_2.mp4"
+import CustomSnackbar from "./components/SnackBar";
+import Backdrop from '@mui/material/Backdrop';
+import CircularProgress from '@mui/material/CircularProgress';
+import Button from '@mui/material/Button';
+
 
 function Dashboard() {
   const { gradients } = colors;
@@ -63,8 +69,32 @@ function Dashboard() {
   const [recentDetectedList, setRecentDetectedList] = useState([]);
   const [cameraSetting, setCameraSetting] = useState([]);
   const [graphData, setGraphData] = useState([]);
-  
+  const [show, setShow] = useState(false);
+  const [backDrop, setBackDrop] = useState(true);
 
+
+  const handleBackDropClose = () => {
+    setBackDrop(false);
+  };
+  const handleBackDropOpen = () => {
+    setBackDrop(true);
+  };
+
+
+  const toggleSnackbar = () => setShow(!show);
+
+  const sendLiveGraphRequest = () => {
+    axios.post("http://127.0.0.1:8080/graph/graphList", { userId: 1 })
+    .then(response => {
+      setGraphData(response.data.result.data);
+      console.log("요청 보냄");
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    })
+  }
+  
+  console.log("메인 리렌더링");
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     
@@ -72,7 +102,7 @@ function Dashboard() {
       axios.post("http://127.0.0.1:8080/camera/cameraName", { userId: 1 }),
       axios.post("http://127.0.0.1:8080/camera/cameraRanking", { userId: 1 }),
       axios.post("http://127.0.0.1:8080/model/allInfoGet"),
-      axios.post("http://127.0.0.1:8080/detection/detections", { userId: 1}),
+      axios.post("http://127.0.0.1:8080/detection/detectionsList", { userId: 1}),
       axios.post("http://127.0.0.1:8080/camera/cameraSetting", { userId: 1 }),
       axios.post("http://127.0.0.1:8080/graph/graphList", { userId: 1 })
     ])
@@ -97,33 +127,21 @@ function Dashboard() {
       setCameraSetting(cameraSettingResponse.data.result.data);
       setCameraRank(Object.entries(cameraRankResponse.data.result.data).sort((data1, data2) => data2[1] - data1[1]));
       setGraphData(graphDataResponse.data.result.data);
+      handleBackDropClose();
+      toggleSnackbar();
     })
     .catch(error => {
       console.log("Error : ", error);
     })
-
-    // const eventSource = new EventSource('http://127.0.0.1:8080/api/notification/sse/notifications', {
-    //   userId: 1
-    // });
-    // console.log("EventSource: ", eventSource);
-    // eventSource.addEventListener("onmessage", (event) => {
-    //   const data = JSON.parse(event.data);
-    //   console.log("Data : %o", data);
-    //   setNotification(data.message);
-    // });
-
-    // return () => {
-    //   eventSource.close();
-    // };
-
   }, []);
+  // setTimeout(sendLiveGraphRequest, 5000);
 
   return (
     <DashboardLayout>
       <DashboardNavbar />
       <VuiBox py={3}>
-        <VuiBox mb={3} style={{ overflowX: 'visible' }}>
-          <Grid container spacing={3} sx={{width: '170%'}} style={{ overflowX: 'visible' }}>
+        <VuiBox mb={3} style={{ overflowX: 'auto' }}>
+          <Grid container spacing={3} sx={{width: '170%'}} style={{ overflowX: 'auto' }}>
             <Grid item xs={12} md={6} xl={2}>
               <MiniStatisticsCard
                 title={{ text: "today's total detected", fontWeight: "bold" }}
@@ -146,8 +164,48 @@ function Dashboard() {
             }
           </Grid>
         </VuiBox>
-        <VuiBox mb={3} style={{ overflowX: 'visible' }}>
-          <Grid container spacing="18px" sx={{width: '300%'}} style={{ overflowX: 'visible' }}>
+        <VuiBox mb={3} style={{ overflowX: 'auto' }}>
+          <Grid container spacing="18px" sx={{width: '300%'}} style={{ overflowX: 'auto' }}>
+            <Grid item xs={12} lg={6} xl={2}>
+              <Card sx={() => ({
+                  height: "540px",
+                  py: "32px",
+                  backgroundImage: `${Video}`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "50%"
+                })}>
+                <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
+                  <VuiTypography
+                    component="a"
+                    href="#"
+                    variant="button"
+                    color="white"
+                    fontWeight="regular"
+                    sx={{
+                      mr: "5px",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+
+                      "& .material-icons-round": {
+                        fontSize: "3.125rem",
+                        transform: `translate(2px, -0.5px)`,
+                        transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
+                      },
+
+                      "&:hover .material-icons-round, &:focus  .material-icons-round": {
+                        transform: `translate(6px, -0.5px)`,
+                      },
+                    }}
+                  >
+                    {"안전구역 카메라"}
+                  </VuiTypography>
+                    <video autoPlay loop muted type="video/mp4" style={{width: "100%", height: "auto",}}>
+                      <source src={Video} type="video/mp4"/>
+                    </video>
+                </VuiBox>
+              </Card>
+            </Grid>
             {
               Object.entries(cameraSetting).map(([index, data]) => (
                 <Grid item xs={12} lg={6} xl={2} key={index}>
@@ -179,10 +237,6 @@ function Dashboard() {
                   <VuiBox sx={{ height: "350px" }}>
                   {
                     graphData.length > 0 && (
-                      // <LineChart
-                      //   lineChartData={graphData}
-                      //   lineChartOptions={lineChartOptionsDashboard}
-                      // />
                       <ApexChart lineChartData={graphData}/>
                     )
                   }
@@ -255,6 +309,14 @@ function Dashboard() {
         </Grid>
       </VuiBox>
       <Footer />
+      <CustomSnackbar show={show} setShow={setShow}/>
+      <Backdrop
+        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+        open={backDrop}
+        onClick={handleBackDropClose}
+      >
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </DashboardLayout>
   );
 }
