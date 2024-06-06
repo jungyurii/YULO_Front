@@ -41,7 +41,7 @@ const AddCamera = () => {
 
   const askForLocation = () =>  {
     navigator.geolocation.getCurrentPosition(accessToGeo)
-}
+  }
 
   const accessToGeo = (position) => {
     const positionObj = {
@@ -233,7 +233,7 @@ const AddCamera = () => {
                 </Grid>
                 <Grid>
                   <Paper style={{ padding: 20, backgroundColor: "#cbd5e0" }} sx={{height: 400, mt: 2}}>
-                    <h4>Location</h4>
+                    <h4>Location</h4> 현재 위치 "위도 : {position && (position.longitude)} 경도: {position && (position.latitude)} "
                     {isLoading ? (
                         <Skeleton variant="rectangular" width={'100%'} height={'90%'} sx={{ bgcolor: '#2d3748', borderRadius:5}}/>
                       ) : (
@@ -242,23 +242,7 @@ const AddCamera = () => {
                               height: "540px",
                             })}>
                             <VuiBox height="350px" display="flex" flexDirection="column" justifyContent="space-between">
-                              {/* <LiveChart
-                                graphURL={graphURL}
-                                lineChartData={lineChartDataDashboard}
-                                lineChartOptions={lineChartOptionsDashboard}
-                              /> */}
-                              {/* <LiveChart
-                                url={graphURL}
-                              >
-                                <CartesianGrid strokeDasharray="3 3" />
-                                <XAxis dataKey="dateTime" style={{color:"black"}}/>
-                                <YAxis />
-                                <Tooltip />
-                                <Legend />
-                                <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-                              </LiveChart> */}
-                              <KakaoMap position={position}/>
-                              {/* {<MapBox position={position}/>} */}
+                              <KakaoMap position={position} setPosition={setPosition}/>
                             </VuiBox>
                           </Card>
                           </VuiBox>

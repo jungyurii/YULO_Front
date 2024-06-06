@@ -12,7 +12,7 @@ import { BsCreditCardFill } from "react-icons/bs";
 import { SiDropbox } from "react-icons/si";
 
 // Vision UI Dashboard React example components
-import TimelineItem from "examples/Timeline/TimelineItem";
+import TimelineItem from "../TimelineItem";
 import AdobeXD from "examples/Icons/AdobeXD";
 
 // Vision UI Dashboard theme imports
@@ -35,7 +35,7 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
   };
 
   const fetchData = () => {
-    axios.post("http://127.0.0.1:8080/detection/detections", { userId: 1})
+    axios.post("http://127.0.0.1:8080/detection/detectionsList", { userId: 1})
     .then(response => {
       setRecentDetectedList(response.data.result.data);
     }
@@ -85,11 +85,11 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
           <VuiBox display="flex" alignItems="center">
             <BsCheckCircleFill color="green" size="15px" mr="5px" />
             <VuiTypography variant="button" color="text" fontWeight="medium" ml="5px" mr="2px">
-              +30%
+              {new Date().getMonth()+1}
             </VuiTypography>{" "}
             <VuiTypography variant="button" color="text" fontWeight="regular">
               {" "}
-              this month
+              월 감지 내역
             </VuiTypography>
           </VuiBox>
         </VuiBox>
@@ -105,7 +105,14 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
                     fullwidth
                     icon={<FaBell size="16px" color={palette.info.main} />}
                     title={item.cameraName}
-                    dateTime={item.detectionDate}
+                    dateTime={new Date(item.detectionDate).toLocaleString('en-US', { 
+                      year: 'numeric', 
+                      month: '2-digit', 
+                      day: '2-digit', 
+                      hour: '2-digit', 
+                      minute: '2-digit', 
+                      second: '2-digit' 
+                    })}
                   >
                   </TimelineItem>
                   {item.detectionChecked ? (
