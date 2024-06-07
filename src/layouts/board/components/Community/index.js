@@ -283,10 +283,10 @@ function Community() {
                             100
                     </VuiButton>
                 </VuiBox>
-                    <DialogActions>
+                    {/* <DialogActions>
                     <TextareaAutosize aria-label="minimum height" minRows={3} placeholder="Comments..." />
                         <VuiButton variant="gradient" color="secondary" fullWidth onClick={handleClose}>Send</VuiButton>
-                    </DialogActions>
+                    </DialogActions> */}
 
 
                 <Box ml={3} mr={3}>
