@@ -2,13 +2,14 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
 import CommentExampleThreaded from "../Comments";
+import FileUpload from "../FileUpload";
 
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import { Dialog, DialogActions, DialogContent, Box, TextField, Typography, createTheme, Pagination, Icon } from "@mui/material";
-import MUIRichTextEditor from "mui-rte";
-import { Button, TextareaAutosize } from "@material-ui/core";
+import { Dialog, DialogActions, DialogContent, Box, Button, TextField, Typography, createTheme, Pagination, Icon } from "@mui/material";
+import { styled } from '@mui/material/styles';
+import { TextareaAutosize } from "@material-ui/core";
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 // Images
@@ -40,6 +41,11 @@ function Community() {
   const [openPost, setOpenPost] = useState(false);
   const [openDetail, setOpenDetail] = useState(false);
 
+  const [title, setTitle] = useState('');
+  const [content, setContent] = useState('');
+
+  const [file, setFile] = useState([]);
+
   const myTheme = createTheme({});
 
   const handleOpenDetail = (boardId) => {
@@ -47,13 +53,26 @@ function Community() {
     setOpenDetail(true);
   };
 
-  const handleOpenPost = () => {
-    setOpenPost(true);
-  }
-
   const handleClose = () => {
     setOpenPost(false);
     setOpenDetail(false);
+  }
+
+  const post = () => {
+    console.log("post 작동 준비");
+    const userId = localStorage.getItem("userId");
+    axios.post("http://127.0.0.1:8080/board/write", {
+        userId: userId,
+        title: title,
+        content: content
+    })
+    .then(response => {
+        console.log('response.data : ', response.data.result.data);
+        const userId = response.data.result.data.userId;
+        const title = response.data.result.data.title;
+        const content = response.data.result.data.content;
+        localStorage.setItem("userId", userId);
+    })
   }
   
   const handelPageChange = (page) => {
@@ -87,6 +106,18 @@ function Community() {
       console.log("Error : ", error);
     });
   },[])
+
+  const VisuallyHiddenInput = styled('input')({
+    clip: 'rect(0 0 0 0)',
+    clipPath: 'inset(50%)',
+    height: 1,
+    overflow: 'hidden',
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    whiteSpace: 'nowrap',
+    width: 1,
+  });
 
 
   return (
@@ -153,16 +184,7 @@ function Community() {
                           <TextField  variant="filled" size="medium" fullWidth focused />
                         <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
                     </Box>
-                    <Button
-                        component="label"
-                        role={undefined}
-                        variant="contained"
-                        tabIndex={-1}
-                        startIcon={<CloudUploadIcon />}
-                        type="file"
-                        >
-                        Upload file
-                    </Button>
+                    <FileUpload />
                     <TextareaAutosize
                         maxRows={15}
                         aria-label="maximum height"
@@ -172,7 +194,7 @@ function Community() {
 
                 <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
                 <DialogActions>
-                    <VuiButton variant="gradient" color="primary" fullWidth>Post</VuiButton>
+                    <VuiButton variant="gradient" color="primary" fullWidth onClick={post}>Post</VuiButton>
                     <VuiButton variant="gradient" color="secondary" fullWidth onClick={handleClose}>Back</VuiButton>
                 </DialogActions>
                 </Dialog>
