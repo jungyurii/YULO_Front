@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
+import CommentExampleThreaded from "../Comments";
 
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import { Dialog, DialogActions, DialogContent, Box, TextField, Typography, createTheme, ThemeProvider, Pagination } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, Box, TextField, Typography, createTheme, Pagination, Icon } from "@mui/material";
 import MUIRichTextEditor from "mui-rte";
+import { Button, TextareaAutosize } from "@material-ui/core";
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 // Images
 import profile1 from "assets/images/profile-1.png";
@@ -20,11 +23,13 @@ import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
+import TimelineItem from "examples/Timeline/TimelineItem";
 
 // React icons
 import { IoChatbubbles } from "react-icons/io5";
 
 function Community() {
+  const [boardlist, setBoardlist] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalElements, setTotalElements] = useState(0);
@@ -32,18 +37,23 @@ function Community() {
   const [first, setFirst] = useState(false);
   const [last, setLast] = useState(false);
 
-  const [boardlist, setBoardlist] = useState([]);
-  const [open, setOpen] = useState(false);
+  const [openPost, setOpenPost] = useState(false);
+  const [openDetail, setOpenDetail] = useState(false);
 
   const myTheme = createTheme({});
 
-  const handleOpen = (boardId) => {
+  const handleOpenDetail = (boardId) => {
     console.log("boardId : ", boardId);
-    setOpen(true);
+    setOpenDetail(true);
   };
 
+  const handleOpenPost = () => {
+    setOpenPost(true);
+  }
+
   const handleClose = () => {
-    setOpen(false);
+    setOpenPost(false);
+    setOpenDetail(false);
   }
   
   const handelPageChange = (page) => {
@@ -86,13 +96,13 @@ function Community() {
                 <VuiTypography color="white" variant="lg" fontWeight="bold" mb="6px">
                     Community
                 </VuiTypography>
-                    <VuiButton display="inline" variant="text" fontWeight="bold" color="info" onClick={() => setOpen(true)}> + Add Write
+                    <VuiButton display="inline" variant="text" fontWeight="bold" color="info" onClick={() => setOpenPost(true)}> + Add Write
                 </VuiButton>
             </VuiBox>
             <Grid container spacing={5}>
                 {
                 boardlist.map((board, index) => (
-                    <Grid item xs={12} md={6} xl={3} key={index}  onClick={() => handleOpen(board.boardId)}>
+                    <Grid item xs={12} md={6} xl={3} key={index}  onClick={() => handleOpenDetail(board.boardId)}>
                     <DefaultProjectCard
                     image={profile1}
                     label={"project #" + board.boardId}
@@ -102,7 +112,7 @@ function Community() {
                         type: "internal",
                         color: "white",
                         label: "VIEW ALL",
-                        onClick: () => handleOpen(board.boardId),
+                        onClick: () => handleOpenDetail(board.boardId),
                     }}
                     authors={[
                         { image: team1, name: "Elena Morison" },
@@ -115,19 +125,22 @@ function Community() {
                 </Grid>
                 ))
                 }
-                <Dialog
-                    open={open}
+
+                <Dialog // 글 작성 Dialog
+                    open={openPost} 
                     close={handleClose}
                     aria-labelledby="title"
                     fullWidth
                     maxWidth={'md'}
                     PaperProps={{
                         sx: {
-                        minHeight: 700,
-                        borderRadius: 3
-                        }
-                    }}
-                >
+                            minHeight: 800,
+                            minWidth: 1000,
+                            borderRadius: 3
+                            }
+                        }}
+                > 
+
                 <DialogContent>
                 <Box>
                     <Box display="flex" alignItems="center" mb={2}>
@@ -137,24 +150,93 @@ function Community() {
                         <VuiTypography component="label" variant="h5" color="sidenav" fontWeight="medium" >
                             title
                         </VuiTypography>
-                            <TextField  variant="filled" size="medium" fullWidth />
+                          <TextField  variant="filled" size="medium" fullWidth focused />
                         <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
                     </Box>
-                    <ThemeProvider theme={myTheme}>
-                    <MUIRichTextEditor
-                        label="Type something here..."
-                        // onSave={save}
-                        inlineToolbar={true}
+                    <Button
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        tabIndex={-1}
+                        startIcon={<CloudUploadIcon />}
+                        type="file"
+                        >
+                        Upload file
+                    </Button>
+                    <TextareaAutosize
+                        maxRows={15}
+                        aria-label="maximum height"
+                        placeholder="Type something here..."
                     />
-                    </ThemeProvider>
                 </DialogContent>
+
                 <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
                 <DialogActions>
                     <VuiButton variant="gradient" color="primary" fullWidth>Post</VuiButton>
                     <VuiButton variant="gradient" color="secondary" fullWidth onClick={handleClose}>Back</VuiButton>
                 </DialogActions>
-            </Dialog>
+                </Dialog>
+
+
+
+
+
+                <Dialog // 글 상세 보기 Dialog
+                    open={openDetail}
+                    close={handleClose}
+                    aria-labelledby="title"
+                    fullWidth
+                    maxWidth={'md'}
+                    PaperProps={{
+                        sx: {
+                        minHeight: 800,
+                        minWidth: 1000,
+                        borderRadius: 3
+                        }
+                    }}
+                > 
+                <DialogContent>
+                <Box>
+                    <Box display="flex" alignItems="center" mb={5}>
+                    <IoChatbubbles size="22px" color="#4318ff" />
+                        <Typography variant="h4" ml={1} fontStyle={{ color: "#4318ff" }}>Community</Typography>
+                    </Box>
+                        <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
+                            title
+                        </VuiTypography>
+                        <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
+                    </Box>
+                        <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
+                            content
+                        </VuiTypography>
+                </DialogContent>
+
+
+                <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} />
+                <VuiBox>
+                    <VuiButton variant="text" color="primary" fontWeight="regular">
+                        <Icon>favorite</Icon>&nbsp;
+                            45
+                    </VuiButton>
+                    <VuiButton variant="text" color="primary">
+                        <Icon>message</Icon>&nbsp;
+                            100
+                    </VuiButton>
+                </VuiBox>
+                    <DialogActions>
+                    <TextareaAutosize aria-label="minimum height" minRows={3} placeholder="Comments..." />
+                        <VuiButton variant="gradient" color="secondary" fullWidth onClick={handleClose}>Send</VuiButton>
+                    </DialogActions>
+
+
+                <Box ml={3} mr={3}>
+                    <Typography variant="h5">Comments</Typography>
+                    <Box sx={{ my: 2, ml: 3, borderBottom: "1px solid #e0e0e0" }} />
+                    <CommentExampleThreaded />
+                </Box>
+                </Dialog>
             </Grid>
+            
             <VuiBox mt={4} display="flex" justifyContent="center">
                 <Pagination
                     color="secondary"
