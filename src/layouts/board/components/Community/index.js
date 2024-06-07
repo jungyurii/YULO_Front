@@ -235,19 +235,19 @@ function Community() {
 
 
 
-                <Dialog // 글 상세 보기 Dialog
-                    open={openDetail}
-                    close={handleClose}
-                    aria-labelledby="title"
-                    fullWidth
-                    maxWidth={'md'}
-                    PaperProps={{
-                        sx: {
-                        minHeight: 800,
-                        minWidth: 1000,
-                        borderRadius: 3
-                        }
-                    }}
+            <Dialog // 글 상세 보기 Dialog
+                open={openDetail}
+                close={handleClose}
+                aria-labelledby="title"
+                fullWidth
+                maxWidth={'md'}
+                PaperProps={{
+                    sx: {
+                    minHeight: 800,
+                    minWidth: 1000,
+                    borderRadius: 3
+                    }
+                }}
                 > 
                 <DialogContent>
                 <Box>

@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Card } from "@mui/material";
+import { Card, Dialog, DialogContent, Box, Typography } from "@mui/material";
 import Pagination from '@mui/material/Pagination';
-
-// Vision UI Dashboard React examples
 import Table from "examples/Tables/Table";
 import VuiBox from "components/VuiBox";
-
+import VuiTypography from "components/VuiTypography";
 import axios from "axios";
+import { IoNotifications, IoClose } from "react-icons/io5";
 
 function Announcement() {
   const [noticelist, setNoticelist] = useState([]);
@@ -17,7 +16,11 @@ function Announcement() {
   const [first, setFirst] = useState(false);
   const [last, setLast] = useState(false);
 
-  const handelPageChange = (page) => {
+  const [notice, setNotice] = useState([]);
+  const [openDetail, setOpenDetail] = useState(false);
+  const [selectedNotice, setSelectedNotice] = useState(null);
+
+  const handlePageChange = (page) => {
     axios.get(`http://127.0.0.1:8080/board/listNotice?page=${page}`)
     .then(response => {
       setNoticelist(response.data.result.data.content);
@@ -25,56 +28,118 @@ function Announcement() {
     })
     .catch(error => {
       console.log("Error : ", error);
-    })
-  }
+    });
+  };
 
-  useEffect(() => {
-    axios.get("http://127.0.0.1:8080/board/listNotice?page=1")
+  const handleTitleClick = (noticeId) => {
+    axios.post("http://127.0.0.1:8080/board/detailNotice", {
+      noticeId: noticeId
+    })
     .then(response => {
-      console.log("Response : ", response.data.result.data.content);
-      setNoticelist(response.data.result.data.content);
-      setTotalPages(response.data.result.data.totalPages); // 전체 페이지 수 설정
-      setCurrentPage(response.data.result.data.number + 1); // 현재 페이지 번호 설정
-      setTotalElements(response.data.result.data.totalElements); // 전체 요소 수 설정
-      setSize(response.data.result.data.size); // 페이지당 요소 수 설정
-      setFirst(response.data.result.data.first); // 첫 번째 페이지인지
-      setLast(response.data.result.data.last); // 마지막 페이지인지
+      setNotice(response.data.result.data);
+      setOpenDetail(true);
     })
     .catch(error => {
       console.log("Error : ", error);
     });
-  },[])
+  };
 
-  const tableRows = noticelist.map((notice, index) => ({
+  const handleClose = () => {
+    setOpenDetail(false);
+    setSelectedNotice(null);
+  };
+
+  useEffect(() => {
+    axios.get("http://127.0.0.1:8080/board/listNotice?page=1")
+    .then(response => {
+      setNoticelist(response.data.result.data.content);
+      setTotalPages(response.data.result.data.totalPages);
+      setCurrentPage(response.data.result.data.number + 1);
+      setTotalElements(response.data.result.data.totalElements);
+      setSize(response.data.result.data.size);
+      setFirst(response.data.result.data.first);
+      setLast(response.data.result.data.last);
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    });
+  }, []);
+
+  const tableRows = noticelist.map((notice) => ({
     id: notice.noticeId,
     name: notice.userName,
-    title: notice.title,
+    title: (
+      <VuiTypography
+        variant="button"
+        color="info"
+        fontWeight="medium"
+        onClick={() => handleTitleClick(notice.noticeId)}
+        sx={{ cursor: 'pointer' }}
+      >
+        {notice.title}
+      </VuiTypography>
+    ),
     date: notice.createDate,
   }));
 
-    return (
-      <Card>
-        <Table
-          columns={[
-            { name: "id", align: "left" },
-            { name: "name", align: "left" },
-            { name: "title", align: "center" },
-            { name: "date", align: "center" },
-          ]}
-          rows={tableRows}
+  return (
+    <Card>
+      <Table
+        columns={[
+          { name: "id", align: "left" },
+          { name: "name", align: "left" },
+          { name: "title", align: "center" },
+          { name: "date", align: "center" },
+        ]}
+        rows={tableRows}
+      />
+      <VuiBox mt={4} display="flex" justifyContent="center">
+        <Pagination
+          color="secondary"
+          count={totalPages}
+          page={currentPage}
+          onChange={(event, page) => handlePageChange(page)}
+          showFirstButton={!first}
+          showLastButton={!last}
         />
-        <VuiBox mt={4} display="flex" justifyContent="center">
-          <Pagination
-            color="secondary"
-            count={totalPages} // 전체 페이지 수
-            page={currentPage} // 현재 페이지
-            onChange={(event, page) => handelPageChange(page)}
-            showFirstButton={!first} // 첫번째 페이지가 아닐 때 첫번째 페이지 버튼 표시
-            showLastButton={!last} // 마지막 페이지가 아닐 때 마지막 페이지 버튼 표시
-          />
-        </VuiBox>
-      </Card>
-    );
-  };
+      </VuiBox>
+
+      <Dialog
+        open={openDetail}
+        onClose={handleClose}
+        aria-labelledby="title"
+        fullWidth
+        maxWidth={'md'}
+        PaperProps={{
+          sx: {
+            minHeight: 800,
+            minWidth: 1000,
+            borderRadius: 3
+          }
+        }}
+      >
+        <DialogContent>
+          <Box>
+            <Box display="flex" alignContent="space-between" mb={5}>
+              <IoNotifications size="35px" color="#4318ff" />
+              <Typography variant="h4" ml={1} fontStyle={{ color: "#4318ff" }}>Announcement</Typography>
+              <Box width="100%"/>
+              <IoClose size="30px" onClick={handleClose}/>
+            </Box>
+            <VuiTypography variant="h5" color="sidenav" fontWeight="medium">
+              {notice && notice.title}
+            </VuiTypography>
+            <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
+          </Box>
+          <VuiTypography variant="h5" color="sidenav" fontWeight="medium">
+            {notice && notice.content}
+          </VuiTypography>
+        </DialogContent>
+
+        <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} />
+      </Dialog>
+    </Card>
+  );
+}
 
 export default Announcement;
