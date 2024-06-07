@@ -26,7 +26,11 @@ export default function FileUpload() {
         content: "내용"
     }
 
-    formData.append("boardWriteRequestDTO", JSON.stringify(boardWriteRequestDTO));
+    const json = JSON.stringify(boardWriteRequestDTO);
+    const blob = new Blob([json], { type: "application/json" });
+    formData.append("boardWriteRequestDTO", blob);
+
+    // formData.append("boardWriteRequestDTO", JSON.stringify(boardWriteRequestDTO));
 
     console.log("FormData : %o", formData);
 
