@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Avatar, Typography, Box, Button, TextField } from '@mui/material';
 import Icon from '@mui/material/Icon';
 import { TextareaAutosize } from '@material-ui/core';
 import VuiButton from 'components/VuiButton';
+import axios from 'axios';
 
 const Comment = ({ author, avatar, date, text, children }) => (
   <Box display="flex" mb={2} alignItems="flex-start">
@@ -24,13 +25,49 @@ const Comment = ({ author, avatar, date, text, children }) => (
   </Box>
 );
 
-const Comments = ({comments}) => { 
+const Comments = ({comments, setComments, boardId}) => { 
   console.log("Comments: ", comments);
+  console.log("boardId: ", boardId);
+
+  const [comment, setComment] = useState('');
+
+
+  const handleComment = (e) => {
+    setComment(e.target.value);
+  }
+
+  const submitComment = () => {
+    console.log("작성 내용 : ", comment);
+    axios.post("http://127.0.0.1:8080/board/comment", {
+      boardId: boardId,
+      userId: 3,
+      content : comment
+    })
+    .then(response => {
+      console.log(response.data);
+      
+      axios.post("http://127.0.0.1:8080/board/detail", {
+          boardId: boardId
+      })
+      .then(response => {
+          setComments(response.data.result.data.comments);
+      })
+      .catch(error => {
+          console.log("error : ", error)
+      })
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    });
+  }
+
 
   return (
     <Box>
-      <TextareaAutosize aria-label="minimum height" minRows={3} placeholder="Comments..." />
-      <VuiButton variant="gradient" color="secondary" fullWidth>Send</VuiButton>
+      <Box mb={4} display="flex">
+        <TextareaAutosize onChange={handleComment} style={{ width: "90%", padding:2, borderRadius: "5px", border: "1px solid #0e456d"}} minRows={2} placeholder="Comments..." />
+        <VuiButton sx={{ml:1}} variant="gradient" color="secondary" onClick={submitComment}>Send</VuiButton>
+      </Box>
     <Box height="300px" sx={{ overflowY: "auto" }}>
       {comments.map((comment, index) => (
         <Box>

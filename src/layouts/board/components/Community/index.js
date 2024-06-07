@@ -25,9 +25,11 @@ import VuiButton from "components/VuiButton";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
 
 // React icons
-import { IoChatbubbles } from "react-icons/io5";
+import { IoChatbubbles, IoClose, IoCloseCircle } from "react-icons/io5";
+import CustomSnackbar from "layouts/dashboard/components/SnackBar";
 
 function Community() {
+  const userId = localStorage.getItem("userId");
   const [boardlist, setBoardlist] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
@@ -46,7 +48,8 @@ function Community() {
 
   const [files, setFiles] = useState();
 
-  const myTheme = createTheme({});
+  const [show, setShow] = useState(false); // SnackBar
+  const toggleSnackbar = () => setShow(!show);
 
   const handleOpenDetail = (boardId) => {
     console.log("boardId : ", boardId);
@@ -103,7 +106,9 @@ function Community() {
           },
         ],
       });
-      alert("이미지 업로드 성공");
+      // alert("이미지 업로드 성공");
+      handleClose(); // 모달창을 닫고
+      toggleSnackbar(); // 스낵바를 띄움
     } catch (error) {
       alert("이미지 업로드 실패");
       console.log(error);
@@ -142,20 +147,9 @@ function Community() {
     });
   },[])
 
-  const VisuallyHiddenInput = styled('input')({
-    clip: 'rect(0 0 0 0)',
-    clipPath: 'inset(50%)',
-    height: 1,
-    overflow: 'hidden',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    whiteSpace: 'nowrap',
-    width: 1,
-  });
-
 
   return (
+    <>
         <Card>
         <VuiBox display="flex" flexDirection="column" height="100%" >
             <VuiBox display="flex" flexDirection="row" justifyContent="space-between" mb="24px">
@@ -257,18 +251,20 @@ function Community() {
                 > 
                 <DialogContent>
                 <Box>
-                    <Box display="flex" alignItems="center" mb={5}>
-                    <IoChatbubbles size="22px" color="#4318ff" />
-                        <Typography variant="h4" ml={1} fontStyle={{ color: "#4318ff" }}>Community</Typography>
-                    </Box>
-                        <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
-                            {board && board.title}
-                        </VuiTypography>
-                        <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
-                    </Box>
-                        <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
-                            {board && board.content}
-                        </VuiTypography>
+                  <Box display="flex" alignContent="space-between" mb={5}>
+                    <IoChatbubbles size="35px" color="#4318ff" />
+                    <Typography variant="h4" ml={1} fontStyle={{ color: "#4318ff" }}>Community</Typography>
+                    <Box width="100%"/>
+                    <IoClose size="30px" onClick={handleClose}/>
+                  </Box>
+                  <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
+                      {board && board.title}
+                  </VuiTypography>
+                  <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
+                </Box>
+                    <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
+                        {board && board.content}
+                    </VuiTypography>
                 </DialogContent>
 
 
@@ -283,20 +279,13 @@ function Community() {
                             100
                     </VuiButton>
                 </VuiBox>
-                    {/* <DialogActions>
-                    <TextareaAutosize aria-label="minimum height" minRows={3} placeholder="Comments..." />
-                        <VuiButton variant="gradient" color="secondary" fullWidth onClick={handleClose}>Send</VuiButton>
-                    </DialogActions> */}
-
-
-                <Box ml={3} mr={3}>
+                <Box p={3}>
                     <Typography variant="h5">Comments</Typography>
-                    <Box sx={{ my: 2, ml: 3, borderBottom: "1px solid #e0e0e0" }} />
-                    <Comments comments={comments} />
+                    <Box sx={{ my: 2,borderBottom: "1px solid #e0e0e0" }} />
+                    {board && <Comments comments={comments} setComments={setComments} boardId={board.boardId} />}
                 </Box>
                 </Dialog>
             </Grid>
-            
             <VuiBox mt={4} display="flex" justifyContent="center">
                 <Pagination
                     color="secondary"
@@ -309,6 +298,8 @@ function Community() {
                 </VuiBox>
             </VuiBox>
             </Card>
+          <CustomSnackbar show={show} setShow={setShow}/>
+        </>
         )}
 
 export default Community;
