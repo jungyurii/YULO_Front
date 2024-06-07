@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
-import CommentExampleThreaded from "../Comments";
+import Comments from "../Comments";
 import FileUpload from "../FileUpload";
 
 // @mui material components
@@ -10,7 +10,6 @@ import Grid from "@mui/material/Grid";
 import { Dialog, DialogActions, DialogContent, Box, Button, TextField, Typography, createTheme, Pagination, Icon } from "@mui/material";
 import { styled } from '@mui/material/styles';
 import { TextareaAutosize } from "@material-ui/core";
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
 // Images
 import profile1 from "assets/images/profile-1.png";
@@ -24,7 +23,6 @@ import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";
 import DefaultProjectCard from "examples/Cards/ProjectCards/DefaultProjectCard";
-import TimelineItem from "examples/Timeline/TimelineItem";
 
 // React icons
 import { IoChatbubbles } from "react-icons/io5";
@@ -43,13 +41,26 @@ function Community() {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [board, setBoard] = useState();
+  const [comments, setComments] = useState([]);
 
-  const [file, setFile] = useState([]);
+  const [files, setFiles] = useState();
 
   const myTheme = createTheme({});
 
   const handleOpenDetail = (boardId) => {
     console.log("boardId : ", boardId);
+    axios.post("http://127.0.0.1:8080/board/detail", {
+        boardId: boardId
+    })
+    .then(response => {
+        console.log(response.data.result.data);
+        setBoard(response.data.result.data);
+        setComments(response.data.result.data.comments);
+    })
+    .catch(error => {
+        console.log("error : ", error)
+    })
     setOpenDetail(true);
   };
 
@@ -58,22 +69,46 @@ function Community() {
     setOpenDetail(false);
   }
 
-  const post = () => {
-    console.log("post 작동 준비");
-    const userId = localStorage.getItem("userId");
-    axios.post("http://127.0.0.1:8080/board/write", {
-        userId: userId,
+  const upload = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    Array.from(files).forEach((el) => {
+        console.log("el : ", el);
+      formData.append("files", el);
+    });
+
+    // 다른 데이터 추가
+    const boardWriteRequestDTO = {
+        userId: 1,
         title: title,
-        content: content
-    })
-    .then(response => {
-        console.log('response.data : ', response.data.result.data);
-        const userId = response.data.result.data.userId;
-        const title = response.data.result.data.title;
-        const content = response.data.result.data.content;
-        localStorage.setItem("userId", userId);
-    })
-  }
+        content: content,
+        comments: comments
+    }
+
+    const json = JSON.stringify(boardWriteRequestDTO);
+    const blob = new Blob([json], { type: "application/json" });
+    formData.append("boardWriteRequestDTO", blob);
+
+    console.log("FormData : %o", formData);
+
+    try {
+      const response = await axios.post(`http://127.0.0.1:8080/board/write`, formData, {
+        headers: {
+            "Content-Type": "multipart/form-data", // 파일을 위한 Content-Type
+            "Accept": "application/json", // JSON 응답을 원하는 경우
+        },
+        transformRequest: [
+          function () {
+            return formData;
+          },
+        ],
+      });
+      alert("이미지 업로드 성공");
+    } catch (error) {
+      alert("이미지 업로드 실패");
+      console.log(error);
+    }
+  };
   
   const handelPageChange = (page) => {
     axios.get(`http://127.0.0.1:8080/board/list?page=${page}`)
@@ -181,20 +216,23 @@ function Community() {
                         <VuiTypography component="label" variant="h5" color="sidenav" fontWeight="medium" >
                             title
                         </VuiTypography>
-                          <TextField  variant="filled" size="medium" fullWidth focused />
+                          <TextField  variant="filled" size="medium" fullWidth focused value={title} onChange={(event) => setTitle(event.target.value)} />
                         <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
                     </Box>
-                    <FileUpload />
+                    <FileUpload files={files} setFiles={setFiles} />
                     <TextareaAutosize
                         maxRows={15}
                         aria-label="maximum height"
                         placeholder="Type something here..."
+                        value={content}
+                        onChange={(event) => setContent(event.target.value)}
                     />
                 </DialogContent>
 
                 <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
                 <DialogActions>
-                    <VuiButton variant="gradient" color="primary" fullWidth onClick={post}>Post</VuiButton>
+                    <form onSubmit={upload} encType="multipart/form-data">
+                    <VuiButton variant="gradient" color="primary" fullWidth type="submit">Post</VuiButton></form>
                     <VuiButton variant="gradient" color="secondary" fullWidth onClick={handleClose}>Back</VuiButton>
                 </DialogActions>
                 </Dialog>
@@ -224,12 +262,12 @@ function Community() {
                         <Typography variant="h4" ml={1} fontStyle={{ color: "#4318ff" }}>Community</Typography>
                     </Box>
                         <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
-                            title
+                            {board && board.title}
                         </VuiTypography>
                         <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} /> 
                     </Box>
                         <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
-                            content
+                            {board && board.content}
                         </VuiTypography>
                 </DialogContent>
 
@@ -254,7 +292,7 @@ function Community() {
                 <Box ml={3} mr={3}>
                     <Typography variant="h5">Comments</Typography>
                     <Box sx={{ my: 2, ml: 3, borderBottom: "1px solid #e0e0e0" }} />
-                    <CommentExampleThreaded />
+                    <Comments comments={comments} />
                 </Box>
                 </Dialog>
             </Grid>

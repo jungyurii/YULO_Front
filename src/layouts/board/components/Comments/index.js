@@ -10,7 +10,6 @@ const Comment = ({ author, avatar, date, text, children }) => (
       <Typography variant="subtitle1">{author}</Typography>
       <Typography variant="subtitle2" color="textSecondary">{date}</Typography>
       <Typography variant="body1">{text}</Typography>
-      <Button color="primary" size="small">Reply</Button>
       {children}
     </Box>
     <Box>
@@ -24,36 +23,21 @@ const Comment = ({ author, avatar, date, text, children }) => (
   </Box>
 );
 
-const CommentExampleThreaded = () => (
-  <Box>
-    <Comment 
-      author="Matt" 
-      avatar="https://react.semantic-ui.com/images/avatar/small/matt.jpg"
-      date="Today at 5:42PM"
-      text="How artistic!"
-    />
-    <Comment 
-      author="Elliot Fu" 
-      avatar="https://react.semantic-ui.com/images/avatar/small/elliot.jpg"
-      date="Yesterday at 12:30AM"
-      text="This has been very useful for my research. Thanks as well!"
-    >
-      <Box ml={8}>
-        <Comment 
-          author="Jenny Hess" 
-          avatar="https://react.semantic-ui.com/images/avatar/small/jenny.jpg"
-          date="Just now"
-          text="Elliot you are always so right :)"
-        />
-      </Box>
-    </Comment>
-    <Box mt={2}>
-      <TextareaAutosize aria-label="minimum height" minRows={3} placeholder="Comments..." />
-      <Button variant="contained" color="primary" style={{ marginTop: 16, color: "white" }}>
-        Add Reply
-      </Button>
-    </Box>
-  </Box>
-);
+const Comments = ({comments}) => { 
+  console.log("Comments: ", comments);
 
-export default CommentExampleThreaded;
+  return (
+  comments.map((comment, index) => (
+      <Box>
+        <Comment 
+          author={comment.userName}
+          avatar="https://react.semantic-ui.com/images/avatar/small/matt.jpg"
+          date={comment.createDate}
+          text={comment.content}
+        />
+      </Box> 
+    ))
+  );
+}
+
+export default Comments;
