@@ -114,7 +114,7 @@ function Community() {
     }
   };
 
-  const handelDelete = (boardId) => {
+  const handleDelete = (boardId) => {
     console.log("boardId : ", boardId);
     axios.post(`http://127.0.0.1:8080/board/delete`, {
       userId: userId,
@@ -314,10 +314,12 @@ function Community() {
                               100
                       </VuiButton>
                     </Box>
-                    <VuiButton sx={{marginRight:4, fontSize:"12px"}} variant="text" color="error" onClick={() => handelDelete(board.boardId)}>
-                      <Icon>delete</Icon>&nbsp;
-                          DELETE
-                    </VuiButton>
+                    {board && String(board.userName) === userId && (
+                      <VuiButton sx={{ marginRight: 4, fontSize: "12px" }} variant="text" color="error" onClick={() => handleDelete(board.boardId)}>
+                        <Icon>delete</Icon>&nbsp;
+                        DELETE
+                      </VuiButton>
+                    )}
                 </VuiBox>
                 <Box p={3}>
                     <Typography variant="h5">Comments</Typography>
