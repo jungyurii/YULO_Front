@@ -7,8 +7,7 @@ import FileUpload from "../FileUpload";
 // @mui material components
 import Card from "@mui/material/Card";
 import Grid from "@mui/material/Grid";
-import { Dialog, DialogActions, DialogContent, Box, Button, TextField, Typography, createTheme, Pagination, Icon } from "@mui/material";
-import { styled } from '@mui/material/styles';
+import { Dialog, DialogActions, DialogContent, Box, Button, TextField, Typography, Pagination, Icon } from "@mui/material";
 import { TextareaAutosize } from "@material-ui/core";
 
 // Images
@@ -82,7 +81,7 @@ function Community() {
 
     // 다른 데이터 추가
     const boardWriteRequestDTO = {
-        userId: 1,
+        userId: userId,
         title: title,
         content: content,
         comments: comments
@@ -114,6 +113,39 @@ function Community() {
       console.log(error);
     }
   };
+
+  const handelDelete = (boardId) => {
+    console.log("boardId : ", boardId);
+    axios.post(`http://127.0.0.1:8080/board/delete`, {
+      userId: userId,
+      boardId: boardId
+    })
+    .then(response => {
+      console.log("response : ", response);
+      alert("게시글 삭제 완료")
+      setOpenDetail(false);
+
+      axios.get("http://127.0.0.1:8080/board/list?page=1", { 
+        userId: userId
+      })
+      .then(response => {
+        console.log("Response : ", response.data.result.data);
+        setBoardlist(response.data.result.data.content);
+        setTotalPages(response.data.result.data.totalPages); // 전체 페이지 수 설정
+        setCurrentPage(response.data.result.data.number + 1); // 현재 페이지 번호 설정
+        setTotalElements(response.data.result.data.totalElements); // 전체 요소 수 설정
+        setSize(response.data.result.data.size); // 페이지당 요소 수 설정
+        setFirst(response.data.result.data.first); // 첫 번째 페이지인지
+        setLast(response.data.result.data.last); // 마지막 페이지인지
+      })
+      .catch(error => {
+        console.log("Error : ", error);
+      });
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    })
+  }
   
   const handelPageChange = (page) => {
     axios.get(`http://127.0.0.1:8080/board/list?page=${page}`)
@@ -265,18 +297,26 @@ function Community() {
                     <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
                         {board && board.content}
                     </VuiTypography>
+                  <Box display="flex" align-content="space-between">
+                  </Box>
                 </DialogContent>
 
 
                 <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} />
-                <VuiBox>
-                    <VuiButton variant="text" color="primary" fontWeight="regular">
-                        <Icon>favorite</Icon>&nbsp;
-                            45
-                    </VuiButton>
-                    <VuiButton variant="text" color="primary">
-                        <Icon>message</Icon>&nbsp;
-                            100
+                <VuiBox display="flex" justifyContent="space-between">
+                  <Box>
+                      <VuiButton variant="text" color="primary" fontWeight="regular">
+                          <Icon>favorite</Icon>&nbsp;
+                              45
+                      </VuiButton>
+                      <VuiButton variant="text" color="primary">
+                          <Icon>message</Icon>&nbsp;
+                              100
+                      </VuiButton>
+                    </Box>
+                    <VuiButton sx={{marginRight:4, fontSize:"12px"}} variant="text" color="error" onClick={() => handelDelete(board.boardId)}>
+                      <Icon>delete</Icon>&nbsp;
+                          DELETE
                     </VuiButton>
                 </VuiBox>
                 <Box p={3}>
