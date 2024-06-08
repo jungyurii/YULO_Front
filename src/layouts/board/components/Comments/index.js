@@ -30,7 +30,7 @@ const Comments = ({comments, setComments, boardId}) => {
   console.log("boardId: ", boardId);
 
   const [comment, setComment] = useState('');
-
+  const userId = localStorage.getItem("userId");
 
   const handleComment = (e) => {
     setComment(e.target.value);
@@ -40,7 +40,7 @@ const Comments = ({comments, setComments, boardId}) => {
     console.log("작성 내용 : ", comment);
     axios.post("http://127.0.0.1:8080/board/comment", {
       boardId: boardId,
-      userId: 3,
+      userId: userId,
       content : comment
     })
     .then(response => {
