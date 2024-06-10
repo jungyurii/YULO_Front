@@ -147,7 +147,7 @@ function Community() {
     })
   }
   
-  const handelPageChange = (page) => {
+  const handlePageChange = (page) => {
     axios.get(`http://127.0.0.1:8080/board/list?page=${page}`)
     .then(response => {
       setBoardlist(response.data.result.data.content);
@@ -206,13 +206,7 @@ function Community() {
                         label: "VIEW ALL",
                         onClick: () => handleOpenDetail(board.boardId),
                     }}
-                    authors={[
-                        { image: team1, name: "Elena Morison" },
-                        { image: team2, name: "Ryan Milly" },
-                        { image: team3, name: "Nick Daniel" },
-                        { image: team4, name: "Peterson" },
-                    ]}
-                    
+                    createDate={board.createDate}
                     />
                 </Grid>
                 ))
@@ -298,7 +292,13 @@ function Community() {
                         {board && board.content}
                     </VuiTypography>
                   <Box display="flex" align-content="space-between">
+                    <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
+                        {board && board.userName}
+                    </VuiTypography>
                   </Box>
+                    <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
+                        {board && board.createDate}
+                    </VuiTypography>
                 </DialogContent>
 
 
@@ -314,12 +314,10 @@ function Community() {
                               100
                       </VuiButton>
                     </Box>
-                    {board && String(board.userName) === userId && (
-                      <VuiButton sx={{ marginRight: 4, fontSize: "12px" }} variant="text" color="error" onClick={() => handleDelete(board.boardId)}>
-                        <Icon>delete</Icon>&nbsp;
-                        DELETE
-                      </VuiButton>
-                    )}
+                    <VuiButton sx={{marginRight:4, fontSize:"12px"}} variant="text" color="error" onClick={() => handleDelete(board.boardId)}>
+                      <Icon>delete</Icon>&nbsp;
+                          DELETE
+                    </VuiButton>
                 </VuiBox>
                 <Box p={3}>
                     <Typography variant="h5">Comments</Typography>
@@ -333,7 +331,7 @@ function Community() {
                     color="secondary"
                     count={totalPages} // 전체 페이지 수
                     page={currentPage} // 현재 페이지
-                    onChange={(event, page) => handelPageChange(page)}
+                    onChange={(event, page) => handlePageChange(page)}
                     showFirstButton={!first} // 첫번째 페이지가 아닐 때 첫번째 페이지 버튼 표시
                     showLastButton={!last} // 마지막 페이지가 아닐 때 마지막 페이지 버튼 표시
                     />
