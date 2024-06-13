@@ -188,7 +188,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                       </VuiTypography>
                     </IconButton>
                   </Link>
-                    <VuiButton variant='outlined' onClick={handleLogout}>Logout</VuiButton>
+                    <VuiButton variant="text" color="info" size="large" onClick={handleLogout}>Logout</VuiButton>
                   </>
                 ) : (
                   <Link to="/authentication/sign-in">
