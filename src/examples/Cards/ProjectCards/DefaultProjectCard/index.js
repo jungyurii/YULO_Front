@@ -1,56 +1,16 @@
-/*!
-
-=========================================================
-* Vision UI Free React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/vision-ui-free-react
-* Copyright 2021 Creative Tim (https://www.creative-tim.com/)
-* Licensed under MIT (https://github.com/creativetimofficial/vision-ui-free-react/blob/master LICENSE.md)
-
-* Design and Coded by Simmmple & Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-
 // react-router-dom components
 import { Link } from "react-router-dom";
 
 // prop-types is a library for typechecking of props
 import PropTypes from "prop-types";
 
-// @mui material components
-import Tooltip from "@mui/material/Tooltip";
-
 // Vision UI Dashboard React components
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";
-import VuiAvatar from "components/VuiAvatar";
+import { useState } from "react";
 
-function DefaultProjectCard({ image, label, title, description, action, authors }) {
-  const renderAuthors = authors.map(({ image: media, name }) => (
-    <Tooltip key={name} title={name} placement="bottom">
-      <VuiAvatar
-        src={media}
-        alt={name}
-        size="xs"
-        sx={({ borders: { borderWidth }, palette: { dark }, functions: { rgba } }) => ({
-          border: `${borderWidth[2]} solid ${rgba(dark.focus, 0.5)}`,
-          cursor: "pointer",
-          position: "relative",
-          ml: -1.25,
-
-          "&:hover, &:focus": {
-            zIndex: "10",
-          },
-        })}
-      />
-    </Tooltip>
-  ));
+function DefaultProjectCard({ image, label, title, description, action,authors, createDate }) {
 
   return (
     <VuiBox
@@ -139,7 +99,7 @@ function DefaultProjectCard({ image, label, title, description, action, authors 
               {action.label}
             </VuiButton>
           )}
-          <VuiBox display="flex">{renderAuthors}</VuiBox>
+          <VuiBox display="flex">{createDate}</VuiBox>
         </VuiBox>
       </VuiBox>
     </VuiBox>
@@ -173,7 +133,7 @@ DefaultProjectCard.propTypes = {
     ]).isRequired,
     label: PropTypes.string.isRequired,
   }).isRequired,
-  authors: PropTypes.arrayOf(PropTypes.object),
+  createDate: PropTypes.string.isRequired,
 };
 
 export default DefaultProjectCard;
