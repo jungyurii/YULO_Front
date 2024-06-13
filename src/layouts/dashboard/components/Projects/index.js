@@ -45,7 +45,7 @@ function Projects({modelInfo}) {
     >
       <VuiBox display="flex" justifyContent="space-between" alignItems="center" mb="32px">
         <VuiBox mb="auto">
-          <VuiTypography color="white" variant="h4" mb="6px" gutterBottom>
+          <VuiTypography variant="h4" fontWeight="bold" mb="5px" color="white" gutterBottom>
             모델별 정확도 테이블
           </VuiTypography>
           <VuiBox display="flex" alignItems="center" lineHeight={0}>

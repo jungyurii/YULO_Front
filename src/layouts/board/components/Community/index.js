@@ -235,7 +235,8 @@ function Community() {
               </Box>
               <FileUpload files={files} setFiles={setFiles} />
               <TextareaAutosize
-                maxRows={15}
+                style={{ marginTop: 30, width: "100%", borderRadius: "5px" }}
+                minRows={25}
                 aria-label="maximum height"
                 placeholder="Type something here..."
                 value={content}
@@ -245,9 +246,9 @@ function Community() {
 
             <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} />
             <DialogActions>
-              <form onSubmit={upload} encType="multipart/form-data">
+              <form onSubmit={upload} encType="multipart/form-data" style={{ width: "50%" }}>
                 <VuiButton variant="gradient" color="primary" fullWidth type="submit">Post</VuiButton></form>
-              <VuiButton variant="gradient" color="secondary" fullWidth onClick={handleClose}>Back</VuiButton>
+                <VuiButton variant="gradient" color="secondary" sx={{ width: "50%" }} onClick={handleClose}>Back</VuiButton>
             </DialogActions>
           </Dialog>
 

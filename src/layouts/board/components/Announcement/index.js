@@ -67,11 +67,25 @@ function Announcement() {
   }, []);
 
   const tableRows = noticelist.map((notice) => ({
-    id: notice.noticeId,
-    name: notice.userName,
+    id: (
+      <VuiTypography
+        variant="body2"
+        color="white"
+      >
+      {notice.noticeId}
+      </VuiTypography>
+    ),
+    name: (
+      <VuiTypography
+        variant="body2"
+        color="white"
+      >
+      {notice.userName}
+      </VuiTypography>
+    ),
     title: (
       <VuiTypography
-        variant="button"
+        variant="body2"
         color="info"
         fontWeight="medium"
         onClick={() => handleTitleClick(notice.noticeId)}
@@ -80,15 +94,22 @@ function Announcement() {
         {notice.title}
       </VuiTypography>
     ),
-    date: notice.createDate,
+    date: (
+      <VuiTypography
+        variant="body2"
+        color="white"
+      >
+      {notice.createDate}
+      </VuiTypography>
+    ),
   }));
 
   return (
       <Card>
         <Table
           columns={[
-            { name: "id", align: "left" },
-            { name: "name", align: "left" },
+            { name: "id", align: "center" },
+            { name: "name", align: "center" },
             { name: "title", align: "center" },
             { name: "date", align: "center" },
           ]}

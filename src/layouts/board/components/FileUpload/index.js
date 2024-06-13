@@ -1,7 +1,6 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 
-export default function FileUpload({files, setFiles}) {
+export default function FileUpload({ files, setFiles }) {
 
   const onChangeFiles = (e) => {
     const fileList = e.target.files;
@@ -12,8 +11,7 @@ export default function FileUpload({files, setFiles}) {
 
   return (
     <div>
-        <input type="file" name="userfile" multiple onChange={onChangeFiles} />
-        <input type="submit" />
+      <input type="file" name="userfile" multiple onChange={onChangeFiles} />
     </div>
   );
 }
