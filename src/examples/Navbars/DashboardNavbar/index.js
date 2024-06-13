@@ -17,6 +17,7 @@ import Icon from "@mui/material/Icon";
 import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiInput from "components/VuiInput";
+import VuiButton from "components/VuiButton";
 
 // Vision UI Dashboard React example components
 import Breadcrumbs from "examples/Breadcrumbs";
@@ -46,10 +47,17 @@ import logoSpotify from "assets/images/small-logos/logo-spotify.svg";
 function DashboardNavbar({ absolute, light, isMini }) {
   const [navbarType, setNavbarType] = useState();
   const [controller, dispatch] = useVisionUIController();
-  const { miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
+  const {miniSidenav, transparentNavbar, fixedNavbar, openConfigurator } = controller;
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
   const [userEmail, setUserEmail] = useState('');
+
+  const handleLogout = () => {
+    localStorage.clear();
+    console.log("로그아웃", handleLogout);
+    setUserEmail(false);
+    history.push('/authentication/sign-in');
+  }
   
   useEffect(() => {
     // Setting the navbar type
@@ -175,6 +183,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
                       >
                         {userEmail}
                       </VuiTypography>
+                      <VuiButton variant='outlined' onClick={handleLogout}>Logout</VuiButton>
                     </IconButton>
                   </Link>
                 ) : (
