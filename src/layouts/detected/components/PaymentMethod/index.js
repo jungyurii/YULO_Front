@@ -42,7 +42,7 @@ function PaymentMethod({setDetectedList}) {
     <Card id="delete-account">
       <VuiBox display="flex" width="100%" justifyContent="space-between" alignItems="center" mb="32px" >
         <VuiTypography variant="lg" fontWeight="bold" color="white" >
-          Date Picker
+          Detection Search 
         </VuiTypography>
         <VuiButton variant="contained" color="info" onClick={submitDateRange}>
           Check

@@ -19,7 +19,7 @@ import projectsTableData from "layouts/camera/data/projectsTableData";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import React from "react";
-import { Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, ListItemText, Paper, Select, Skeleton, MenuItem } from "@mui/material";
+import { Dialog, DialogActions, DialogContent, DialogTitle, FormControl, Grid, ListItemText, Paper, Select, Skeleton, MenuItem, Box } from "@mui/material";
 import GradientBorder from "examples/GradientBorder";
 import borders from "assets/theme/base/borders";
 import radialGradient from "assets/theme/functions/radialGradient";
@@ -33,8 +33,13 @@ import { lineChartOptionsDashboard } from "layouts/dashboard/data/lineChartOptio
 import ApexChart3 from "examples/Charts/LineCharts/LineChart3";
 import KakaoMap from "./components/KakaoMap";
 import MyComponent from "./components/GoogleMap";
+import ApexChart from "examples/Charts/LineCharts/LineChart2";
+import AddCamera from "layouts/dashboard/components/AddCamera";
 
 function Camera() {
+
+  const [graphData, setGraphData] = useState([]);
+  const [newGraphData, setNewGraphData] = useState([]);
 
   const [cameraSettings, setCameraSettings] = useState([]);
   const [open, setOpen] = useState(false);
@@ -173,7 +178,17 @@ function Camera() {
   }
   
   const { columns, rows } = cameraData({cameraSettings, setCameraSettings, editCamera});
-  const { columns: prCols, rows: prRows } = projectsTableData;
+  
+  const [name, setName] = useState('');
+
+
+  const handleName = (e) => {
+    setName(e.target.value);
+  }
+
+  const submitCameraName = () => {
+    axios.post()
+  }
 
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -190,13 +205,28 @@ function Camera() {
     <React.Fragment>
     <DashboardLayout>
       <DashboardNavbar />
-      <VuiBox py={3}>
+      <VuiBox py={3} sx={{height:"1100px"}}>
         <VuiBox mb={3}>
           <Card>
-            <VuiBox display="flex" justifyContent="space-between" alignItems="center" mb="22px">
-              <VuiTypography variant="lg" color="white">
-                Camera Setting
-              </VuiTypography>
+            <VuiBox display="flex" width="100%" justifyContent="space-between" alignItems="center" mb={4} mx={2}>
+              <Grid container spacing={3}>
+                <Grid item xs={12} md={3}>
+                  <VuiTypography variant="lg" fontWeight="bold" color="white" >
+                  Camera Setting
+                  </VuiTypography>
+                </Grid>
+                <Grid item xs={12} md={4}>
+                  <VuiInput placeholder="Camera   Name" value={name} onChange={handleName}/>
+                </Grid>
+                <Grid item xs={12} md={2}>
+                <VuiButton variant="contained" color="info" onClick={submitCameraName}>
+                  Search
+                </VuiButton>
+                </Grid>
+                <Grid item xs={12} md={3}>
+                  <AddCamera/>
+                </Grid>
+              </Grid>
             </VuiBox>
             <VuiBox
               sx={{
@@ -216,36 +246,6 @@ function Camera() {
             </VuiBox>
           </Card>
         </VuiBox>
-        <Card>
-          <VuiBox display="flex" justifyContent="space-between" alignItems="center">
-            <VuiTypography variant="lg" color="white">
-              Projects table
-            </VuiTypography>
-          </VuiBox>
-          <VuiBox
-            sx={{
-              "& th": {
-                borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                  `${borderWidth[1]} solid ${grey[700]}`,
-              },
-              "& .MuiTableRow-root:not(:last-child)": {
-                "& td": {
-                  borderBottom: ({ borders: { borderWidth }, palette: { grey } }) =>
-                    `${borderWidth[1]} solid ${grey[700]}`,
-                },
-              },
-            }}
-          >
-            <Grid container spacing={2}>
-              <Grid item xs={8}>  
-                {/* <MyComponent/> */}
-              </Grid>
-              <Grid item xs={4}>
-                {/* <KakaoMap/> */}
-              </Grid>
-            </Grid>
-          </VuiBox>
-        </Card>
       </VuiBox>
       <Footer />
     </DashboardLayout>

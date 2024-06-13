@@ -158,43 +158,9 @@ const AddCamera = () => {
 
   return (
     <React.Fragment>
-      <Card sx={() => ({
-        height: "540px",
-        py: "32px",
-        backgroundSize: "cover",
-        backgroundPosition: "50%"
-      })}>
-        <ImageButton
-            focusRipple
-            key={gif.title}
-            style={{
-              width: '100%',
-              height: '100%'
-            }}
-            onClick={handleClickOpen}
-          >
-            <ImageSrc style={{ backgroundImage: `url(${gif})` }} />
-            <ImageBackdrop className="MuiImageBackdrop-root" />
-            <Image>
-              <Typography
-                component="span"
-                variant="subtitle1"
-                color="inherit"
-                align="center"
-                sx={{
-                  position: 'relative',
-                  p: 4,
-                  pt: 2,
-                  pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
-                }}
-              >
-                <IoAddCircleOutline size="20px" color="white" sx={{pr:2}} />
-                Add Camera
-                <ImageMarked className="MuiImageMarked-root" />
-              </Typography>
-            </Image>
-          </ImageButton>
-      </Card>
+        <VuiButton variant="contained" color="light" sx={{width:"100px", ml:"18px"}} onClick={handleClickOpen}>
+          Add
+        </VuiButton>
 
 
       <Dialog

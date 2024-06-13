@@ -27,11 +27,13 @@ import axios from "axios";
 function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [detectedId, setDetectdId] = useState(0);
+  const [detectionServerPath, setDetectionServerPath] = useState('');
 
-  const openModal = (detectionId) => {
+  const openModal = (detectionId,detectionServerPath) => {
     // 모달 표시 상태를 true로 설정하여 모달을 엽니다.
     setIsModalOpen(true);
     setDetectdId(detectionId);
+    setDetectionServerPath(detectionServerPath);
   };
 
   const fetchData = () => {
@@ -116,11 +118,11 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
                   >
                   </TimelineItem>
                   {item.detectionChecked ? (
-                    <VuiButton variant="text" color="success" onClick={() => openModal(item.detectionId)} sx={{ ml: 10 }}>
+                    <VuiButton variant="text" color="success" onClick={() => openModal(item.detectionId, item.detectionServerPath)} sx={{ ml: 10 }}>
                       <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
                     </VuiButton>
                   ) : (
-                    <VuiButton variant="text" color="info" onClick={() => openModal(item.detectionId)} sx={{ ml: 10 }}>
+                    <VuiButton variant="text" color="info" onClick={() => openModal(item.detectionId, item.detectionServerPath)} sx={{ ml: 10 }}>
                       <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
                     </VuiButton>
                   )}
@@ -146,7 +148,7 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
       <Card>
         <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
           <video width="100%" controls>
-            <source src={'http://192.168.0.100:8000/web/static/1006.mp4'} type="video/mp4" />
+            <source src={`http://10.200.73.221:8000/web/static/${detectionServerPath}`} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </VuiBox>

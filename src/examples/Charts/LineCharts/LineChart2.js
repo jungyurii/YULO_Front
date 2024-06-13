@@ -1,15 +1,13 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 
-
 class ApexChart extends React.Component {
   constructor(props) {
     super(props);
     const now = new Date();
-    const twelveHoursAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000); // 12시간 전의 시간을 계산
+    const fiveMinutesAgo = new Date(now.getTime() - 3 * 60 * 1000); // 5분 전의 시간을 계산
     this.state = {
-      series: []
-      ,
+      series: [],
       options: {
         chart: {
           type: 'area',
@@ -19,17 +17,7 @@ class ApexChart extends React.Component {
           }
         },
         dataLabels: {
-          enabled: false,
-          // dropShadow: {
-          //   enabled: true,
-          //   left: 2,
-          //   top: 2,
-          //   opacity: 0.5,
-          // },
-          // background: {
-          //   enabled : false,
-          //   foreColor: "#fff"
-          // },
+          enabled: true,
         },
         markers: {
           size: 0,
@@ -37,7 +25,7 @@ class ApexChart extends React.Component {
         },
         xaxis: {
           type: 'datetime',
-          min: twelveHoursAgo.getTime(),
+          min: fiveMinutesAgo.getTime(),
           max: now.getTime(),
           tickAmount: 1,
           labels: {
@@ -72,7 +60,7 @@ class ApexChart extends React.Component {
             shade: "dark",
             type: "vertical",
             shadeIntensity: 0,
-            gradientToColors: undefined, // optional, if not defined - uses the shades of same color in series
+            gradientToColors: undefined,
             inverseColors: true,
             opacityFrom: 0.8,
             opacityTo: 0,
@@ -87,67 +75,86 @@ class ApexChart extends React.Component {
           fontWeight: 600,
         },
       },
-    
-    
-      // selection: 'one_day',
-    
     };
   }
-  componentDidMount() {
 
-    const { lineChartData } = this.props;
-    const series = [];
-  
-    lineChartData.forEach(element => {
-      console.log(element);
-  
-      const newarr = element.data.map((data, index) => {
-        const d = [
-          new Date(element.dateTime[index]).getTime(), element.data[index]
-        ]
-        return d;
-      });
-      series.push({ data: newarr, name: element.name });
-    });
-    console.log('SERIES: %o', series);
-  
-    // const updatedOptions = { ...this.state.options };
-    // updatedOptions.xaxis.min = new Date('27 May 2024').getTime();
-  
-    this.setState({
-      series: series,
-    });
+  componentDidMount() {
+    this.updateSeries(this.props.lineChartData);
   }
 
-  // updateData(timeline) {
-  //   this.setState({
-  //     selection: timeline
-  //   }, () => {
-  //     switch (timeline) {
-  //       case 'one_month':
-  //         ApexCharts.exec(
-  //           'area-datetime',
-  //           'zoomX',
-  //           new Date('26 May 2024').getTime(),
-  //           new Date('27 May 2024').getTime()
-  //         )
-  //         break;
-  //       // 나머지 case들도 같은 방식으로 처리
-  //       default:
-  //     }
-  //   });
-  // }
+  componentDidUpdate(prevProps) {
+    if (prevProps.newGraphData !== this.props.newGraphData) {
+      this.updateSeries(this.props.newGraphData, true);
+    }
+  }
 
+  updateSeries = (data, append = false) => {
+    const newSeries = data.map(element => {
+      const newarr = element.data.map((data, index) => {
+        const d = [new Date(element.dateTime[index]).getTime(), element.data[index]];
+        return d;
+      });
+      return { data: newarr, name: element.name };
+    });
+
+    const now = new Date();
+    const fiveMinutesAgo = new Date(now.getTime() - 5 * 60 * 1000); // 5분 전의 시간을 계산
+
+    if (append) {
+      this.setState(prevState => {
+        const updatedSeries = prevState.series.map(existingSeries => {
+          const match = newSeries.find(newS => newS.name === existingSeries.name);
+          if (match) {
+            return {
+              ...existingSeries,
+              data: [...existingSeries.data, ...match.data].filter((item, index, self) =>
+                index === self.findIndex((t) => (
+                  t[0] === item[0] && t[1] === item[1]
+                ))
+              ) // 중복 데이터 제거
+            };
+          }
+          return existingSeries;
+        });
+
+        const nonMatchedSeries = newSeries.filter(newS => !prevState.series.some(existingSeries => existingSeries.name === newS.name));
+
+        return {
+          series: [...updatedSeries, ...nonMatchedSeries],
+          options: {
+            ...prevState.options,
+            xaxis: {
+              ...prevState.options.xaxis,
+              min: fiveMinutesAgo.getTime(),
+              max: now.getTime(),
+            },
+          },
+        };
+      });
+    } else {
+      this.setState({
+        series: newSeries,
+        options: {
+          ...this.state.options,
+          xaxis: {
+            ...this.state.options.xaxis,
+            min: fiveMinutesAgo.getTime(),
+            max: now.getTime(),
+          },
+        },
+      });
+    }
+  }
 
   render() {
     return (
-    <ReactApexChart 
-      options={this.state.options} 
-      series={this.state.series} 
-      type="area" 
-      height={300} 
-    />
-  );
+      <ReactApexChart 
+        options={this.state.options} 
+        series={this.state.series} 
+        type="area" 
+        height={300} 
+      />
+    );
   }
 }
 

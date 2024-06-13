@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 // react-router components
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useHistory } from "react-router-dom";
 
 // prop-types is a library for typechecking of props.
 import PropTypes from "prop-types";
@@ -51,11 +51,12 @@ function DashboardNavbar({ absolute, light, isMini }) {
   const [openMenu, setOpenMenu] = useState(false);
   const route = useLocation().pathname.split("/").slice(1);
   const [userEmail, setUserEmail] = useState('');
+  const history = useHistory();
+
 
   const handleLogout = () => {
     localStorage.clear();
-    console.log("로그아웃", handleLogout);
-    setUserEmail(false);
+    console.log("로그아웃");
     history.push('/authentication/sign-in');
   }
   
@@ -72,6 +73,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
     if(userEmail != 'null') {
       setUserEmail(userEmail);
     } else {
+      console.log("새로 고침 후 여기 들어옴2");
       history.push('/authentication/sign-in');
     }
 
@@ -167,6 +169,7 @@ function DashboardNavbar({ absolute, light, isMini }) {
             <VuiBox color={light ? "white" : "inherit"}>
               {
                 userEmail ? (
+                  <>
                   <Link to="/dashboard">
                     <IconButton sx={navbarIconButton} size="small">
                       <Icon
@@ -183,9 +186,10 @@ function DashboardNavbar({ absolute, light, isMini }) {
                       >
                         {userEmail}
                       </VuiTypography>
-                      <VuiButton variant='outlined' onClick={handleLogout}>Logout</VuiButton>
                     </IconButton>
                   </Link>
+                    <VuiButton variant='outlined' onClick={handleLogout}>Logout</VuiButton>
+                  </>
                 ) : (
                   <Link to="/authentication/sign-in">
                     <IconButton sx={navbarIconButton} size="small">

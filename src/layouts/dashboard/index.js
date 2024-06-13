@@ -48,8 +48,6 @@ import PieChart from "examples/Charts/PieCharts/PieChart";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Margin } from "@mui/icons-material";
-import AddCamera from "./components/AddCamera";
-import MaxWidthDialog from "./components/AddCamera";
 import ApexChart from "examples/Charts/LineCharts/LineChart2";
 import Video from "../../assets/videos/annotated_output_2.mp4"
 import CustomSnackbar from "./components/SnackBar";
@@ -68,9 +66,10 @@ function Dashboard() {
   const [modelInfo, setModelInfo] = useState([]);
   const [recentDetectedList, setRecentDetectedList] = useState([]);
   const [cameraSetting, setCameraSetting] = useState([]);
-  const [graphData, setGraphData] = useState([]);
   const [show, setShow] = useState(false);
+  const [graphData, setGraphData] = useState([]);
   const [backDrop, setBackDrop] = useState(true);
+  const [newGraphData, setNewGraphData] = useState([]);
 
 
   const handleBackDropClose = () => {
@@ -84,17 +83,15 @@ function Dashboard() {
   const toggleSnackbar = () => setShow(!show);
 
   const sendLiveGraphRequest = () => {
-    axios.post("http://127.0.0.1:8080/graph/graphList", { userId: 1 })
+    axios.post("http://127.0.0.1:8080/graph/newGraph", { userId: 1 })
     .then(response => {
-      setGraphData(response.data.result.data);
-      console.log("요청 보냄");
+      setNewGraphData(response.data.result.data);
     })
     .catch(error => {
       console.log("Error : ", error);
     })
   }
   
-  console.log("메인 리렌더링");
   useEffect(() => {
     const userId = localStorage.getItem("userId");
     
@@ -133,8 +130,12 @@ function Dashboard() {
     .catch(error => {
       console.log("Error : ", error);
     })
+
+    // 5초마다 요청을 보내도록 설정합니다.
+    const intervalId = setInterval(sendLiveGraphRequest, 6000);
+    // 컴포넌트 언마운트 시 인터벌 정리
+    return () => clearInterval(intervalId);
   }, []);
-  // setTimeout(sendLiveGraphRequest, 5000);
 
   return (
     <DashboardLayout>
@@ -213,9 +214,6 @@ function Dashboard() {
                 </Grid>
               ))
             }
-            <Grid item xs={12} lg={6} xl={1}>
-              <MaxWidthDialog />
-            </Grid>
           </Grid>
         </VuiBox>
         <VuiBox mb={3}>
@@ -237,7 +235,7 @@ function Dashboard() {
                   <VuiBox sx={{ height: "350px" }}>
                   {
                     graphData.length > 0 && (
-                      <ApexChart lineChartData={graphData}/>
+                      <ApexChart lineChartData={graphData} newGraphData={newGraphData}/>
                     )
                   }
                   </VuiBox>
@@ -309,7 +307,7 @@ function Dashboard() {
         </Grid>
       </VuiBox>
       <Footer />
-      <CustomSnackbar show={show} setShow={setShow}/>
+      <CustomSnackbar show={show} setShow={setShow} message={"데이터를 성공적으로 로딩했습니다."}/>
       <Backdrop
         sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
         open={backDrop}

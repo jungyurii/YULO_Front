@@ -10,6 +10,10 @@ import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";
 import linearGradient from "assets/theme/functions/linearGradient";
 import colors from "assets/theme/base/colors";
+import Video from "../../../../assets/videos/annotated_output_2.mp4"
+import CheckBoxIcon from '@mui/icons-material/CheckBox';
+import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
+
 
 function Bill({ name, company, email, vat, noGutter, key }) {
   const { gradients } = colors;
@@ -19,15 +23,13 @@ function Bill({ name, company, email, vat, noGutter, key }) {
     <VuiBox
       component="li"
       display="flex"
-      justifyContent="space-between"
-      alignItems="flex-start"
       sx={{ background: linearGradient(bill.main, bill.state, bill.deg) }}
       borderRadius="lg"
       p="24px"
       mb={noGutter ? "0px" : "24px"}
       mt="20px"
     >
-      <VuiBox width="100%" display="flex" flexDirection="column">
+      <VuiBox width="65%" display="flex" flexDirection="column">
         <VuiBox
           display="flex"
           justifyContent="space-between"
@@ -36,50 +38,58 @@ function Bill({ name, company, email, vat, noGutter, key }) {
           mb="5px"
         >
           <VuiTypography
-            variant="button"
+            variant="h4"
             color="white"
             fontWeight="medium"
             textTransform="capitalize"
           >
             {name}
           </VuiTypography>
-
         </VuiBox>
-        <VuiBox mb={1} lineHeight={0}>
-          <VuiTypography variant="caption" color="text">
+        <VuiBox mb={1} lineHeight={0} display="flex">
+          <VuiTypography variant="h6" color="text">
             Detected Date :&nbsp;&nbsp;&nbsp;
-            <VuiTypography
-              variant="caption"
-              color="text"
-              fontWeight="regular"
-              textTransform="capitalize"
-            >
-              {company}
             </VuiTypography>
+          <VuiTypography
+            variant="h6"
+            color="text"
+            fontWeight="regular"
+            textTransform="capitalize"
+          >
+            {new Date(company).toLocaleString('en-US', { 
+                    year: 'numeric', 
+                    month: '2-digit', 
+                    day: '2-digit', 
+                    hour: '2-digit', 
+                    minute: '2-digit', 
+                    second: '2-digit' 
+                  })}
           </VuiTypography>
         </VuiBox>
-        <VuiBox mb={1} lineHeight={0}>
-          <VuiTypography variant="caption" color="text">
+        <VuiBox mb={1} lineHeight={0} display="flex">
+          <VuiTypography variant="h6" color="text">
             Model Type :&nbsp;&nbsp;&nbsp;
-            <VuiTypography variant="caption" fontWeight="regular" color="text">
-              {email}
-            </VuiTypography>
+          </VuiTypography>
+          <VuiTypography variant="h6" fontWeight="regular" color="text">
+            {email}
           </VuiTypography>
         </VuiBox>
-        <VuiTypography variant="caption" color="text">
-          CHECKED:&nbsp;&nbsp;&nbsp;
-          <VuiTypography variant="caption" fontWeight="regular" color="text">
-            {vat}
-          </VuiTypography>
-        </VuiTypography>
       </VuiBox>
-      <VuiBox width="40%" display="flex" flexDirection="row">
-        <VuiBox 
-          bgColor="info"
-          sx={{ backgroundImage: "/Users/hongseongmin/GitHub/YULO_Front_2/vision-ui-dashboard-react-main/src/assets/videos/output.mp4", 
-          width:"50%", color: "info", height:"120px", mr: "30px" }}>
-          
-        </VuiBox>
+      <VuiBox width="10%" display="flex" flexDirection="column" justifyContent="center">
+      {vat ? (
+              <VuiButton variant="text" color="success">
+                <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
+              </VuiButton>
+            ) : (
+              <VuiButton variant="text" color="info">
+                <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
+              </VuiButton>
+      )}
+      </VuiBox>
+      <VuiBox width="20%" display="flex" flexDirection="row" justifyContent="space-between">
+        <video autoPlay loop muted type="video/mp4" style={{width: "60%", height: "100%", marginRight: "50px"}}>
+          <source src={Video} type="video/mp4"/>
+        </video>
         <VuiBox
           display="flex"
           alignItems="center"

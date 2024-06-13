@@ -75,7 +75,6 @@ function BillingInformation() {
               key={detection.detectionId}
             />
           ))}
-
         </VuiBox>
       </VuiBox>
       <VuiBox mt={4} display="flex" justifyContent="center">
