@@ -79,13 +79,15 @@ function BillingInformation() {
       </VuiBox>
       <VuiBox mt={4} display="flex" justifyContent="center">
         <Pagination
-            color="secondary"
+            color="info"
+            size="large"
             count={totalPages} // 전체 페이지 수
             page={currentPage} // 현재 페이지
             onChange={(event, page) => handelPageChange(page)}
             showFirstButton={!first} // 첫번째 페이지가 아닐 때 첫번째 페이지 버튼 표시
             showLastButton={!last} // 마지막 페이지가 아닐 때 마지막 페이지 버튼 표시
-          />
+            sx={{ '& .MuiPaginationItem-root': { color: '#FFFFFF', }, 
+            '& .MuiPaginationItem-root.Mui-selected': { backgroundColor: 'info.main', }, }} />
       </VuiBox>
     </Card>
     

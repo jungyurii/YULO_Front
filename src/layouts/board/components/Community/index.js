@@ -269,7 +269,7 @@ function Community() {
             }}
           >
 
-            <Box display="flex" alignContent="space-between" mb={1} p={3}>
+            <Box display="flex" alignContent="space-between" mb={1} p={2}>
               <IoChatbubbles size="35px" color="#4318ff" />
               <Typography variant="h4" ml={1} fontStyle={{ color: "#4318ff" }}>Community</Typography>
               <Box width="100%" />
@@ -279,29 +279,43 @@ function Community() {
             <Grid container spacing={2}>
               <Grid item xs={6}>
                 <DialogContent>
-                  <Box>
-                    <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
-                      {board && board.title}
-                    </VuiTypography>
-                    <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} />
-                    <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
-                      {board && board.content}
-                    </VuiTypography>
-                    <Box display="flex" align-content="space-between">
-                      <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
-                        {board && board.userName}
+                  <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                    <Box sx={{ py: 2, borderBottom: '1px solid #e0e0e0' }}>
+                      <VuiTypography variant="h5" color="sidenav" fontWeight="medium">
+                        {board && board.title}
                       </VuiTypography>
                     </Box>
-                    <VuiTypography variant="h5" color="sidenav" fontWeight="medium" >
-                      {board && board.createDate}
-                    </VuiTypography>
+                    <Box sx={{ py: 2, borderBottom: '1px solid #e0e0e0' }}>
+                      <VuiTypography variant="subtitle2" color="sidenav" fontWeight="medium">
+                        작성자 : {board && board.userName}
+                      </VuiTypography>
+                    </Box>
+                    <Box sx={{ py: 2, borderBottom: '1px solid #e0e0e0' }}>
+                      <VuiTypography variant="subtitle2" color="sidenav">
+                        작성 날짜 : {board && board.createDate}
+                      </VuiTypography>
+                    </Box>
+                    <Box sx={{ py: 2, flexGrow: 1, overflowY: 'auto' }}>
+                      <VuiTypography variant="body1" color="sidenav">
+                        {board && board.content}
+                      </VuiTypography>
+                    </Box>
                   </Box>
                 </DialogContent>
 
-
-                <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} />
-                <VuiBox display="flex" justifyContent="space-between">
-                  <Box>
+                <Box sx={{ my: 2, borderBottom: '1px solid #e0e0e0' }} />
+                <VuiBox display="flex" justifyContent="flex-end">
+                  <VuiButton
+                    sx={{ mr: 2, fontSize: '12px' }}
+                    variant="text"
+                    color="error"
+                    onClick={() => handleDelete(board.boardId)}
+                  >
+                    <Icon>delete</Icon>&nbsp;DELETE
+                  </VuiButton>
+                </VuiBox>
+              </Grid>
+              {/* <Box>
                     <VuiButton variant="text" color="primary" fontWeight="regular">
                       <Icon>favorite</Icon>&nbsp;
                       45
@@ -310,13 +324,7 @@ function Community() {
                       <Icon>message</Icon>&nbsp;
                       100
                     </VuiButton>
-                  </Box>
-                  <VuiButton sx={{ marginRight: 4, fontSize: "12px" }} variant="text" color="error" onClick={() => handleDelete(board.boardId)}>
-                    <Icon>delete</Icon>&nbsp;
-                    DELETE
-                  </VuiButton>
-                </VuiBox>
-              </Grid>
+                  </Box> */}
 
               <Grid item xs={6}>
                 <Box mr={4}>
@@ -330,13 +338,15 @@ function Community() {
 
           <VuiBox mt={4} display="flex" justifyContent="center">
             <Pagination
-              color="secondary"
+              color="info"
+              size="large"
               count={totalPages} // 전체 페이지 수
               page={currentPage} // 현재 페이지
               onChange={(event, page) => handlePageChange(page)}
               showFirstButton={!first} // 첫번째 페이지가 아닐 때 첫번째 페이지 버튼 표시
               showLastButton={!last} // 마지막 페이지가 아닐 때 마지막 페이지 버튼 표시
-            />
+              sx={{ '& .MuiPaginationItem-root': { color: '#FFFFFF', }, 
+              '& .MuiPaginationItem-root.Mui-selected': { backgroundColor: 'info.main', }, }} />
           </VuiBox>
         </VuiBox>
       </Card>
