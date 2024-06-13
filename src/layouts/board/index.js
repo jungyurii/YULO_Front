@@ -22,7 +22,7 @@ function Board() {
       <Header setView={setView} />
       { view ?
        (<Grid container marginY="30px" width="100%">
-          <Grid item xs={12} xl={12}>
+          <Grid item xs={10} xl={12} sx={{ height: "800px" }}>
           <Announcement />
        </Grid>
       </Grid>) 
