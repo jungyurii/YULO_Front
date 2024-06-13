@@ -229,7 +229,8 @@ function Community() {
                 <VuiTypography component="label" variant="h5" color="sidenav" fontWeight="medium" >
                   title
                 </VuiTypography>
-                <TextField variant="filled" size="medium" fullWidth focused value={title} onChange={(event) => setTitle(event.target.value)} />
+                <TextField variant="filled" size="medium" fullWidth focused value={title}
+                  onChange={(event) => setTitle(event.target.value)} />
                 <Box sx={{ my: 2, borderBottom: "1px solid #e0e0e0" }} />
               </Box>
               <FileUpload files={files} setFiles={setFiles} />
@@ -269,7 +270,7 @@ function Community() {
             }}
           >
 
-            <Box display="flex" alignContent="space-between" mb={1} p={2}>
+            <Box display="flex" alignContent="space-between" p={2}>
               <IoChatbubbles size="35px" color="#4318ff" />
               <Typography variant="h4" ml={1} fontStyle={{ color: "#4318ff" }}>Community</Typography>
               <Box width="100%" />
@@ -345,8 +346,10 @@ function Community() {
               onChange={(event, page) => handlePageChange(page)}
               showFirstButton={!first} // 첫번째 페이지가 아닐 때 첫번째 페이지 버튼 표시
               showLastButton={!last} // 마지막 페이지가 아닐 때 마지막 페이지 버튼 표시
-              sx={{ '& .MuiPaginationItem-root': { color: '#FFFFFF', }, 
-              '& .MuiPaginationItem-root.Mui-selected': { backgroundColor: 'info.main', }, }} />
+              sx={{
+                '& .MuiPaginationItem-root': { color: '#FFFFFF', },
+                '& .MuiPaginationItem-root.Mui-selected': { backgroundColor: 'info.main', },
+              }} />
           </VuiBox>
         </VuiBox>
       </Card>

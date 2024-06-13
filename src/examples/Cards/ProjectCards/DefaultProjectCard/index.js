@@ -99,7 +99,7 @@ function DefaultProjectCard({ image, label, title, description, action,authors, 
               {action.label}
             </VuiButton>
           )}
-          <VuiBox display="flex">{createDate}</VuiBox>
+          <VuiTypography variant="body2" color="white" display="flex">{createDate}</VuiTypography>
         </VuiBox>
       </VuiBox>
     </VuiBox>
