@@ -11,6 +11,8 @@ import VuiProgress from "components/VuiProgress";
 import { IoLogoNoSmoking } from "react-icons/io";
 import { IoMdPersonAdd } from "react-icons/io";
 import { IoIosFlame } from "react-icons/io";
+import { FaHelmetSafety } from "react-icons/fa6";
+import { MdBikeScooter } from "react-icons/md";
 
 
 // Images
@@ -41,13 +43,19 @@ export default function modelata(modelInfo) {
       Icon: (
         <VuiBox alignItems="center">
           {(element.modelId === 1) ? (
-            <IoLogoNoSmoking color="#fff" size="25px" />
-          ) : (
-            (element.modelId === 2) ? (
               <IoMdPersonAdd color="#fff" size="25px" />
             ) : (
-              <IoIosFlame color="#fff" size="25px" />
-            )
+            (element.modelId === 2) ? (
+              <IoLogoNoSmoking color="#fff" size="25px" />
+            ) : (
+              (element.modelId === 3) ? (
+                <FaHelmetSafety color="#fff" size="25px"/>
+              ) : (
+                (element.modelId === 4) ? (
+                  <MdBikeScooter color="#fff" size="25px"/>
+                ) : (
+                  <IoIosFlame color="#fff" size="25px" />
+              )))
           )}
         </VuiBox>
       ),

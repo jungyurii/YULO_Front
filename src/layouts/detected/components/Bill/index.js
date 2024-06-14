@@ -14,6 +14,12 @@ import Video from "../../../../assets/videos/annotated_output_2.mp4"
 import CheckBoxIcon from '@mui/icons-material/CheckBox';
 import CheckBoxOutlineBlankIcon from '@mui/icons-material/CheckBoxOutlineBlank';
 
+import { IoLogoNoSmoking } from "react-icons/io";
+import { IoMdPersonAdd } from "react-icons/io";
+import { IoIosFlame } from "react-icons/io";
+import { FaHelmetSafety } from "react-icons/fa6";
+import { MdBikeScooter } from "react-icons/md";
+
 
 function Bill({ name, company, email, vat, noGutter, key }) {
   const { gradients } = colors;
@@ -71,7 +77,21 @@ function Bill({ name, company, email, vat, noGutter, key }) {
             Model Type :&nbsp;&nbsp;&nbsp;
           </VuiTypography>
           <VuiTypography variant="h6" fontWeight="regular" color="text">
-            {email}
+            {(email === 1) ? (
+              <IoMdPersonAdd color="#fff" size="25px" />
+            ) : (
+            (email === 2) ? (
+              <IoLogoNoSmoking color="#fff" size="25px" />
+            ) : (
+              (email === 3) ? (
+                <FaHelmetSafety color="#fff" size="25px"/>
+              ) : (
+                (email === 4) ? (
+                  <MdBikeScooter color="#fff" size="25px"/>
+                ) : (
+                  <IoIosFlame color="#fff" size="25px" />
+              )))
+          )}
           </VuiTypography>
         </VuiBox>
       </VuiBox>

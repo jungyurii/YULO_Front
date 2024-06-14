@@ -51,7 +51,7 @@ function Projects({modelInfo}) {
           <VuiBox display="flex" alignItems="center" lineHeight={0}>
             <BsCheckCircleFill color="green" size="15px" />
             <VuiTypography variant="button" fontWeight="regular" color="text" ml="5px">
-              &nbsp;<strong>30 done</strong> this month
+              &nbsp;현재 모델별<strong> 감지 정확도 </strong>입니다.
             </VuiTypography>
           </VuiBox>
         </VuiBox>

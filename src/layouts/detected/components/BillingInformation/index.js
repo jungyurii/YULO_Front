@@ -15,8 +15,7 @@ import Bill from "layouts/detected/components/Bill";
 import Icon from "@mui/material/Icon";
 
 
-function BillingInformation() {
-  const [detectedList, setDetectedList] = useState([]);
+function BillingInformation({detectedList,setDetectedList}) {
   const [totalPages, setTotalPages] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalElements, setTotalElements] = useState(0);

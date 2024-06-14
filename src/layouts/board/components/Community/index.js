@@ -145,6 +145,7 @@ function Community() {
       .then(response => {
         setBoardlist(response.data.result.data.content);
         setCurrentPage(page);
+        console.log("Response : ", response.data.result.data);
       })
       .catch(error => {
         console.log("Error : ", error);
@@ -189,7 +190,7 @@ function Community() {
               boardlist.map((board, index) => (
                 <Grid item xs={12} md={6} xl={3} key={index} onClick={() => handleOpenDetail(board.boardId)}>
                   <DefaultProjectCard
-                    image={profile1}
+                    image={board.imageUrls}
                     label={"project #" + board.boardId}
                     title={board.title}
                     description={board.content}
@@ -280,7 +281,7 @@ function Community() {
 
             <Grid container spacing={2}>
               <Grid item xs={6}>
-                <DialogContent>
+                <DialogContent style={{height:"700px"}}>
                   <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Box sx={{ py: 2, borderBottom: '1px solid #e0e0e0' }}>
                       <VuiTypography variant="h5" color="sidenav" fontWeight="medium">
@@ -302,9 +303,23 @@ function Community() {
                         {board && board.content}
                       </VuiTypography>
                     </Box>
+                    {board && board.files.map((file, key) => (
+                  <Box
+                  sx={{
+                    width: "100%",
+                    height: "300px",
+                    border: "2px black solid",
+                    borderRadius: "30px",
+                    marginX: "5px",
+                    backgroundImage: `url(http://localhost:8080/board/images/${file.origFilename})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                  }}
+                  key={key}
+                />
+                ))}
                   </Box>
                 </DialogContent>
-
                 <Box sx={{ my: 2, borderBottom: '1px solid #e0e0e0' }} />
                 <VuiBox display="flex" justifyContent="flex-end">
                   <VuiButton

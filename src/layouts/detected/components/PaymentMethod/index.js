@@ -21,12 +21,10 @@ function PaymentMethod({setDetectedList}) {
   const [name, setName] = useState('');
 
   const handleFromDate = (e) => {
-    console.log('handleFromDate : ',e.target.value);
     setFrom(e.target.value);
   }
 
   const handleToDate = (e) => {
-    console.log('handleToDate : ',e.target.value);
     setTo(e.target.value);
   }
 
@@ -35,7 +33,17 @@ function PaymentMethod({setDetectedList}) {
   }
 
   const submitDateRange = () => {
-    axios.post()
+    axios.post("http://localhost:8080/detection/detectionsDetails", {
+      userId: localStorage.getItem("userId"),
+      cameraName: name+ "T00:00:00",
+      startDate : from+ "T23:59:59",
+      endDate : to
+    }).then(response => {
+      console.log("Response : ", response);
+      setDetectedList(response.data.result.data);
+    }).catch(error => {
+      console.log("Error : ", error);
+    })
   }
 
   return (

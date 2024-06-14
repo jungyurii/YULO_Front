@@ -100,7 +100,7 @@ const Comments = ({ comments, setComments, boardId }) => {
         <TextareaAutosize onChange={handleComment} style={{ width: "90%", padding: 2, borderRadius: "5px", border: "1px solid #0e456d" }} minRows={2} placeholder="Comments..." />
         <VuiButton sx={{ ml: 1 }} variant="gradient" color="secondary" onClick={submitComment}>Send</VuiButton>
       </Box>
-      <Box height="300px" sx={{ overflowY: "auto" }}>
+      <Box height="600px" sx={{ overflowY: "auto" }}>
         {comments.map((comment, index) => (
           <Box>
             <Comment

@@ -14,10 +14,11 @@ import PaymentMethod from "layouts/detected/components/PaymentMethod";
 import BillingInformation from "layouts/detected/components/BillingInformation";
 
 import colors from "assets/theme/base/colors";
+import { useState } from "react";
 
 function Detected() {
   const { gradients } = colors;
-
+  const [detectedList, setDetectedList] = useState([]);
   return (
     <DashboardLayout>
       <DashboardNavbar/>
@@ -25,14 +26,14 @@ function Detected() {
         <VuiBox mb={1.5}>
           <Grid container spacing={3}>
             <Grid item xs={12} width="100%">
-              <PaymentMethod />
+              <PaymentMethod setDetectedList={setDetectedList}/>
             </Grid>
           </Grid>
         </VuiBox>
         <VuiBox my={3}>
           <Grid container spacing={3}>
             <Grid item xs={12} md={12}>
-              <BillingInformation />
+              <BillingInformation detectedList={detectedList} setDetectedList={setDetectedList}/>
             </Grid>           
           </Grid>
         </VuiBox>

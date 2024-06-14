@@ -9,9 +9,17 @@ import VuiBox from "components/VuiBox";
 import VuiTypography from "components/VuiTypography";
 import VuiButton from "components/VuiButton";
 import { useState } from "react";
+import noImage from "../../../../assets/images/no-image.png";
 
 function DefaultProjectCard({ image, label, title, description, action,authors, createDate }) {
-
+  let imageSrc ='';
+  if(image[0] === undefined) {
+    imageSrc = noImage
+  }
+  else {
+    imageSrc = `http://localhost:8080/board/images/${image[0]}`;
+  }
+  
   return (
     <VuiBox
       sx={{
@@ -23,7 +31,7 @@ function DefaultProjectCard({ image, label, title, description, action,authors, 
     >
       <VuiBox
         component="img"
-        src={image}
+        src={imageSrc}
         mb="8px"
         borderRadius="15px"
         sx={({ breakpoints }) => ({
