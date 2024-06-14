@@ -70,9 +70,9 @@ function Table({ columns, rows }) {
         pl={align === "left" ? pl : 3}
         pr={align === "right" ? pr : 3}
         textAlign={align}
-        fontSize={size.xxs}
+        fontSize={size.xs}
         fontWeight={fontWeightBold}
-        color="text"
+        color="white"
         opacity={0.7}
         borderBottom={`${borderWidth[1]} solid ${grey[700]}`}
       >
