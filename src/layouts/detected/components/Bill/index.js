@@ -19,13 +19,54 @@ import { IoMdPersonAdd } from "react-icons/io";
 import { IoIosFlame } from "react-icons/io";
 import { FaHelmetSafety } from "react-icons/fa6";
 import { MdBikeScooter } from "react-icons/md";
+import React, { useState } from "react";
+import axios from "axios";
+
+import { Dialog, DialogActions, DialogContent, Card } from "@mui/material";
 
 
-function Bill({ name, company, email, vat, noGutter, key }) {
+function Bill({ name, company, email, vat, noGutter, detectionId, videoSrc }) {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { gradients } = colors;
   const { bill } = gradients;
 
+  const openModal = (detectionId) => {
+    // 모달 표시 상태를 true로 설정하여 모달을 엽니다.
+    setIsModalOpen(true);
+    
+  };
+  const checkVideo = (detectionId) => {
+    axios.post("http://127.0.0.1:8080/detection/detectionCheck", {
+      detectionId: detectionId,
+    })
+    .then(response => {
+      fetchData();
+    })
+    .catch(error => {
+      console.log("Error : ",error);
+    });
+    setIsModalOpen(false);
+  };
+
+  const deleteVideo = (detectionId) => {
+    axios.post("http://127.0.0.1:8080/detection/detectionDelete", {
+      detectionId: detectionId
+    })
+    .then(response => {
+      fetchData();
+    })
+    .catch(error => {
+      console.log("Error : ", error);
+    });
+    setIsModalOpen(false);
+  }
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
+
   return (
+    <React.Fragment>
     <VuiBox
       component="li"
       display="flex"
@@ -96,19 +137,10 @@ function Bill({ name, company, email, vat, noGutter, key }) {
         </VuiBox>
       </VuiBox>
       <VuiBox width="10%" display="flex" flexDirection="column" justifyContent="center">
-      {vat ? (
-              <VuiButton variant="text" color="success">
-                <CheckBoxIcon sx={{ mr: "4px" }}>check</CheckBoxIcon>&nbsp;CHECKED
-              </VuiButton>
-            ) : (
-              <VuiButton variant="text" color="info">
-                <CheckBoxOutlineBlankIcon sx={{ mr: "4px" }}>check</CheckBoxOutlineBlankIcon>&nbsp;CHECK
-              </VuiButton>
-      )}
       </VuiBox>
       <VuiBox width="20%" display="flex" flexDirection="row" justifyContent="space-between">
         <video autoPlay loop muted type="video/mp4" style={{width: "60%", height: "100%", marginRight: "50px"}}>
-          <source src={Video} type="video/mp4"/>
+          <source src={`http://10.200.72.238:8000/web/static/${videoSrc}`} type="video/mp4"/>
         </video>
         <VuiBox
           display="flex"
@@ -126,12 +158,36 @@ function Bill({ name, company, email, vat, noGutter, key }) {
               <Icon sx={{ mr: "4px" }}>delete</Icon>&nbsp;DELETE
             </VuiButton>
           </VuiBox>
-          <VuiButton variant="text" color="text">
+          <VuiButton variant="text" color="text" onClick={() => openModal(detectionId)}>
             <Icon sx={{ mr: "4px" }}>edit</Icon>&nbsp;SHOW
           </VuiButton>
         </VuiBox>
       </VuiBox>
     </VuiBox>
+    <Dialog
+    open={isModalOpen}
+    close={closeModal}
+    aria-labelledby="modal-title"
+    fullWidth
+    maxWidth={'lg'}
+  >
+    {/* 비디오 플레이어 컴포넌트 */}
+    <DialogContent sx={{ backgroundColor:"#012654"}} >
+      <Card>
+        <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
+          <video width="100%" controls>
+            <source src={`http://10.200.72.238:8000/web/static/${videoSrc}`} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+        </VuiBox>
+      </Card>
+      <DialogActions sx={{paddingBottom: 2}}>
+          <VuiButton variant="gradient" color="info" fullWidth onClick={() => checkVideo(detectionId)}>확인 완료</VuiButton>
+          <VuiButton variant="gradient" color="error" fullWidth onClick={() => deleteVideo(detectionId)}>삭제</VuiButton>
+      </DialogActions>
+    </DialogContent>
+  </Dialog>
+  </React.Fragment>
   );
 }
 

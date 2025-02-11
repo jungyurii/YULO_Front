@@ -44,7 +44,7 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
     ).catch(error => {
       console.log("Error : ", error);
     });
-  }
+  };
 
   const checkVideo = () => {
     axios.post("http://127.0.0.1:8080/detection/detectionCheck", {
@@ -148,7 +148,7 @@ function OrdersOverview({recentDetectedList,setRecentDetectedList}) {
       <Card>
         <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
           <video width="100%" controls>
-            <source src={`http://10.200.73.221:8000/web/static/${detectionServerPath}`} type="video/mp4" />
+            <source src={`http://10.200.72.238:8000/web/static/${detectionServerPath}`} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </VuiBox>

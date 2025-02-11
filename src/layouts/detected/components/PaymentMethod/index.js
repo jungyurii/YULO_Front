@@ -35,9 +35,9 @@ function PaymentMethod({setDetectedList}) {
   const submitDateRange = () => {
     axios.post("http://localhost:8080/detection/detectionsDetails", {
       userId: localStorage.getItem("userId"),
-      cameraName: name+ "T00:00:00",
-      startDate : from+ "T23:59:59",
-      endDate : to
+      cameraName: name,
+      startDate : from+ "T00:00:00",
+      endDate : to+ "T23:59:59"
     }).then(response => {
       console.log("Response : ", response);
       setDetectedList(response.data.result.data);

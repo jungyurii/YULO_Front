@@ -50,10 +50,13 @@ import axios from "axios";
 import { Margin } from "@mui/icons-material";
 import ApexChart from "examples/Charts/LineCharts/LineChart2";
 import Video from "../../assets/videos/annotated_output_2.mp4"
+import Video2 from "../../assets/videos/fire_detection.mov"
+import Video3 from "../../assets/videos/scooter3.mov"
 import CustomSnackbar from "./components/SnackBar";
 import Backdrop from '@mui/material/Backdrop';
 import CircularProgress from '@mui/material/CircularProgress';
 import Button from '@mui/material/Button';
+
 
 
 function Dashboard() {
@@ -207,13 +210,93 @@ function Dashboard() {
                 </VuiBox>
               </Card>
             </Grid>
-            {
+            <Grid item xs={12} lg={6} xl={2}>
+              <Card sx={() => ({
+                  height: "540px",
+                  py: "32px",
+                  backgroundImage: `${Video2}`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "50%"
+                })}>
+                <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
+                  <VuiTypography
+                    component="a"
+                    href="#"
+                    variant="button"
+                    color="white"
+                    fontWeight="regular"
+                    sx={{
+                      mr: "5px",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+
+                      "& .material-icons-round": {
+                        fontSize: "3.125rem",
+                        transform: `translate(2px, -0.5px)`,
+                        transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
+                      },
+
+                      "&:hover .material-icons-round, &:focus  .material-icons-round": {
+                        transform: `translate(6px, -0.5px)`,
+                      },
+                    }}
+                  >
+                    {"실내 외각 휴게실 "}
+                  </VuiTypography>
+                    <video autoPlay loop muted type="video/mp4" style={{width: "100%", height: "auto",}}>
+                      <source src={Video2} type="video/mp4"/>
+                    </video>
+                </VuiBox>
+              </Card>
+            </Grid>
+            <Grid item xs={12} lg={6} xl={2}>
+              <Card sx={() => ({
+                  height: "540px",
+                  py: "32px",
+                  backgroundImage: `${Video3}`,
+                  backgroundSize: "cover",
+                  backgroundPosition: "50%"
+                })}>
+                <VuiBox height="100%" display="flex" flexDirection="column" justifyContent="space-between">
+                  <VuiTypography
+                    component="a"
+                    href="#"
+                    variant="button"
+                    color="white"
+                    fontWeight="regular"
+                    sx={{
+                      mr: "5px",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      cursor: "pointer",
+
+                      "& .material-icons-round": {
+                        fontSize: "3.125rem",
+                        transform: `translate(2px, -0.5px)`,
+                        transition: "transform 0.2s cubic-bezier(0.34,1.61,0.7,1.3)",
+                      },
+
+                      "&:hover .material-icons-round, &:focus  .material-icons-round": {
+                        transform: `translate(6px, -0.5px)`,
+                      },
+                    }}
+                  >
+                    {"인경호 부근"}
+                  </VuiTypography>
+                    <video autoPlay loop muted type="video/mp4" style={{width: "100%", height: "auto",}}>
+                      <source src={Video3} type="video/mp4"/>
+                    </video>
+                </VuiBox>
+              </Card>
+            </Grid>
+            {/* {
               Object.entries(cameraSetting).map(([index, data]) => (
                 <Grid item xs={12} lg={6} xl={2} key={index}>
                   <WelcomeMark data={data}/>
                 </Grid>
               ))
-            }
+            } */}
           </Grid>
         </VuiBox>
         <VuiBox mb={3}>

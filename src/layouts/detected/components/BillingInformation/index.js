@@ -65,13 +65,15 @@ function BillingInformation({detectedList,setDetectedList}) {
       </VuiBox>
       <VuiBox>
         <VuiBox component="ul" display="flex" flexDirection="column" p={0} m={0}>
-          {detectedList.map(detection => (
+          {detectedList.map((detection, index) => (
             <Bill
+              key={index}
               name={detection.cameraName}
               company={detection.detectionDate}
               email={detection.modelId}
               vat={detection.detectionChecked}
-              key={detection.detectionId}
+              detectionId={detection.detectionId}
+              videoSrc={detection.detectionServerPath}
             />
           ))}
         </VuiBox>
